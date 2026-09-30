@@ -15,25 +15,19 @@
 </helmet>
 <div data-screen-label="Setup" style="display:flex;height:100vh;overflow:hidden;background:var(--color-background-default);font-family:var(--font-sans, Inter, sans-serif);color:var(--color-background-default-foreground)">
   <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Sidebar" collapsed="{{ sidebarCollapsed }}" hint-size="240px,100%">
-    <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarHeader" logo="E" title="EnPath" caption="Admin workspace" hint-size="100%,56px"></x-import>
+    <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarHeader" logo="E" title="EnPath" caption="Career workspace" hint-size="100%,56px"></x-import>
     <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarContent" hint-size="100%,200px">
-      <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarGroup" label="Operations" hint-size="100%,160px">
-        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarMenuItem" icon="{{ ic.dash }}" label="Dashboard" hint-size="100%,32px"></x-import>
-        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarMenuItem" icon="{{ ic.people }}" label="People" hint-size="100%,32px"></x-import>
-        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarMenuItem" icon="{{ ic.setup }}" label="Setup" active="{{ true }}" hint-size="100%,32px"></x-import>
-        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarMenuItem" icon="{{ ic.audit }}" label="Audit log" hint-size="100%,32px"></x-import>
+      <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarGroup" label="Workspace" hint-size="100%,96px">
+        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarMenuItem" icon="{{ ic.career }}" label="My Career" href="../my-career/" hint-size="100%,32px"></x-import>
+        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarMenuItem" icon="{{ ic.setup }}" label="Setup" href="../setup/" active="{{ true }}" hint-size="100%,32px"></x-import>
       </x-import>
-    </x-import>
-    <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarFooter" hint-size="100%,80px">
-      <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarMenuItem" icon="{{ ic.bell }}" label="Notifications" hint-size="100%,32px"></x-import>
-      <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarMenuItem" icon="{{ ic.settings }}" label="Settings" hint-size="100%,32px"></x-import>
     </x-import>
   </x-import>
 
   <div style="display:flex;flex:1;flex-direction:column;min-width:0;overflow:hidden">
     <header style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 16px;padding:12px 16px 0;flex-shrink:0">
       <div style="display:flex;flex-direction:column;gap:4px;min-width:0">
-        <span style="font-size:12px;color:var(--color-text-secondary)">Operations / Setup</span>
+        <span style="font-size:12px;color:var(--color-text-secondary)">Workspace / Setup</span>
         <h1 style="margin:0;font-size:18px;font-weight:600;line-height:1.3">Setup</h1>
       </div>
       <div style="display:flex;align-items:center;gap:8px">
@@ -1145,7 +1139,7 @@ class Component extends DCLogic {
 
     return {
       ro, sidebarCollapsed,
-      ic: { dash: I('layout-dashboard'), people: I('users'), setup: I('settings-2'), audit: I('history'), bell: I('bell'), settings: I('settings'), lock: I('lock'), warn: I('triangle-alert'), warnSm: I('triangle-alert', { width: 14, height: 14 }), alert: I('circle-alert'), info: I('info'), search: I('search'), briefcase: I('briefcase'), layers: I('layers'), user: I('user'), grid: I('grid-3x3'), list: I('list-checks'), route: I('route') },
+      ic: { career: I('route'), dash: I('layout-dashboard'), people: I('users'), setup: I('settings-2'), audit: I('history'), bell: I('bell'), settings: I('settings'), lock: I('lock'), warn: I('triangle-alert'), warnSm: I('triangle-alert', { width: 14, height: 14 }), alert: I('circle-alert'), info: I('info'), search: I('search'), briefcase: I('briefcase'), layers: I('layers'), user: I('user'), grid: I('grid-3x3'), list: I('list-checks'), route: I('route') },
       tabs, tab: s.tab, onTab: v => this.go(v),
       isOverview: s.tab === 'overview', isPositions: s.tab === 'positions', isMapping: s.tab === 'mapping', isMatrix: s.tab === 'matrix', isExpect: s.tab === 'expect', isPaths: s.tab === 'paths',
       ovCols: narrow ? 'minmax(0,1fr)' : 'minmax(0,2fr) minmax(280px,1fr)',

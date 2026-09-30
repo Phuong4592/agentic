@@ -15,17 +15,12 @@
 </helmet>
 <div data-screen-label="My Career" style="display:flex;height:100vh;overflow:hidden;background:var(--color-background-default);font-family:var(--font-sans, Inter, sans-serif);color:var(--color-background-default-foreground)">
   <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Sidebar" collapsed="{{ sidebarCollapsed }}" hint-size="240px,100%">
-    <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarHeader" logo="E" title="EnPath" caption="Employee workspace" hint-size="100%,56px"></x-import>
+    <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarHeader" logo="E" title="EnPath" caption="Career workspace" hint-size="100%,56px"></x-import>
     <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarContent" hint-size="100%,200px">
-      <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarGroup" label="Workspace" hint-size="100%,130px">
-        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarMenuItem" icon="{{ ic.career }}" label="My Career" active="{{ true }}" hint-size="100%,32px"></x-import>
-        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarMenuItem" icon="{{ ic.actions }}" label="My Actions" hint-size="100%,32px"></x-import>
-        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarMenuItem" icon="{{ ic.records }}" label="Records" hint-size="100%,32px"></x-import>
+      <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarGroup" label="Workspace" hint-size="100%,96px">
+        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarMenuItem" icon="{{ ic.career }}" label="My Career" href="../my-career/" active="{{ true }}" hint-size="100%,32px"></x-import>
+        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarMenuItem" icon="{{ ic.setup }}" label="Setup" href="../setup/" hint-size="100%,32px"></x-import>
       </x-import>
-    </x-import>
-    <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarFooter" hint-size="100%,80px">
-      <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarMenuItem" icon="{{ ic.bell }}" label="Notifications" badge="{{ 1 }}" hint-size="100%,32px"></x-import>
-      <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarMenuItem" icon="{{ ic.settings }}" label="Settings" hint-size="100%,32px"></x-import>
     </x-import>
   </x-import>
 
@@ -1096,7 +1091,7 @@ class Component extends DCLogic {
 
     const mk = (n) => I(n);
     return {
-      ic: { career: mk('route'), actions: mk('list-checks'), records: mk('file-text'), bell: mk('bell'), settings: mk('settings'), info: mk('info'), chart: mk('chart-bar'), alert: mk('circle-alert') },
+      ic: { career: mk('route'), setup: mk('settings-2'), actions: mk('list-checks'), records: mk('file-text'), bell: mk('bell'), settings: mk('settings'), info: mk('info'), chart: mk('chart-bar'), alert: mk('circle-alert') },
       sidebarCollapsed: !!this.props.sidebarCollapsed || s.narrow || s.aiOpen,
       showChangeAlert: plan.follow === 'eg' && !s.seenHistory && m.fp.changes.length > 0,
       changeText: m.fp.name + ' changed ' + (m.fp.changes[0] ? m.fp.changes[0].date.replace(', 2026', '') : ''),
