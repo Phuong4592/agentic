@@ -1,0 +1,40 @@
+/* Typography primitives (verbatim from source — unitless sizes). px-ready aliases live in typography.css */
+:root {
+  --font-size-xs: 12; /* @kind other */
+  --font-size-sm: 14; /* @kind other */
+  --font-size-base: 16; /* @kind other */
+  --font-size-lg: 18; /* @kind other */
+  --font-size-xl: 20; /* @kind other */
+  --font-size-2xl: 24; /* @kind other */
+  --font-size-3xl: 30; /* @kind other */
+  --font-size-4xl: 36; /* @kind other */
+  --font-size-5xl: 48; /* @kind other */
+  --font-size-6xl: 60; /* @kind other */
+  --font-size-7xl: 72; /* @kind other */
+  --font-size-8xl: 96; /* @kind other */
+  --font-size-9xl: 128; /* @kind other */
+  --font-weight-thin: 100; /* @kind other */
+  --font-weight-extralight: 200; /* @kind other */
+  --font-weight-light: 300; /* @kind other */
+  --font-weight-normal: 400; /* @kind other */
+  --font-weight-medium: 500; /* @kind other */
+  --font-weight-semibold: 600; /* @kind other */
+  --font-weight-bold: 700; /* @kind other */
+  --font-weight-extrabold: 800; /* @kind other */
+  --font-weight-black: 900; /* @kind other */
+  --line-height-none: 100; /* @kind other */
+  --line-height-tight: 125; /* @kind other */
+  --line-height-snug: 137.5; /* @kind other */
+  --line-height-normal: 150; /* @kind other */
+  --line-height-relaxed: 162.5; /* @kind other */
+  --line-height-loose: 200; /* @kind other */
+  --letter-spacing-tighter: -2.5; /* @kind other */
+  --letter-spacing-tight: -1.5; /* @kind other */
+  --letter-spacing-normal: 0; /* @kind other */
+  --letter-spacing-wide: 2.5; /* @kind other */
+  --letter-spacing-wider: 5; /* @kind other */
+  --letter-spacing-widest: 10; /* @kind other */
+  --font-family-sans: Inter;
+  --font-family-mono: Roboto Mono;
+  --font-family-serif: Georgia;
+}

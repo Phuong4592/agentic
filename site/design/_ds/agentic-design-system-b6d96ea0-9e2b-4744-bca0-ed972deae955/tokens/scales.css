@@ -1,0 +1,112 @@
+/* Spacing, radius, shadow, motion, opacity, z-index, breakpoints, layout grid. Source: agentic-ui/src/app/tokens.css */
+:root {
+  --spacing-0: 0px;
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-5: 20px;
+  --spacing-6: 24px;
+  --spacing-7: 28px;
+  --spacing-8: 32px;
+  --spacing-9: 36px;
+  --spacing-10: 40px;
+  --spacing-11: 44px;
+  --spacing-12: 48px;
+  --spacing-14: 56px;
+  --spacing-16: 64px;
+  --spacing-20: 80px;
+  --spacing-24: 96px;
+  --spacing-28: 112px;
+  --spacing-32: 128px;
+  --spacing-px: 1px;
+  --spacing-0-5: 2px;
+  --spacing-1-5: 6px;
+  --spacing-2-5: 10px;
+  --spacing-3-5: 14px;
+  --spacing-component-xxs: 2px;
+  --spacing-component-sm: 8px;
+  --spacing-component-lg: 16px;
+  --spacing-component-xl: 24px;
+  --spacing-component-2xl: 32px;
+  --spacing-component-md: 12px;
+  --spacing-component-xs: 4px;
+  --spacing-component-xs-plus: 6px;
+  --spacing-layout-xs: 16px;
+  --spacing-layout-sm: 24px;
+  --spacing-layout-md: 32px;
+  --spacing-layout-lg: 48px;
+  --spacing-layout-xl: 64px;
+  --radius-none: 0px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-base: 8px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-2xl: 14px;
+  --radius-3xl: 18px;
+  --radius-4xl: 21px;
+  --radius-full: 9999px;
+  --shadow-none: none;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-default: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  --shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+  --motion-duration-instant: 0; /* @kind other */
+  --motion-duration-fast: 100; /* @kind other */
+  --motion-duration-normal: 200; /* @kind other */
+  --motion-duration-slow: 300; /* @kind other */
+  --motion-duration-slower: 500; /* @kind other */
+  --motion-easing-standard: cubic-bezier(0.2, 0, 0, 1); /* @kind other */
+  --motion-easing-enter: cubic-bezier(0, 0, 0.2, 1); /* @kind other */
+  --motion-easing-exit: cubic-bezier(0.4, 0, 1, 1); /* @kind other */
+  --motion-easing-linear: linear; /* @kind other */
+  --opacity-0: 0; /* @kind other */
+  --opacity-10: 10; /* @kind other */
+  --opacity-20: 20; /* @kind other */
+  --opacity-30: 30; /* @kind other */
+  --opacity-40: 40; /* @kind other */
+  --opacity-50: 50; /* @kind other */
+  --opacity-60: 60; /* @kind other */
+  --opacity-70: 70; /* @kind other */
+  --opacity-75: 75; /* @kind other */
+  --opacity-80: 80; /* @kind other */
+  --opacity-90: 90; /* @kind other */
+  --opacity-100: 100; /* @kind other */
+  --opacity-disabled: 60; /* @kind other */
+  --opacity-loading: 50; /* @kind other */
+  --opacity-overlay: 50; /* @kind other */
+  --opacity-ghost: 80; /* @kind other */
+  --opacity-active: 80; /* @kind other */
+  --z-index-base: 0; /* @kind other */
+  --z-index-raised: 10; /* @kind other */
+  --z-index-dropdown: 20; /* @kind other */
+  --z-index-sticky: 30; /* @kind other */
+  --z-index-overlay: 40; /* @kind other */
+  --z-index-modal: 50; /* @kind other */
+  --z-index-toast: 60; /* @kind other */
+  --breakpoint-sm: 640; /* @kind other */
+  --breakpoint-md: 768; /* @kind other */
+  --breakpoint-lg: 1024; /* @kind other */
+  --breakpoint-xl: 1280; /* @kind other */
+  --breakpoint-2xl: 1536; /* @kind other */
+  --breakpoint-frame-mobile: 390; /* @kind other */
+  --breakpoint-frame-tablet: 768; /* @kind other */
+  --breakpoint-frame-laptop: 1024; /* @kind other */
+  --breakpoint-frame-desktop: 1280; /* @kind other */
+  --breakpoint-frame-large: 1440; /* @kind other */
+  --layout-container-max-width: 1400; /* @kind other */
+  --layout-container-padding-mobile: 16; /* @kind other */
+  --layout-container-padding-desktop: 32; /* @kind other */
+  --layout-grid-columns-mobile: 4; /* @kind other */
+  --layout-grid-columns-tablet: 8; /* @kind other */
+  --layout-grid-columns-desktop: 12; /* @kind other */
+  --layout-grid-gutter-mobile: 16; /* @kind other */
+  --layout-grid-gutter-desktop: 24; /* @kind other */
+  --layout-grid-margin-mobile: 16; /* @kind other */
+  --layout-grid-margin-tablet: 32; /* @kind other */
+  --layout-grid-margin-desktop: 80; /* @kind other */
+}
