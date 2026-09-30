@@ -1,0 +1,3 @@
+/* Webfonts — the source loads Inter + Roboto Mono from Google Fonts (next/font + Storybook preview-head.html).
+   No font binaries ship in the repo, so we load the same Google Fonts families here. */
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto+Mono:wght@400;500;600&display=swap");

@@ -1,0 +1,75 @@
+/* Component tokens — button, badge, table, tooltip. Source: agentic-ui/src/app/tokens.css */
+:root {
+  --button-primary-bg-bg: #2b7fff;
+  --button-primary-bg-hover: #155dfc;
+  --button-primary-bg-active: #1447e6;
+  --button-primary-fg-fg: #ffffff;
+  --button-secondary-bg-bg: #dbeafe;
+  --button-secondary-bg-hover: #bedbff;
+  --button-secondary-bg-active: #8ec5ff;
+  --button-secondary-fg-fg: #1447e6;
+  --button-destructive-bg-bg: #ef4444;
+  --button-destructive-bg-hover: #dc2626;
+  --button-destructive-bg-active: #b91c1c;
+  --button-destructive-fg-fg: #ffffff;
+  --button-outline-bg-bg: #ffffff;
+  --button-outline-bg-hover: #f4f4f5;
+  --button-outline-bg-active: #f4f4f5;
+  --button-outline-fg-fg: #18181b;
+  --button-outline-border-default: #e4e4e7;
+  --button-outline-border-hover: #d4d4d8;
+  --button-outline-border-focus: #2b7fff;
+  --button-outline-border-active: #a1a1aa;
+  --button-outline-border-disabled: #f4f4f5;
+  --button-ghost-bg-hover: #f4f4f5;
+  --button-ghost-bg-bg: #ffffff;
+  --button-ghost-bg-active: #f4f4f5;
+  --button-ghost-fg-fg: #18181b;
+  --button-link-fg-default: #2b7fff;
+  --button-link-fg-hover: #155dfc;
+  --button-link-fg-disabled: #a1a1aa;
+  --button-link-fg-active: #1447e6;
+  --button-size-button-radius-1: 12px; /* @kind radius */
+  --button-size-button-radius-2: 8px; /* @kind radius */
+  --button-size-button-height-default: 40px; /* @kind spacing */
+  --button-size-button-height-small: 36px; /* @kind spacing */
+  --button-size-button-height-large: 44px; /* @kind spacing */
+  --button-size-button-spacing: 4px; /* @kind spacing */
+  --button-size-button-padding-default: 16px; /* @kind spacing */
+  --button-size-button-padding-small: 12px; /* @kind spacing */
+  --badge-badge-height-small: 16px; /* @kind spacing */
+  --badge-badge-height-medium: 20px; /* @kind spacing */
+  --badge-badge-height-large: 24px; /* @kind spacing */
+  --table-table-cell-compact: 40px; /* @kind spacing */
+  --table-table-cell-default: 48px; /* @kind spacing */
+  --tooltip-bg: var(--color-background-inverted);
+  --tooltip-fg: var(--color-background-inverted-foreground);
+}
+
+/* Dark mode — toggle with class="dark" on <html> or any ancestor */
+.dark {
+  --button-secondary-bg-bg: #1c398e;
+  --button-secondary-bg-hover: #193cb8;
+  --button-secondary-bg-active: #1447e6;
+  --button-secondary-fg-fg: #fafafa;
+  --button-destructive-bg-bg: #dc2626;
+  --button-destructive-bg-active: #991b1b;
+  --button-outline-bg-bg: #27272a;
+  --button-outline-bg-hover: #27272a;
+  --button-outline-bg-active: #27272a;
+  --button-outline-fg-fg: #fafafa;
+  --button-outline-border-default: #71717a;
+  --button-outline-border-hover: #52525b;
+  --button-outline-border-focus: #51a2ff;
+  --button-outline-border-disabled: #3f3f46;
+  --button-ghost-bg-bg: #09090b;
+  --button-ghost-bg-hover: #27272a;
+  --button-ghost-bg-active: #27272a;
+  --button-ghost-fg-fg: #fafafa;
+  --button-link-fg-default: #51a2ff;
+  --button-link-fg-hover: #8ec5ff;
+  --button-link-fg-active: #bedbff;
+  --button-link-fg-disabled: #71717a;
+  --tooltip-bg: #fafafa;
+  --tooltip-fg: #000000;
+}

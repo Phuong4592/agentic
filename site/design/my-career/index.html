@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>EnPath My Career</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="../support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="../_ds/agentic-design-system-b6d96ea0-9e2b-4744-bca0-ed972deae955/styles.css">
+  <script src="../_ds/agentic-design-system-b6d96ea0-9e2b-4744-bca0-ed972deae955/_ds_bundle.js"></script>
+  <style>html,body{margin:0;height:100%;overflow:hidden}a{color:var(--color-text-link-hover)}a:hover{color:var(--color-text-link-active)}</style>
+</helmet>
+<div data-screen-label="My Career" style="display:flex;height:100vh;overflow:hidden;background:var(--color-background-default);font-family:var(--font-sans, Inter, sans-serif);color:var(--color-background-default-foreground)">
+  <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Sidebar" collapsed="{{ sidebarCollapsed }}" hint-size="240px,100%">
+    <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarHeader" logo="E" title="EnPath" caption="Employee workspace" hint-size="100%,56px"></x-import>
+    <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarContent" hint-size="100%,200px">
+      <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarGroup" label="Workspace" hint-size="100%,130px">
+        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarMenuItem" icon="{{ ic.career }}" label="My Career" active="{{ true }}" hint-size="100%,32px"></x-import>
+        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarMenuItem" icon="{{ ic.actions }}" label="My Actions" hint-size="100%,32px"></x-import>
+        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarMenuItem" icon="{{ ic.records }}" label="Records" hint-size="100%,32px"></x-import>
+      </x-import>
+    </x-import>
+    <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarFooter" hint-size="100%,80px">
+      <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarMenuItem" icon="{{ ic.bell }}" label="Notifications" badge="{{ 1 }}" hint-size="100%,32px"></x-import>
+      <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarMenuItem" icon="{{ ic.settings }}" label="Settings" hint-size="100%,32px"></x-import>
+    </x-import>
+  </x-import>
+
+  <div style="display:flex;flex:1;flex-direction:column;min-width:0;overflow:hidden">
+    <header style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 16px;padding:12px 16px;border-bottom:1px solid var(--color-border-default);flex-shrink:0">
+      <div style="display:flex;flex-direction:column;gap:4px;min-width:0">
+        <h1 style="margin:0;font-size:18px;font-weight:600;line-height:1.3">My Career</h1>
+        <span style="font-size:14px;color:var(--color-text-secondary)">Lan Nguyen · Backend Engineer L2 · Mid</span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px">
+        <sc-if value="{{ showChangeAlert }}" hint-placeholder-val="{{ true }}">
+          <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Alert" icon="{{ ic.info }}" hint-size="320px,44px">
+            <div style="display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;font-size:14px">
+              <span>{{ changeText }}</span>
+              <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" variant="link" size="sm" onClick="{{ openHistory }}" style="height:auto;padding:0" hint-size="130px,20px">See what's different</x-import>
+            </div>
+          </x-import>
+        </sc-if>
+        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.ButtonGroup" hint-size="140px,36px">
+          <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" variant="{{ mapVariant }}" size="sm" aria-pressed="{{ isMap }}" onClick="{{ showMap }}" hint-size="70px,36px">
+            <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Icon" name="map" hint-size="16px,16px"></x-import>
+            <span>Map</span>
+          </x-import>
+          <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" variant="{{ listVariant }}" size="sm" aria-pressed="{{ isList }}" onClick="{{ showList }}" hint-size="70px,36px">
+            <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Icon" name="list" hint-size="16px,16px"></x-import>
+            <span>List</span>
+          </x-import>
+        </x-import>
+        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" variant="{{ aiVariant }}" size="sm" onClick="{{ toggleAi }}" hint-size="90px,36px">
+          <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Icon" name="sparkles" hint-size="16px,16px"></x-import>
+          <span>Ask AI</span>
+        </x-import>
+        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Avatar" size="sm" fallback="LN" name="Lan Nguyen" hint-size="32px,32px"></x-import>
+      </div>
+    </header>
+
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;padding:12px 16px;border-bottom:1px solid var(--color-border-default);flex-shrink:0;min-height:36px">
+      <sc-if value="{{ hasTarget }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;align-items:center;gap:8px;font-size:14px">
+          <span style="display:flex;color:var(--color-text-success)"><x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Icon" name="flag" hint-size="16px,16px"></x-import></span>
+          <span>Toward <strong style="font-weight:600">{{ targetName }}</strong></span>
+        </div>
+        <div style="display:flex;gap:2px;width:140px;height:8px;border-radius:9999px;overflow:hidden;background:var(--color-background-muted)">
+          <div style="width:{{ bar.ready }}%;background:var(--color-status-success)"></div>
+          <div style="width:{{ bar.growth }}%;background:var(--color-status-warning)"></div>
+          <div style="width:{{ bar.need }}%;background:var(--color-border-strong)"></div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px">
+          <sc-for list="{{ countBtns }}" as="b" hint-placeholder-count="3">
+            <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" variant="outline" size="sm" onClick="{{ b.onClick }}" hint-size="120px,36px">
+              <span style="width:8px;height:8px;border-radius:9999px;background:{{ b.dot }}"></span>
+              <span>{{ b.label }}</span>
+            </x-import>
+          </sc-for>
+          <span style="font-size:14px;color:var(--color-text-secondary)">{{ ofTotal }}</span>
+          <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Tooltip" content="{{ tipText }}" side="bottom" hint-size="16px,16px">
+            <span tabIndex="0" aria-label="About these counts" style="display:flex;color:var(--color-icon-muted);cursor:help"><x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Icon" name="info" hint-size="16px,16px"></x-import></span>
+          </x-import>
+        </div>
+      </sc-if>
+      <sc-if value="{{ noTarget }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;align-items:center;gap:8px;font-size:14px">
+          <span style="display:flex;color:var(--color-icon-muted)"><x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Icon" name="flag" hint-size="16px,16px"></x-import></span>
+          <span><strong style="font-weight:600">{{ noTargetHead }}</strong> <span style="color:var(--color-text-secondary)">{{ noTargetText }}</span></span>
+        </div>
+      </sc-if>
+    </div>
+
+    <div style="display:flex;flex-direction:{{ bodyDir }};flex:1;min-height:0;overflow:{{ bodyOverflow }}">
+      <div style="display:flex;flex-direction:column;flex:1;min-width:0;min-height:{{ viewMinH }};background:var(--color-background-subtle)">
+        <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;padding:12px 16px;border-bottom:1px solid var(--color-border-default);background:var(--color-background-default)">
+          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px">
+            <sc-if value="{{ showPicker }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex;align-items:center;gap:8px">
+                <span style="font-size:14px;color:var(--color-text-secondary)">Following</span>
+                <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Select" options="{{ followOptions }}" value="{{ follow }}" onValueChange="{{ askSwitch }}" style="width:220px" hint-size="220px,36px"></x-import>
+              </div>
+            </sc-if>
+            <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" variant="outline" size="sm" onClick="{{ openExploreToolbar }}" hint-size="150px,36px">
+              <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Icon" name="plus" hint-size="16px,16px"></x-import>
+              <span>Explore a position</span>
+            </x-import>
+          </div>
+          <sc-if value="{{ isMap }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;align-items:center;gap:4px">
+              <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" variant="ghost" size="icon-sm" onClick="{{ zoomOut }}" aria-label="Zoom out" hint-size="32px,32px"><x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Icon" name="minus" hint-size="16px,16px"></x-import></x-import>
+              <span style="min-width:44px;text-align:center;font-size:12px;font-family:var(--font-mono, 'Roboto Mono', monospace);color:var(--color-text-secondary)">{{ zoomPct }}</span>
+              <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" variant="ghost" size="icon-sm" onClick="{{ zoomIn }}" aria-label="Zoom in" hint-size="32px,32px"><x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Icon" name="plus" hint-size="16px,16px"></x-import></x-import>
+              <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" variant="ghost" size="sm" onClick="{{ showWhole }}" hint-size="140px,32px">
+                <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Icon" name="scan" hint-size="16px,16px"></x-import>
+                <span>Show whole map</span>
+              </x-import>
+            </div>
+          </sc-if>
+        </div>
+
+        <sc-if value="{{ isMap }}" hint-placeholder-val="{{ true }}">
+          <div ref="{{ vpRef }}" onMouseDown="{{ onDown }}" style="position:relative;flex:1;min-height:0;overflow:hidden;cursor:{{ cursor }}">
+            <div style="position:absolute;left:0;top:0;transform-origin:0 0;transform:{{ transform }}">
+              {{ edgesEl }}
+              <sc-for list="{{ nodes }}" as="n" hint-placeholder-count="4">
+                <div data-node="1" tabIndex="0" role="button" aria-label="{{ n.aria }}" onClick="{{ n.select }}" onKeyDown="{{ n.key }}" style="position:absolute;left:{{ n.x }}px;top:{{ n.y }}px;width:176px;height:104px;box-sizing:border-box;display:flex;flex-direction:column;border-radius:8px;overflow:hidden;background:var(--color-background-default);border:{{ n.border }};outline:{{ n.outline }};outline-offset:2px;box-shadow:{{ n.ring }};cursor:pointer">
+                  <div style="display:flex;align-items:center;gap:6px;height:26px;padding:0 10px;flex-shrink:0;background:{{ n.bandBg }};color:{{ n.bandFg }};font-size:12px;font-weight:500">
+                    <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Icon" name="{{ n.icon }}" size="{{ 12 }}" hint-size="12px,12px"></x-import>
+                    <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ n.band }}</span>
+                  </div>
+                  <div style="display:flex;flex-direction:column;justify-content:center;gap:4px;flex:1;padding:8px 10px">
+                    <span style="font-size:14px;font-weight:600;line-height:1.3;color:{{ n.titleColor }}">{{ n.title }}</span>
+                    <span style="font-size:12px;color:var(--color-text-secondary)">{{ n.pos }}</span>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:10px 16px;border-top:1px solid var(--color-border-default);background:var(--color-background-default)">
+            <sc-for list="{{ legend }}" as="l" hint-placeholder-count="2">
+              <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" variant="{{ l.variant }}" size="sm" aria-pressed="{{ l.active }}" onClick="{{ l.onClick }}" hint-size="160px,36px">
+                <span style="width:20px;height:0;border-top:3px {{ l.dash }} {{ l.color }}"></span>
+                <span style="font-weight:{{ l.weight }}">{{ l.label }}</span>
+              </x-import>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isList }}" hint-placeholder-val="{{ false }}">
+          <div ref="{{ listRef }}" style="flex:1;min-height:0;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:16px">
+            <sc-for list="{{ listRoutes }}" as="r" hint-placeholder-count="2">
+              <div data-route="{{ r.id }}" style="display:flex;flex-direction:column;gap:12px;padding:16px;border-radius:8px;background:var(--color-background-default);border:{{ r.border }}">
+                <div style="display:flex;flex-direction:column;gap:4px">
+                  <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px">
+                    <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" variant="link" size="sm" onClick="{{ r.onClick }}" style="padding:0;height:auto" hint-size="140px,20px">
+                      <span style="font-size:14px;font-weight:600">{{ r.name }}</span>
+                    </x-import>
+                    <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Badge" variant="{{ r.badge }}" hint-size="80px,20px">{{ r.badgeLabel }}</x-import>
+                  </div>
+                  <span style="font-size:12px;color:var(--color-text-secondary)">{{ r.context }}</span>
+                </div>
+                <div style="display:flex;flex-direction:column">
+                  <sc-for list="{{ r.rows }}" as="s" hint-placeholder-count="3">
+                    <div data-row="{{ s.key }}" onClick="{{ s.onClick }}" style="display:grid;grid-template-columns:20px minmax(0,1fr);gap:8px;padding:0 8px;border-radius:6px;background:{{ s.bg }};cursor:{{ s.cursor }}">
+                      <div style="position:relative">
+                        <div style="position:absolute;left:9px;top:{{ s.lt }};bottom:{{ s.lb }};border-left:2px {{ s.ls }} {{ s.lc }}"></div>
+                        <div style="position:absolute;left:4px;top:calc(50% - 6px);width:12px;height:12px;box-sizing:border-box;border-radius:9999px;background:{{ s.dot }};border:2px solid {{ s.dotB }}"></div>
+                      </div>
+                      <div style="display:flex;flex-direction:column;gap:2px;padding:8px 0">
+                        <span style="font-size:14px;font-weight:{{ s.weight }};color:{{ s.tc }}">{{ s.text }}</span>
+                        <sc-if value="{{ s.hasSub }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;color:var(--color-text-secondary)">{{ s.sub }}</span></sc-if>
+                      </div>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+      </div>
+
+      <sc-if value="{{ panelOpen }}" hint-placeholder-val="{{ true }}">
+        <aside style="width:{{ panelW }};flex-shrink:0;display:flex;flex-direction:column;border-left:{{ panelBorderL }};border-top:{{ panelBorderT }};background:var(--color-background-default);min-height:0">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;padding:16px;border-bottom:1px solid var(--color-border-default)">
+            <div style="display:flex;flex-direction:column;gap:6px;min-width:0">
+              <h2 style="margin:0;font-size:16px;font-weight:600;line-height:1.3">{{ pn.title }}</h2>
+              <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px">
+                <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Badge" variant="{{ pn.badge }}" hint-size="80px,20px">{{ pn.badgeLabel }}</x-import>
+              </div>
+              <span style="font-size:12px;color:var(--color-text-secondary)">{{ pn.context }}</span>
+            </div>
+            <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" variant="ghost" size="icon-sm" onClick="{{ clearSel }}" aria-label="Close details" hint-size="32px,32px"><x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Icon" name="x" hint-size="16px,16px"></x-import></x-import>
+          </div>
+
+          <div ref="{{ panelRef }}" style="flex:1;min-height:0;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px">
+            <sc-if value="{{ pn.isRole }}" hint-placeholder-val="{{ true }}">
+              <sc-if value="{{ pn.nothing }}" hint-placeholder-val="{{ false }}">
+                <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Empty" variant="outline" icon="{{ ic.chart }}" title="Nothing to compare yet" description="This level has no expectations set in Setup." hint-size="100%,160px"></x-import>
+              </sc-if>
+              <sc-if value="{{ pn.hasCompare }}" hint-placeholder-val="{{ true }}">
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <span style="font-size:14px;font-weight:500">Compared with your approved scores</span>
+                  <div style="display:flex;gap:2px;height:8px;border-radius:9999px;overflow:hidden;background:var(--color-background-muted)">
+                    <div style="width:{{ pn.bar.ready }}%;background:var(--color-status-success)"></div>
+                    <div style="width:{{ pn.bar.growth }}%;background:var(--color-status-warning)"></div>
+                    <div style="width:{{ pn.bar.need }}%;background:var(--color-border-strong)"></div>
+                  </div>
+                  <span style="font-size:12px;color:var(--color-text-secondary)">{{ pn.barNote }}</span>
+                </div>
+                <sc-for list="{{ pn.groups }}" as="g" hint-placeholder-count="2">
+                  <div id="{{ g.domId }}" style="display:flex;flex-direction:column;border:1px solid var(--color-border-default);border-radius:8px">
+                    <button type="button" onClick="{{ g.toggle }}" aria-expanded="{{ g.open }}" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 16px;border:0;background:transparent;font:inherit;cursor:pointer;color:inherit">
+                      <span style="display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600"><span style="width:8px;height:8px;border-radius:9999px;background:{{ g.dot }}"></span>{{ g.title }}</span>
+                      <span style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--color-text-secondary)">{{ g.count }}<x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Icon" name="{{ g.chev }}" hint-size="16px,16px"></x-import></span>
+                    </button>
+                    <sc-if value="{{ g.open }}" hint-placeholder-val="{{ true }}">
+                      <div style="padding:0 16px 4px;border-top:1px solid var(--color-border-default)">
+                        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Accordion" type="single" items="{{ g.items }}" hint-size="100%,96px"></x-import>
+                      </div>
+                    </sc-if>
+                  </div>
+                </sc-for>
+              </sc-if>
+            </sc-if>
+            <sc-if value="{{ pn.isRoute }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column">
+                <sc-for list="{{ pn.rows }}" as="s" hint-placeholder-count="3">
+                  <div onClick="{{ s.onClick }}" style="display:grid;grid-template-columns:20px minmax(0,1fr);gap:8px;padding:0 8px;border-radius:6px;background:{{ s.bg }};cursor:{{ s.cursor }}">
+                    <div style="position:relative">
+                      <div style="position:absolute;left:9px;top:{{ s.lt }};bottom:{{ s.lb }};border-left:2px {{ s.ls }} {{ s.lc }}"></div>
+                      <div style="position:absolute;left:4px;top:calc(50% - 6px);width:12px;height:12px;box-sizing:border-box;border-radius:9999px;background:{{ s.dot }};border:2px solid {{ s.dotB }}"></div>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:2px;padding:8px 0">
+                      <span style="font-size:14px;font-weight:{{ s.weight }};color:{{ s.tc }}">{{ s.text }}</span>
+                      <sc-if value="{{ s.hasSub }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;color:var(--color-text-secondary)">{{ s.sub }}</span></sc-if>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+
+          <sc-if value="{{ pn.hasFooter }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;flex-direction:column;gap:8px;padding:16px;border-top:1px solid var(--color-border-default)">
+              <sc-for list="{{ pn.notes }}" as="t" hint-placeholder-count="1">
+                <p style="margin:0;font-size:12px;line-height:1.5;color:var(--color-text-secondary);text-wrap:pretty">{{ t.text }}</p>
+              </sc-for>
+              <div style="display:grid;gap:8px">
+                <sc-for list="{{ pn.buttons }}" as="b" hint-placeholder-count="2">
+                  <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" variant="{{ b.variant }}" onClick="{{ b.onClick }}" style="width:100%" hint-size="100%,40px">
+                    <span style="display:flex;align-items:center;gap:8px;color:{{ b.color }}">
+                      <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Icon" name="{{ b.icon }}" hint-size="16px,16px"></x-import>
+                      <span>{{ b.label }}</span>
+                    </span>
+                  </x-import>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+        </aside>
+      </sc-if>
+    </div>
+  </div>
+
+  <sc-if value="{{ aiOpen }}" hint-placeholder-val="{{ false }}">
+    <aside style="width:360px;flex-shrink:0;display:flex;flex-direction:column;border-left:1px solid var(--color-border-default);background:var(--color-background-default)">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 16px;border-bottom:1px solid var(--color-border-default)">
+        <div style="display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600">
+          <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Icon" name="sparkles" hint-size="16px,16px"></x-import>
+          <span>Ask AI</span>
+        </div>
+        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" variant="ghost" size="icon-sm" onClick="{{ toggleAi }}" aria-label="Close Ask AI" hint-size="32px,32px"><x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Icon" name="x" hint-size="16px,16px"></x-import></x-import>
+      </div>
+      <div ref="{{ chatRef }}" style="flex:1;min-height:0;overflow-y:auto;padding:16px">
+        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.ChatLog" label="Ask AI conversation" hint-size="100%,200px">
+          <sc-for list="{{ msgs }}" as="m" hint-placeholder-count="1">
+            <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.ChatBubble" role="{{ m.role }}" hint-size="100%,60px">
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <span style="white-space:pre-line">{{ m.text }}</span>
+                <sc-if value="{{ m.hasProposal }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex-direction:column;gap:8px;padding:12px;border:1px dashed #7c3aed;border-radius:8px;background:var(--color-background-default)">
+                    <span style="font-size:12px;font-weight:500;color:#6d28d9">Proposed Career vision</span>
+                    <sc-for list="{{ m.rows }}" as="s" hint-placeholder-count="3">
+                      <div style="display:grid;grid-template-columns:20px minmax(0,1fr);gap:8px">
+                        <div style="position:relative">
+                          <div style="position:absolute;left:9px;top:{{ s.lt }};bottom:{{ s.lb }};border-left:2px {{ s.ls }} {{ s.lc }}"></div>
+                          <div style="position:absolute;left:4px;top:calc(50% - 6px);width:12px;height:12px;box-sizing:border-box;border-radius:9999px;background:{{ s.dot }};border:2px solid {{ s.dotB }}"></div>
+                        </div>
+                        <span style="padding:6px 0;font-size:13px;color:{{ s.tc }}">{{ s.text }}</span>
+                      </div>
+                    </sc-for>
+                    <sc-if value="{{ m.canAdd }}" hint-placeholder-val="{{ true }}">
+                      <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" size="sm" onClick="{{ m.add }}" hint-size="120px,36px">Add to my map</x-import>
+                    </sc-if>
+                    <sc-if value="{{ m.added }}" hint-placeholder-val="{{ false }}">
+                      <span style="font-size:12px;color:var(--color-text-success)">Added to your map</span>
+                    </sc-if>
+                  </div>
+                </sc-if>
+              </div>
+            </x-import>
+          </sc-for>
+        </x-import>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;padding:12px 16px;border-top:1px solid var(--color-border-default)">
+        <div style="display:flex;flex-wrap:wrap;gap:6px">
+          <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SuggestionChip" onClick="{{ askVision }}" hint-size="150px,28px">Suggest a Career vision</x-import>
+          <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SuggestionChip" onClick="{{ askTargetNeeds }}" hint-size="150px,28px">What does my target need?</x-import>
+          <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SuggestionChip" onClick="{{ askCompare }}" hint-size="120px,28px">Compare two roles</x-import>
+        </div>
+        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.ChatInput" onSend="{{ onChatSend }}" placeholder="Ask about your map" hint-size="100%,44px"></x-import>
+      </div>
+    </aside>
+  </sc-if>
+
+  <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Dialog" open="{{ exOpen }}" onOpenChange="{{ closeDlgIfFalse }}" title="Explore a position" description="See what a move would look like before it goes on your map." width="{{ 560 }}" hint-size="0px,0px">
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <label style="font-size:14px;font-weight:500;line-height:1">Starting from</label>
+        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Select" options="{{ exFromOptions }}" value="{{ ex.from }}" onValueChange="{{ setExFrom }}" hint-size="100%,36px"></x-import>
+      </div>
+      <div style="display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:12px">
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <label style="font-size:14px;font-weight:500;line-height:1">Position</label>
+          <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Select" options="{{ exPosOptions }}" value="{{ ex.pos }}" onValueChange="{{ setExPos }}" placeholder="Select a position" hint-size="100%,36px"></x-import>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <label style="font-size:14px;font-weight:500;line-height:1">Join at</label>
+          <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Select" options="{{ exJoinOptions }}" value="{{ ex.join }}" onValueChange="{{ setExJoin }}" disabled="{{ exNoPos }}" placeholder="Level" hint-size="100%,36px"></x-import>
+        </div>
+      </div>
+      <sc-if value="{{ mv.ok }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:8px;padding:12px;border:1px solid var(--color-border-default);border-radius:8px">
+          <div style="display:flex;flex-direction:column;gap:2px">
+            <span style="font-size:14px;font-weight:600">{{ mv.heading }}</span>
+            <span style="font-size:12px;color:var(--color-text-secondary)">{{ mv.sub }}</span>
+          </div>
+          <div style="display:flex;flex-direction:column">
+            <sc-for list="{{ mv.rows }}" as="s" hint-placeholder-count="3">
+              <div style="display:grid;grid-template-columns:20px minmax(0,1fr);gap:8px;padding:0 8px">
+                <div style="position:relative">
+                  <div style="position:absolute;left:9px;top:{{ s.lt }};bottom:{{ s.lb }};border-left:2px {{ s.ls }} {{ s.lc }}"></div>
+                  <div style="position:absolute;left:4px;top:calc(50% - 6px);width:12px;height:12px;box-sizing:border-box;border-radius:9999px;background:{{ s.dot }};border:2px solid {{ s.dotB }}"></div>
+                </div>
+                <span style="padding:8px 0;font-size:14px;color:{{ s.tc }}">{{ s.text }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ mv.err }}" hint-placeholder-val="{{ false }}">
+        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Alert" variant="destructive" icon="{{ ic.alert }}" title="{{ mv.errText }}" hint-size="100%,48px"></x-import>
+      </sc-if>
+      <div style="display:flex;justify-content:flex-end;gap:8px">
+        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" variant="outline" onClick="{{ closeDlg }}" hint-size="90px,40px">Cancel</x-import>
+        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" onClick="{{ confirmExplore }}" disabled="{{ mv.disabled }}" hint-size="120px,40px">Add to my map</x-import>
+      </div>
+    </div>
+  </x-import>
+
+  <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Dialog" open="{{ cfOpen }}" onOpenChange="{{ closeDlgIfFalse }}" title="{{ cf.title }}" description="{{ cf.desc }}" width="{{ 520 }}" hint-size="0px,0px">
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <sc-if value="{{ cf.hasFromTo }}" hint-placeholder-val="{{ true }}">
+        <div style="display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:12px;padding:12px;border:1px solid var(--color-border-default);border-radius:8px">
+          <div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:12px;color:var(--color-text-secondary)">From</span><span style="font-size:14px">{{ cf.from }}</span></div>
+          <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Icon" name="arrow-right" hint-size="16px,16px"></x-import>
+          <div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:12px;color:var(--color-text-secondary)">To</span><span style="font-size:14px;font-weight:600">{{ cf.to }}</span></div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ cf.hasList }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:6px;padding:12px;border:1px solid var(--color-border-default);border-radius:8px">
+          <span style="font-size:12px;color:var(--color-text-secondary)">{{ cf.listTitle }}</span>
+          <sc-for list="{{ cf.list }}" as="it" hint-placeholder-count="2"><span style="font-size:14px">{{ it.text }}</span></sc-for>
+        </div>
+      </sc-if>
+      <sc-for list="{{ cf.notes }}" as="t" hint-placeholder-count="1">
+        <p style="margin:0;font-size:14px;line-height:1.5;color:var(--color-text-secondary);text-wrap:pretty">{{ t.text }}</p>
+      </sc-for>
+      <div style="display:flex;justify-content:flex-end;gap:8px">
+        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" variant="outline" onClick="{{ closeDlg }}" hint-size="90px,40px">Cancel</x-import>
+        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" variant="{{ cf.variant }}" onClick="{{ confirmCf }}" hint-size="120px,40px">{{ cf.confirm }}</x-import>
+      </div>
+    </div>
+  </x-import>
+
+  <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Dialog" open="{{ rqOpen }}" onOpenChange="{{ closeDlgIfFalse }}" title="{{ rq.title }}" description="{{ rq.line }}" width="{{ 520 }}" hint-size="0px,0px">
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <label for="rq-note" style="font-size:14px;font-weight:500;line-height:1">Note for your manager (optional)</label>
+        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Textarea" id="rq-note" value="{{ rqNote }}" onChange="{{ onRqNote }}" rows="{{ 3 }}" placeholder="Why this direction matters to you" hint-size="100%,80px"></x-import>
+      </div>
+      <p style="margin:0;font-size:14px;line-height:1.5;color:var(--color-text-secondary)">Your current role stays the same. You can withdraw it while it's waiting.</p>
+      <div style="display:flex;justify-content:flex-end;gap:8px">
+        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" variant="outline" onClick="{{ closeDlg }}" hint-size="90px,40px">Cancel</x-import>
+        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" onClick="{{ sendRequest }}" hint-size="120px,40px">Send request</x-import>
+      </div>
+    </div>
+  </x-import>
+
+  <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Sheet" open="{{ hsOpen }}" onOpenChange="{{ closeDlgIfFalse }}" side="right" title="Path history" description="{{ hs.path }}" hint-size="0px,0px">
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <sc-for list="{{ hs.changes }}" as="c" hint-placeholder-count="1">
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <span style="font-size:12px;font-weight:500;color:var(--color-text-secondary)">{{ c.head }}</span>
+          <sc-for list="{{ c.items }}" as="it" hint-placeholder-count="3">
+            <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Item" variant="outline" size="sm" type="icon" icon="{{ it.icon }}" title="{{ it.title }}" description="{{ it.note }}" action="{{ it.badge }}" hint-size="100%,56px"></x-import>
+          </sc-for>
+        </div>
+      </sc-for>
+    </div>
+  </x-import>
+
+  <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Toaster" toasts="{{ toasts }}" hint-size="0px,0px"></x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;visionStatus&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;draft&quot;,&quot;waiting&quot;,&quot;approved&quot;,&quot;declined&quot;],&quot;default&quot;:&quot;draft&quot;,&quot;tsType&quot;:&quot;'draft'|'waiting'|'approved'|'declined'&quot;,&quot;section&quot;:&quot;Demo state&quot;},&quot;sidebarCollapsed&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Layout&quot;}}">
+const NSN = 'AgenticDesignSystem_b6d96e';
+const HERE = 'BE-L2', HELD = ['BE-L1'];
+const POS = {
+  BE: { name: 'Backend Engineer', dept: 'Engineering', levels: [1, 2, 3, 4] },
+  FE: { name: 'Frontend Engineer', dept: 'Engineering', levels: [1, 2, 3] },
+  QA: { name: 'QA Engineer', dept: 'Engineering', levels: [1, 2, 3] },
+  PM: { name: 'Product Manager', dept: 'Product', levels: [1, 2, 3] },
+  PD: { name: 'Product Designer', dept: 'Design', levels: [1, 2, 3] },
+};
+const LVN = { 1: 'Junior', 2: 'Mid', 3: 'Senior', 4: 'Lead' };
+const P = id => id.split('-L')[0], L = id => +id.split('-L')[1];
+const full = id => POS[P(id)].name + ' L' + L(id) + ' · ' + LVN[L(id)];
+const shortL = id => 'L' + L(id) + ' · ' + LVN[L(id)];
+const PATHS = {
+  eg: { name: 'Engineering growth', nodes: ['BE-L1', 'FE-L1', 'BE-L2', 'FE-L3', 'BE-L4'], changes: [{ date: 'Sep 27, 2026', before: ['BE-L1', 'BE-L2', 'BE-L3', 'BE-L4'], targetRemoved: 'BE-L3' }] },
+  etp: { name: 'Engineering to product', nodes: ['BE-L2', 'BE-L3', 'PM-L2', 'PM-L3'], changes: [] },
+};
+const ROLE_PATHS = Object.keys(PATHS).filter(k => PATHS[k].nodes.includes(HERE));
+const COMP = { sd: 'System design', cq: 'Code quality', api: 'API design', tl: 'Technical leadership', mt: 'Mentoring', sc: 'Stakeholder communication', pd: 'Product discovery', ux: 'User research', vd: 'Visual design', ts: 'Test strategy', fe: 'Frontend engineering' };
+const PTN = { 1: 'Foundational', 2: 'Developing', 3: 'Intermediate', 4: 'Advanced', 5: 'Expert' };
+const BEH = { 1: 'Understands the basics and applies them with close guidance.', 2: 'Applies it on well-defined tasks with some guidance.', 3: 'Applies it independently across a feature or service.', 4: 'Shapes how the team applies it and reviews others\u2019 work.', 5: 'Sets the standard for it across the organization.' };
+const EXP = {
+  'BE-L1': { sd: 1, cq: 2, api: 1 }, 'BE-L2': { sd: 2, cq: 3, api: 2, tl: null },
+  'BE-L3': { sd: 3, cq: 3, api: 3, tl: 3, mt: 2 }, 'BE-L4': { sd: 4, cq: 4, api: 4, tl: 4, mt: 3, sc: 3 },
+  'FE-L1': { fe: 1, cq: 2, ux: null }, 'FE-L2': { fe: 2, cq: 3, api: 2 }, 'FE-L3': { fe: 3, cq: 3, sd: 3, mt: 2, ts: null },
+  'PM-L1': { pd: 1, sc: 2 }, 'PM-L2': { pd: 2, sc: 3, ux: 2 }, 'PM-L3': { pd: 3, sc: 4, ux: 3, tl: null },
+  'PD-L1': { ux: 1, vd: 2, pd: 1 }, 'PD-L2': { ux: 2, vd: 3, pd: 2, sc: 2 }, 'PD-L3': { ux: null, vd: null, pd: null },
+  'QA-L1': { ts: 2, cq: 2 }, 'QA-L2': { ts: 3, cq: 3, api: 2 }, 'QA-L3': { ts: 4, cq: 3, mt: 2 },
+};
+const SRC = 'H1 2026 assessment, approved Jul 12, 2026';
+const EVID = { sd: 3, cq: 3, api: 2, tl: 2, fe: 1, sc: 2 };
+const COL = { follow: ['#15803d', '#86efac'], company: ['#52525b', '#a1a1aa'], vision: ['#7c3aed', '#c4b5fd'] };
+const BAND = {
+  completed: { bg: '#f4f4f5', fg: '#52525b', icon: 'check', label: 'Completed' },
+  new: { bg: '#fafafa', fg: '#52525b', icon: 'sparkles', label: 'New on your path' },
+  here: { bg: '#bedbff', fg: '#1447e6', icon: 'map-pin', label: 'You are here' },
+  target: { bg: '#dcfce7', fg: '#15803d', icon: 'flag', label: 'Active target' },
+  planned: { bg: '#fafafa', fg: '#52525b', icon: 'clock', label: 'Planned' },
+  vision: { bg: '#ede9fe', fg: '#6d28d9', icon: 'compass', label: 'Career vision' },
+};
+const GROUPS = [
+  { k: 'growth', title: 'Growth areas', dot: 'var(--color-status-warning)' },
+  { k: 'need', title: 'Not assessed yet', dot: 'var(--color-border-strong)' },
+  { k: 'ready', title: 'Ready', dot: 'var(--color-status-success)' },
+  { k: 'notset', title: 'Not set in Setup', dot: 'var(--color-border-default)' },
+];
+const CW = 176, CH = 104, GX = 240, GY = 150;
+const VSTAT = { draft: ['dashed', 'Draft'], waiting: ['blue', 'Waiting for approval'], approved: ['success', 'Approved'], declined: ['secondary', 'Declined'] };
+
+class Component extends DCLogic {
+  state = this.init();
+
+  init() {
+    const w = typeof window !== 'undefined' ? window.innerWidth : 1400;
+    return {
+      plan: {
+        follow: 'eg', target: null, removedTarget: 'BE-L3',
+        routes: [{ id: 'v1', kind: 'vision', n: 1, road: ['BE-L2', 'PD-L1', 'PD-L2'], status: this.props.visionStatus || 'draft', note: '', mgrNote: 'Let\u2019s talk about timing with the design team first.' }],
+      },
+      seenHistory: false, view: w < 1024 ? 'list' : 'map', sel: { type: 'card', id: HERE },
+      groupsOpen: { growth: true, need: true, ready: false, notset: false },
+      dlg: null, cf: null, ex: { from: HERE, pos: '', join: '' }, rqId: null, rqNote: '',
+      aiOpen: false, msgs: [{ role: 'bot', text: 'Ask me about your map. I can suggest a Career vision, explain what your target needs, or compare two roles. I never change your map on my own.' }],
+      zoom: 1, pan: { x: 40, y: 40 }, dragging: false, toasts: [], narrow: w < 1200, compact: w < 1024,
+    };
+  }
+
+  componentDidMount() {
+    this._t = setInterval(() => { if (window[NSN]) { clearInterval(this._t); this.forceUpdate(); } }, 100);
+    this._rs = () => this.setState({ narrow: window.innerWidth < 1200, compact: window.innerWidth < 1024 });
+    window.addEventListener('resize', this._rs);
+    this._key = e => {
+      if ((e.metaKey || e.ctrlKey) && (e.key === 'i' || e.key === 'I')) { e.preventDefault(); this.setState(s => ({ aiOpen: !s.aiOpen })); }
+      else if (e.key === 'Escape' && !this.state.dlg && this.state.sel) this.setState({ sel: null });
+    };
+    window.addEventListener('keydown', this._key);
+    setTimeout(() => this.openingView(), 350);
+  }
+  componentWillUnmount() { clearInterval(this._t); window.removeEventListener('resize', this._rs); window.removeEventListener('keydown', this._key); if (this._ro) this._ro.disconnect(); }
+  componentDidUpdate(pp) {
+    // The dc runtime passes prevProps only, so remember the previous view/selection here.
+    const ps = this._prev || { view: this.state.view, sel: this.state.sel };
+    this._prev = { view: this.state.view, sel: this.state.sel };
+    if (pp.visionStatus !== this.props.visionStatus) this.setPlan(p => ({ ...p, routes: p.routes.map(r => r.id === 'v1' ? { ...r, status: this.props.visionStatus || 'draft' } : r) }));
+    if (ps.view !== this.state.view && this.state.view === 'map') setTimeout(() => this.openingView(), 60);
+    if (this.state.view === 'list' && (ps.sel !== this.state.sel || ps.view !== this.state.view)) setTimeout(() => this.keepListSelection(), 30);
+  }
+  setPlan(fn) { this.setState(s => ({ plan: fn(s.plan) })); }
+
+  // ---------- model ----------
+  vname(plan, n) { return plan.routes.filter(r => r.kind === 'vision').length > 1 ? 'Career vision ' + n : 'Career vision'; }
+
+  buildMap(plan) {
+    const fp = PATHS[plan.follow];
+    const union = new Set(fp.nodes);
+    plan.routes.forEach(r => r.road.slice(1).forEach(n => union.add(n)));
+    const routes = [{ id: 'follow', kind: 'follow', pathId: plan.follow, name: fp.name, road: fp.nodes.slice() }];
+    const visions = plan.routes.filter(r => r.kind === 'vision').sort((a, b) => a.n - b.n);
+    const comps = plan.routes.filter(r => r.kind === 'company');
+    [...visions, ...comps].forEach(r => {
+      const road = union.has(r.road[0]) ? r.road.slice() : [HERE, ...r.road.slice(1)];
+      routes.push({ ...r, road, name: r.kind === 'vision' ? this.vname(plan, r.n) : PATHS[r.pathId].name });
+    });
+    const cards = {};
+    routes.forEach(r => r.road.forEach((n, k) => {
+      const c = cards[n] || (cards[n] = { id: n, visions: [], company: [], routes: [] });
+      if (k === 0 && r.kind !== 'follow') return;
+      c.routes.push(r.id);
+      (r.kind === 'vision' ? c.visions : c.company).push(r);
+    }));
+    const fi = fp.nodes.indexOf(HERE);
+    Object.values(cards).forEach(c => {
+      const id = c.id, f = fp.nodes.indexOf(id), approved = c.visions.some(v => v.status === 'approved');
+      if (id === HERE) c.st = 'here';
+      else if (f >= 0 && f < fi) c.st = HELD.includes(id) ? 'completed' : 'new';
+      else if (id === plan.target && (c.company.length || approved)) c.st = 'target';
+      else if (c.company.length) c.st = 'planned';
+      else if (c.visions.length) c.st = 'vision';
+      else c.st = 'planned';
+      c.approvedVision = approved;
+    });
+    const target = plan.target && cards[plan.target] && cards[plan.target].st === 'target' ? plan.target : null;
+    const links = [];
+    routes.forEach(r => { for (let k = 0; k < r.road.length - 1; k++) links.push({ route: r, a: r.road[k], b: r.road[k + 1] }); });
+    const ids = Object.keys(cards), col = {};
+    ids.forEach(id => { col[id] = 0; });
+    for (let it = 0; it < ids.length; it++) { let ch = false; links.forEach(l => { if (col[l.b] < col[l.a] + 1) { col[l.b] = col[l.a] + 1; ch = true; } }); if (!ch) break; }
+    const row = {};
+    routes.forEach((r, ri) => r.road.forEach((n, k) => { if (row[n] == null && (r.kind === 'follow' || k > 0)) row[n] = ri; }));
+    const used = [...new Set(Object.values(row))].sort((a, b) => a - b);
+    const xy = {}, occ = {};
+    let w = 0, h = 0;
+    ids.forEach(id => {
+      let r = used.indexOf(row[id]);
+      while (occ[r + ':' + col[id]]) r++;
+      occ[r + ':' + col[id]] = 1;
+      xy[id] = { x: col[id] * GX, y: r * GY };
+      w = Math.max(w, xy[id].x + CW); h = Math.max(h, xy[id].y + CH);
+    });
+    const pairs = {};
+    links.forEach(l => { const k = l.a + '>' + l.b; (pairs[k] = pairs[k] || []).push(l.route.id); });
+    return { routes, cards, links, xy, w, h, target, fp, pairs };
+  }
+
+  compare(id) {
+    const e = EXP[id] || {};
+    return Object.keys(e).map(c => {
+      const need = e[c], ev = EVID[c];
+      const k = need == null ? 'notset' : ev == null ? 'need' : ev >= need ? 'ready' : 'growth';
+      return { c, need, ev, k };
+    });
+  }
+  counts(id) { const r = this.compare(id), o = { growth: 0, need: 0, ready: 0, notset: 0, total: r.length }; r.forEach(x => o[x.k]++); return o; }
+  countText(o) {
+    const p = [];
+    if (o.ready) p.push(o.ready + ' ready');
+    if (o.growth) p.push(o.growth + ' growth area' + (o.growth === 1 ? '' : 's'));
+    if (o.need) p.push(o.need + ' not assessed yet');
+    return p.join(' · ');
+  }
+
+  routeMeta(r, m, plan) {
+    if (r.kind === 'follow') return { badge: 'success', badgeLabel: 'You follow', context: 'Planned by your company · ' + r.road.length + ' levels', color: COL.follow, dash: 'solid' };
+    if (r.kind === 'company') return { badge: 'outline', badgeLabel: 'Company path', context: 'For your role · no approval needed', color: COL.company, dash: 'solid' };
+    const vs = VSTAT[r.status];
+    return { badge: vs[0], badgeLabel: vs[1], context: 'Your own direction · private', color: COL.vision, dash: 'dashed' };
+  }
+
+  statusSuffix(st) { return { completed: 'Completed', new: 'New on your path', here: 'You are here', target: 'Active target', planned: 'Planned', vision: '' }[st]; }
+
+  railRows(r, m, selId, clickable) {
+    const meta = this.routeMeta(r, m), n = r.road.length;
+    return r.road.map((id, k) => {
+      const start = k === 0 && r.kind !== 'follow';
+      const c = m.cards[id];
+      let text = start ? 'Starts from ' + full(id) : full(id) + (this.statusSuffix(c.st) ? ' · ' + this.statusSuffix(c.st) : '');
+      let sub = '';
+      if (!start && c.st === 'target') sub = this.countText(this.counts(id));
+      return {
+        key: r.id + ':' + id, text, sub, hasSub: !!sub,
+        tc: start ? 'var(--color-text-secondary)' : 'var(--color-background-default-foreground)',
+        weight: !start && selId === id ? 600 : 400,
+        lt: k === 0 ? '50%' : '0', lb: k === n - 1 ? '50%' : '0', ls: meta.dash, lc: start ? '#d4d4d8' : meta.color[0],
+        dot: start ? '#fff' : meta.color[0], dotB: start ? '#d4d4d8' : meta.color[0],
+        bg: !start && selId === id ? 'var(--color-background-accent)' : 'transparent',
+        cursor: start || !clickable ? 'default' : 'pointer',
+        onClick: start || !clickable ? undefined : () => this.selectCard(id),
+      };
+    });
+  }
+
+  previewRows(road, m, color, dash, startLabel) {
+    const n = road.length;
+    return road.map((id, k) => {
+      const start = k === 0, onMap = !start && m.cards[id];
+      return {
+        key: id + k, text: start ? (startLabel || 'Starts from ') + full(id) : full(id) + (onMap ? ' · already on your map' : ''),
+        tc: start || onMap ? 'var(--color-text-secondary)' : 'var(--color-background-default-foreground)',
+        lt: k === 0 ? '50%' : '0', lb: k === n - 1 ? '50%' : '0', ls: dash, lc: start ? '#d4d4d8' : color,
+        dot: start || onMap ? '#fff' : color, dotB: start ? '#d4d4d8' : color,
+      };
+    });
+  }
+
+  classifyMove(plan, m, from, pos, join) {
+    if (!from || !pos || !join) return null;
+    const ladder = POS[pos].levels.filter(l => l >= +join).map(l => pos + '-L' + l);
+    const errText = POS[pos].name + ' from L' + join + ' is already on your map.';
+    for (const k of ROLE_PATHS) {
+      const p = PATHS[k], i = p.nodes.indexOf(from), j = p.nodes.indexOf(ladder[0]);
+      if (i >= 0 && j > i) {
+        const steps = p.nodes.slice(j), newOnes = steps.filter(n => !m.cards[n]);
+        if (k === plan.follow || !newOnes.length) return { err: errText };
+        return { kind: 'company', pathId: k, road: [from, ...steps], steps, newOnes, heading: 'Part of ' + p.name + ' · no approval needed', sub: 'Planned by your company for your role.', color: COL.company[0], dash: 'solid' };
+      }
+    }
+    const behind = new Set(Object.values(m.cards).filter(c => c.st === 'completed' || c.st === 'new' || c.st === 'here').map(c => c.id));
+    const visions = plan.routes.filter(r => r.kind === 'vision');
+    const nextN = Math.max(0, ...visions.map(v => v.n)) + 1;
+    let base = [from], mode = 'becomes', n = nextN, joinV = null;
+    const V = visions.find(v => v.road.indexOf(from) > 0);
+    if (V) {
+      const idx = V.road.indexOf(from);
+      if (idx === V.road.length - 1) { base = V.road.slice(); mode = 'joins'; n = V.n; joinV = V; }
+      else base = V.road.slice(0, idx + 1);
+    }
+    const steps = ladder.filter(x => !base.includes(x) && !behind.has(x));
+    if (!steps.length) return { err: errText };
+    const road = base.concat(steps);
+    const existing = new Set(m.links.map(l => l.a + '>' + l.b));
+    let fresh = 0;
+    for (let k = base.length - 1; k < road.length - 1; k++) if (!existing.has(road[k] + '>' + road[k + 1])) fresh++;
+    if (!fresh) return { err: errText };
+    const count = visions.length + (mode === 'becomes' ? 1 : 0);
+    const vn = count > 1 ? 'Career vision ' + n : 'Career vision';
+    return { kind: 'vision', mode, n, road, base, steps, newOnes: steps.filter(x => !m.cards[x]), joinV, vn, heading: (mode === 'joins' ? 'Joins ' : 'Becomes ') + vn, sub: 'Private until you send it for approval.', color: COL.vision[0], dash: 'dashed' };
+  }
+
+  removal(plan, rid) {
+    const before = this.buildMap(plan);
+    const fp = PATHS[plan.follow];
+    let keep = plan.routes.filter(r => r.id !== rid), dropped = plan.routes.filter(r => r.id === rid);
+    let changed = true;
+    while (changed) {
+      changed = false;
+      const union = new Set(fp.nodes); keep.forEach(r => r.road.slice(1).forEach(n => union.add(n)));
+      const nk = keep.filter(r => union.has(r.road[0]));
+      if (nk.length !== keep.length) { dropped = dropped.concat(keep.filter(r => !nk.includes(r))); keep = nk; changed = true; }
+    }
+    const next = { ...plan, routes: keep };
+    const after = this.buildMap(next);
+    const gone = Object.keys(before.cards).filter(id => !after.cards[id]);
+    let blocked = null;
+    if (before.target && gone.includes(before.target)) blocked = 'Your Active target is on it. Set another target before removing it.';
+    const w = dropped.find(r => r.kind === 'vision' && r.status === 'waiting');
+    if (!blocked && w) blocked = this.vname(plan, w.n) + ' is waiting for approval. Withdraw the request before removing it.';
+    return { next, gone, blocked };
+  }
+
+  // ---------- actions ----------
+  toast(t) {
+    const id = Date.now() + Math.random();
+    this.setState(s => ({ toasts: [...s.toasts, { id, type: 'success', ...t }] }));
+    setTimeout(() => this.setState(s => ({ toasts: s.toasts.filter(x => x.id !== id) })), 3500);
+  }
+  selectCard(id) { this.setState({ sel: { type: 'card', id } }); }
+  selectRoute(id) { this.setState(s => ({ sel: s.sel && s.sel.type === 'route' && s.sel.id === id ? null : { type: 'route', id } })); }
+  closeDlg = () => this.setState({ dlg: null });
+  openCf(cf) { this.setState({ dlg: 'confirm', cf }); }
+  confirmCf = () => {
+    const cf = this.state.cf;
+    this.setState(s => ({ plan: cf.apply(s.plan), dlg: null, cf: null, ...(cf.after ? cf.after(s) : {}) }));
+    if (cf.toast) this.toast(cf.toast);
+  };
+
+  askSetTarget(id) {
+    const s = this.state, m = this.buildMap(s.plan), old = m.target;
+    this.openCf({
+      title: 'Make this your target?', desc: 'Your progress strip will track the new role instead.',
+      hasFromTo: true, from: old ? full(old) : 'No target yet', to: full(id),
+      notes: [(old ? full(old) + ' stays on your map as Planned. ' : '') + 'Your official role doesn\u2019t change. A target is your own goal, not a promotion or transfer.'],
+      confirm: 'Set as target', variant: 'default',
+      apply: p => ({ ...p, target: id, removedTarget: null }),
+      toast: { title: 'Target set', description: 'Your progress strip now tracks ' + full(id) + '.' },
+    });
+  }
+  askRemoveTarget(id) {
+    this.openCf({
+      title: 'Remove your target?', desc: full(id) + ' stays on your map. You just stop tracking progress toward it.',
+      notes: [], confirm: 'Remove target', variant: 'destructive',
+      apply: p => ({ ...p, target: null, removedTarget: null }),
+      toast: { title: 'Target removed' },
+    });
+  }
+  askRemoveRoute(rid, label) {
+    const s = this.state, rm = this.removal(s.plan, rid);
+    this.openCf({
+      title: label + '?', desc: 'These cards leave your map. Roles still used by another route stay.',
+      hasList: true, listTitle: rm.gone.length + ' card' + (rm.gone.length === 1 ? '' : 's') + ' removed', list: rm.gone.map(id => ({ text: full(id) })),
+      notes: ['Your scores, Actions, and Records stay in your history.'], confirm: 'Remove', variant: 'destructive',
+      apply: () => rm.next, after: () => ({ sel: { type: 'card', id: HERE } }),
+      toast: { title: 'Removed from your map' },
+    });
+  }
+  askSwitch = v => {
+    const s = this.state; if (v === s.plan.follow) return;
+    const m = this.buildMap(s.plan), np = PATHS[v];
+    let newTarget = m.target, notes = ['No approval needed. Your company published this path.'];
+    if (m.target && !np.nodes.includes(m.target)) {
+      newTarget = np.nodes[np.nodes.indexOf(HERE) + 1] || null;
+      if (newTarget) notes.unshift(full(m.target) + ' isn\u2019t on ' + np.name + ', so ' + full(newTarget) + ' becomes your target.');
+    }
+    this.openCf({
+      title: 'Follow a different company path?', desc: 'It becomes your main route, shown in the top row.',
+      hasFromTo: true, from: PATHS[s.plan.follow].name, to: np.name, notes, confirm: 'Follow this path', variant: 'default',
+      apply: p => ({ ...p, follow: v, target: newTarget, routes: p.routes.filter(r => !(r.kind === 'company' && r.pathId === v)) }),
+      after: () => ({ sel: { type: 'route', id: 'follow' } }),
+      toast: { title: 'You now follow ' + np.name },
+    });
+    setTimeout(() => this.openingView(), 80);
+  };
+
+  openExplore(from) {
+    const m = this.buildMap(this.state.plan);
+    const ok = from && m.cards[from] && !['completed', 'new'].includes(m.cards[from].st);
+    this.setState({ dlg: 'explore', ex: { from: ok ? from : HERE, pos: '', join: '' } });
+  }
+  defaultJoin(from, pos) {
+    const lv = POS[pos].levels;
+    if (P(from) === pos && lv.includes(L(from) + 1)) return String(L(from) + 1);
+    return String(lv[0]);
+  }
+  confirmExplore = () => {
+    const s = this.state, m = this.buildMap(s.plan), mv = this.classifyMove(s.plan, m, s.ex.from, s.ex.pos, s.ex.join);
+    if (!mv || mv.err) return;
+    const posName = POS[s.ex.pos].name;
+    let plan = s.plan;
+    if (mv.kind === 'company') plan = { ...plan, routes: [...plan.routes, { id: 'c' + Date.now(), kind: 'company', pathId: mv.pathId, road: mv.road }] };
+    else if (mv.mode === 'joins') plan = { ...plan, routes: plan.routes.map(r => r === mv.joinV ? { ...r, road: mv.road } : r) };
+    else plan = { ...plan, routes: [...plan.routes, { id: 'v' + Date.now(), kind: 'vision', n: mv.n, road: mv.road, status: 'draft', note: '' }] };
+    const last = mv.newOnes.length ? mv.newOnes[mv.newOnes.length - 1] : mv.steps[mv.steps.length - 1];
+    this.setState({ plan, dlg: null, sel: { type: 'card', id: last } }, () => setTimeout(() => this.focusOn(mv.steps), 60));
+    this.toast({ title: mv.kind === 'company' ? posName + ' added as planned steps' : posName + ' added to ' + mv.vn });
+  };
+
+  openRequest(rid) { const r = this.state.plan.routes.find(x => x.id === rid); this.setState({ dlg: 'request', rqId: rid, rqNote: r.note || '' }); }
+  sendRequest = () => {
+    const s = this.state, r = s.plan.routes.find(x => x.id === s.rqId), vn = this.vname(s.plan, r.n);
+    this.setState({ dlg: null, plan: { ...s.plan, routes: s.plan.routes.map(x => x.id === s.rqId ? { ...x, status: 'waiting', note: s.rqNote } : x) } });
+    this.toast({ title: vn + ' sent for approval' });
+  };
+  withdraw(rid) {
+    const s = this.state, r = s.plan.routes.find(x => x.id === rid), vn = this.vname(s.plan, r.n);
+    this.setPlan(p => ({ ...p, routes: p.routes.map(x => x.id === rid ? { ...x, status: 'draft' } : x) }));
+    this.toast({ type: 'info', title: 'Request withdrawn', description: vn + ' is a draft again.' });
+  }
+
+  openGroup(k) {
+    const m = this.buildMap(this.state.plan);
+    this.setState(s => ({ sel: { type: 'card', id: m.target }, groupsOpen: { ...s.groupsOpen, [k]: true } }), () => setTimeout(() => {
+      const el = document.getElementById('grp-' + k), pnl = this.panelEl;
+      if (el && pnl) pnl.scrollTop = el.offsetTop - pnl.offsetTop - 8;
+    }, 60));
+  }
+
+  // ---------- AI ----------
+  pushMsgs(...ms) { this.setState(s => ({ msgs: [...s.msgs, ...ms] }), () => setTimeout(() => { if (this.chatEl) this.chatEl.scrollTop = this.chatEl.scrollHeight; }, 30)); }
+  aiVision() {
+    const s = this.state, m = this.buildMap(s.plan), road = [HERE, 'QA-L2', 'QA-L3'];
+    const existing = new Set(m.links.map(l => l.a + '>' + l.b));
+    const fresh = road.slice(0, -1).some((a, k) => !existing.has(a + '>' + road[k + 1]));
+    if (!fresh) return this.pushMsgs({ role: 'user', text: 'Suggest a Career vision' }, { role: 'bot', text: 'Those roles are already on your map.' });
+    this.pushMsgs({ role: 'user', text: 'Suggest a Career vision' }, { role: 'bot', text: 'Your Code quality (3 · Intermediate) and API design scores are a good base for QA. Based on your approved scores and Records, this road could fit:', proposal: road, pid: Date.now() });
+  }
+  addProposal(msg) {
+    const s = this.state, visions = s.plan.routes.filter(r => r.kind === 'vision'), n = Math.max(0, ...visions.map(v => v.n)) + 1;
+    const plan = { ...s.plan, routes: [...s.plan.routes, { id: 'v' + Date.now(), kind: 'vision', n, road: msg.proposal.slice(), status: 'draft', note: '' }] };
+    this.setState({ plan, msgs: s.msgs.map(x => x === msg ? { ...x, added: true } : x), sel: { type: 'route', id: plan.routes[plan.routes.length - 1].id } }, () => setTimeout(() => this.focusOn(msg.proposal), 60));
+    this.toast({ title: this.vname(plan, n) + ' added to your map' });
+  }
+  aiTarget() {
+    const m = this.buildMap(this.state.plan);
+    let text;
+    if (!m.target) text = 'You don\u2019t have a target yet. Pick a role on your map and choose Set as target, then I can walk you through what it needs.';
+    else {
+      const r = this.compare(m.target), g = r.filter(x => x.k === 'growth'), n = r.filter(x => x.k === 'need');
+      text = 'To reach ' + full(m.target) + ':\n' + (g.length ? 'Growth areas: ' + g.map(x => COMP[x.c] + ' (' + x.ev + ' \u2192 ' + x.need + ')').join(', ') + '.\n' : 'No growth areas.\n') +
+        (n.length ? 'Not assessed yet: ' + n.map(x => COMP[x.c]).join(', ') + '. Your manager assesses the ones not assessed yet in a future assessment.' : '');
+    }
+    this.pushMsgs({ role: 'user', text: 'What does my target need?' }, { role: 'bot', text });
+  }
+  aiCompare() {
+    const a = 'BE-L4', b = 'PD-L2', ca = this.counts(a), cb = this.counts(b);
+    this.pushMsgs({ role: 'user', text: 'Compare two roles' }, { role: 'bot', text: full(a) + ': ' + (this.countText(ca) || 'nothing to compare') + ' of ' + ca.total + '.\n' + full(b) + ': ' + (this.countText(cb) || 'nothing to compare') + ' of ' + cb.total + '.\nBased on your approved scores only. I count these, I don\u2019t score them.' });
+  }
+  onChatSend = v => {
+    const t = (v || '').toLowerCase();
+    if (/vision|suggest/.test(t)) return this.aiVision();
+    if (/need|target/.test(t)) return this.aiTarget();
+    if (/compare/.test(t)) return this.aiCompare();
+    this.pushMsgs({ role: 'user', text: v }, { role: 'bot', text: 'I can suggest a Career vision, explain what your target needs, or compare two roles. Try one of the suggestions below.' });
+  };
+
+  // ---------- viewport ----------
+  vpRef = el => {
+    if (el && el !== this.vp) {
+      this.vp = el; el.addEventListener('wheel', this.onWheel, { passive: false });
+      if (this._ro) this._ro.disconnect();
+      let last = '';
+      this._ro = new ResizeObserver(() => { const k = el.clientWidth + 'x' + el.clientHeight; if (k !== last) { last = k; clearTimeout(this._ft); this._ft = setTimeout(() => this.openingView(), 140); } });
+      this._ro.observe(el);
+    }
+  };
+  listRef = el => { this.listEl = el; };
+  panelRef = el => { this.panelEl = el; };
+  chatRef = el => { this.chatEl = el; };
+  onWheel = e => {
+    e.preventDefault();
+    if (e.ctrlKey || e.metaKey) { const r = this.vp.getBoundingClientRect(); this.zoomAt(this.state.zoom * (e.deltaY < 0 ? 1.08 : 1 / 1.08), e.clientX - r.left, e.clientY - r.top); }
+    else this.setState(s => ({ pan: { x: s.pan.x - e.deltaX, y: s.pan.y - e.deltaY } }));
+  };
+  zoomAt(z, cx, cy) {
+    z = Math.max(0.4, Math.min(1.5, z));
+    const { zoom, pan } = this.state;
+    if (cx == null && this.vp) { cx = this.vp.clientWidth / 2; cy = this.vp.clientHeight / 2; }
+    this.setState({ zoom: z, pan: { x: cx - (cx - pan.x) * z / zoom, y: cy - (cy - pan.y) * z / zoom } });
+  }
+  onDown = e => {
+    if (e.button !== 0 || e.target.closest('[data-node]') || e.target.closest('[data-hit]')) return;
+    this.drag = { x: e.clientX, y: e.clientY, px: this.state.pan.x, py: this.state.pan.y, moved: false };
+    this.setState({ dragging: true });
+    window.addEventListener('mousemove', this.onMove); window.addEventListener('mouseup', this.onUp);
+  };
+  onMove = e => { const d = this.drag; if (Math.abs(e.clientX - d.x) + Math.abs(e.clientY - d.y) > 4) d.moved = true; this.setState({ pan: { x: d.px + e.clientX - d.x, y: d.py + e.clientY - d.y } }); };
+  onUp = () => {
+    const moved = this.drag && this.drag.moved;
+    this.setState({ dragging: false, ...(moved ? {} : { sel: null }) });
+    window.removeEventListener('mousemove', this.onMove); window.removeEventListener('mouseup', this.onUp);
+  };
+  frame(ids, minZ, maxZ) {
+    if (!this.vp) return;
+    const m = this.buildMap(this.state.plan), vw = this.vp.clientWidth, vh = this.vp.clientHeight;
+    if (!vw || !vh) return;
+    const pts = ids.filter(id => m.xy[id]).map(id => m.xy[id]);
+    if (!pts.length) return;
+    const x0 = Math.min(...pts.map(p => p.x)), y0 = Math.min(...pts.map(p => p.y)), x1 = Math.max(...pts.map(p => p.x + CW)), y1 = Math.max(...pts.map(p => p.y + CH));
+    const z = Math.max(minZ, Math.min(maxZ, (vw - 64) / (x1 - x0), (vh - 64) / (y1 - y0)));
+    this.setState({ zoom: z, pan: { x: (vw - (x1 - x0) * z) / 2 - x0 * z, y: Math.max(24 - y0 * z, (vh - (y1 - y0) * z) / 2 - y0 * z) } });
+    return z;
+  }
+  openingView = () => {
+    if (!this.vp) return;
+    const m = this.buildMap(this.state.plan), vw = this.vp.clientWidth, vh = this.vp.clientHeight;
+    const zAll = Math.min((vw - 64) / m.w, (vh - 64) / m.h);
+    if (zAll >= 0.7) return this.frame(Object.keys(m.xy), 0.7, 1);
+    const f = m.fp.nodes, i = f.indexOf(HERE);
+    this.frame(f.slice(Math.max(0, i - 1), i + 3), 0.4, 1);
+  };
+  showWhole = () => { const m = this.buildMap(this.state.plan); this.frame(Object.keys(m.xy), 0.4, 1); };
+  focusOn(ids) {
+    if (this.state.view !== 'map' || !this.vp) return;
+    const m = this.buildMap(this.state.plan), vw = this.vp.clientWidth, vh = this.vp.clientHeight;
+    if (Math.min((vw - 64) / m.w, (vh - 64) / m.h) >= 0.7) return this.frame(Object.keys(m.xy), 0.7, 1);
+    this.frame(ids, 0.5, 1);
+  }
+  keepListSelection() {
+    const box = this.listEl, s = this.state; if (!box || !s.sel) return;
+    let el = null;
+    if (s.sel.type === 'route') el = box.querySelector('[data-route="' + s.sel.id + '"]');
+    else el = box.querySelector('[data-row$=":' + s.sel.id + '"]');
+    if (!el) return;
+    const bt = box.getBoundingClientRect().top, r = el.getBoundingClientRect();
+    if (r.top >= bt && r.bottom <= bt + box.clientHeight) return;
+    box.scrollTop += r.top - bt - 8;
+  }
+
+  // ---------- render ----------
+  renderVals() {
+    const s = this.state, NS = window[NSN], h = React.createElement, plan = s.plan;
+    const I = (n, st) => (NS && NS.Icon ? h(NS.Icon, { name: n, style: st }) : null);
+    const m = this.buildMap(plan);
+    let sel = s.sel;
+    if (sel && sel.type === 'card' && !m.cards[sel.id]) sel = { type: 'card', id: HERE };
+    if (sel && sel.type === 'route' && !m.routes.find(r => r.id === sel.id)) sel = null;
+    const selCard = sel && sel.type === 'card' ? sel.id : null;
+    const activeRid = sel && sel.type === 'route' ? sel.id : 'follow';
+    const activeRoute = m.routes.find(r => r.id === activeRid);
+
+    // map nodes
+    const nodes = Object.keys(m.xy).map(id => {
+      const c = m.cards[id], b = BAND[c.st];
+      const multiV = c.visions.length > 1;
+      const band = c.st === 'vision' ? (multiV ? 'Career visions ' + c.visions.map(v => v.n).join(', ') : c.visions[0] ? this.vname(plan, c.visions[0].n) : 'Career vision') : b.label;
+      const onActive = activeRoute && activeRoute.road.indexOf(id) >= (activeRoute.kind === 'follow' ? 0 : 1) && c.st !== 'completed';
+      const meta = this.routeMeta(activeRoute, m);
+      return {
+        id, x: m.xy[id].x, y: m.xy[id].y, title: shortL(id), pos: POS[P(id)].name, band, icon: b.icon, bandBg: b.bg, bandFg: b.fg,
+        aria: full(id) + ', ' + band,
+        titleColor: c.st === 'completed' ? 'var(--color-text-secondary)' : 'var(--color-background-default-foreground)',
+        border: c.st === 'target' ? '1px solid #15803d' : c.st === 'vision' ? '1.5px dashed #7c3aed' : '1px solid var(--color-border-default)',
+        outline: selCard === id ? '2px solid var(--color-ring)' : '0 solid transparent',
+        ring: onActive ? '0 0 0 3px ' + meta.color[1] : 'none',
+        select: () => this.selectCard(id),
+        key: e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this.selectCard(id); } },
+      };
+    });
+    const pairIdx = {};
+    const edgesEl = h('svg', { width: m.w + 40, height: m.h + 40, style: { position: 'absolute', left: 0, top: 0, overflow: 'visible' } },
+      m.links.map((l, i) => {
+        const a = m.xy[l.a], b = m.xy[l.b]; if (!a || !b) return null;
+        const key = l.a + '>' + l.b, list = m.pairs[key], pi = (pairIdx[key] = (pairIdx[key] || 0) + 1) - 1;
+        const off = (pi - (list.length - 1) / 2) * 7;
+        const meta = this.routeMeta(l.route, m), act = l.route.id === activeRid;
+        const x1 = a.x + CW, y1 = a.y + CH / 2 + off, x2 = b.x - (act ? 4 : 2), y2 = b.y + CH / 2 + off, mx = (x1 + x2) / 2;
+        const d = `M${x1} ${y1} C${mx} ${y1}, ${mx} ${y2}, ${x2} ${y2}`;
+        const col = act ? meta.color[0] : meta.color[1], aw = act ? 10 : 6;
+        return h('g', { key: i },
+          h('path', { d, fill: 'none', stroke: col, strokeWidth: act ? 3.5 : 2, strokeDasharray: meta.dash === 'dashed' ? '8 6' : undefined, strokeLinecap: 'round' }),
+          h('polygon', { points: `${x2 + 2},${y2} ${x2 - aw + 2},${y2 - aw / 2} ${x2 - aw + 2},${y2 + aw / 2}`, fill: col }),
+          h('path', { d, 'data-hit': '1', fill: 'none', stroke: 'transparent', strokeWidth: 14, style: { cursor: 'pointer', pointerEvents: 'stroke' }, onClick: () => this.selectRoute(l.route.id) }));
+      }));
+
+    const legend = m.routes.map(r => {
+      const meta = this.routeMeta(r, m), act = sel && sel.type === 'route' && sel.id === r.id;
+      return { label: r.kind === 'follow' ? r.name + ' · you follow' : r.name, active: act, variant: act ? 'secondary' : 'outline', weight: act ? 600 : 500, color: act ? meta.color[0] : meta.color[1], dash: meta.dash, onClick: () => this.selectRoute(r.id) };
+    });
+    const listRoutes = m.routes.map(r => {
+      const meta = this.routeMeta(r, m), act = sel && sel.type === 'route' && sel.id === r.id;
+      return { id: r.id, name: r.name, badge: meta.badge, badgeLabel: meta.badgeLabel, context: meta.context, border: act ? '2px solid var(--color-ring)' : '1px solid var(--color-border-default)', onClick: () => this.selectRoute(r.id), rows: this.railRows(r, m, selCard, true) };
+    });
+
+    // strip
+    const tc = m.target ? this.counts(m.target) : null;
+    const scored = tc ? tc.total - tc.notset : 0;
+    const pc = k => (tc && scored ? (tc[k] / scored) * 100 : 0);
+    const countBtns = tc ? GROUPS.filter(g => g.k !== 'notset' && tc[g.k]).map(g => ({ dot: g.dot, label: tc[g.k] + ' ' + (g.k === 'ready' ? 'ready' : g.k === 'growth' ? 'growth area' + (tc[g.k] === 1 ? '' : 's') : 'not assessed yet'), onClick: () => this.openGroup(g.k) })) : [];
+    const tipText = 'Scores come from your latest approved assessment. "Not assessed yet" means a competency has no approved score yet, so it doesn\u2019t count as a growth area. Your manager assesses it in a future assessment.' + (tc && tc.notset ? ' ' + tc.notset + ' expectation' + (tc.notset === 1 ? ' is' : 's are') + ' not set in Setup.' : '');
+    const pickNew = !m.target && plan.removedTarget && !m.cards[plan.removedTarget];
+
+    // panel
+    const pn = { title: '', badge: 'outline', badgeLabel: '', context: '', isRole: false, isRoute: false, notes: [], buttons: [], groups: [], rows: [], bar: {}, hasCompare: false, nothing: false };
+    const btn = (label, icon, onClick, variant) => ({ label, icon, onClick, variant: variant === 'danger' ? 'ghost' : (variant || 'default'), color: variant === 'danger' ? 'var(--color-text-invalid)' : 'inherit' });
+    const otherWaiting = rid => plan.routes.find(r => r.kind === 'vision' && r.status === 'waiting' && r.id !== rid);
+    if (selCard) {
+      const id = selCard, c = m.cards[id];
+      pn.isRole = true; pn.title = full(id);
+      const firstCo = c.company[0];
+      if (c.st === 'vision') {
+        const v = c.visions[0];
+        pn.badge = 'dashed'; pn.badgeLabel = (c.visions.length > 1 ? 'Career visions ' + c.visions.map(x => x.n).join(', ') : this.vname(plan, v.n)) + ' · ' + VSTAT[v.status][1].toLowerCase();
+        pn.context = 'Your own direction · private until you send it';
+      } else {
+        const bm = { completed: ['secondary', 'Completed'], new: ['outline', 'New on your path'], here: ['blue', 'You are here'], target: ['success', 'Active target'], planned: ['outline', 'Planned'] }[c.st];
+        pn.badge = bm[0]; pn.badgeLabel = bm[1];
+        if (c.st === 'here') pn.context = 'Your official role · set by your admin';
+        else if (c.st === 'completed') pn.context = m.fp.name + ' · the path you follow';
+        else if (c.st === 'new') pn.context = 'Added to ' + m.fp.name + ' on ' + (m.fp.changes[0] ? m.fp.changes[0].date : '');
+        else if (firstCo) pn.context = firstCo.name + (firstCo.kind === 'follow' ? ' · the path you follow' : '');
+        else if (c.visions[0]) pn.context = this.vname(plan, c.visions[0].n) + ' · approved';
+      }
+      const rows = this.compare(id), cnt = this.counts(id), sc2 = cnt.total - cnt.notset;
+      pn.nothing = !rows.length || cnt.notset === cnt.total; pn.hasCompare = !pn.nothing;
+      pn.bar = { ready: sc2 ? cnt.ready / sc2 * 100 : 0, growth: sc2 ? cnt.growth / sc2 * 100 : 0, need: sc2 ? cnt.need / sc2 * 100 : 0 };
+      pn.barNote = this.countText(cnt) + ' · of ' + sc2;
+      pn.groups = GROUPS.filter(g => cnt[g.k]).map(g => {
+        const items = rows.filter(r => r.k === g.k).map(r => {
+          const val = r.k === 'growth' ? r.ev + ' \u2192 ' + r.need : r.k === 'need' ? String(r.need) : r.k === 'ready' ? String(r.ev) : 'Not set';
+          const title = h('span', { style: { display: 'flex', alignItems: 'center', gap: 8, width: '100%', textAlign: 'left' } },
+            h('span', { style: { width: 8, height: 8, borderRadius: 9999, background: g.dot, flexShrink: 0 } }),
+            h('span', { style: { flex: 1 } }, COMP[r.c]),
+            h('span', { style: { fontFamily: 'var(--font-mono, "Roboto Mono", monospace)', fontSize: 12, color: 'var(--color-text-secondary)', marginRight: 8 } }, val));
+          let body;
+          const tx = { fontSize: 13, lineHeight: 1.5, color: 'var(--color-text-secondary)', margin: 0 };
+          if (r.k === 'growth') body = [h('div', { key: 1, style: { fontSize: 13, fontWeight: 500 } }, 'What ' + r.need + ' · ' + PTN[r.need] + ' looks like'), h('p', { key: 2, style: tx }, BEH[r.need]), h('p', { key: 3, style: tx }, 'You\u2019re at ' + r.ev + ' · ' + PTN[r.ev] + '.'), NS && NS.Button ? h(NS.Button, { key: 4, variant: 'outline', size: 'sm', onClick: () => this.toast({ type: 'info', title: 'My Actions is coming next' }) }, I('plus'), 'Plan an action') : null];
+          else if (r.k === 'need') body = [h('p', { key: 1, style: tx }, 'No approved score yet · needs ' + r.need + ' · ' + PTN[r.need] + '.')];
+          else if (r.k === 'ready') body = [h('div', { key: 1, style: { fontSize: 13, fontWeight: 500 } }, 'You\u2019re at ' + r.ev + ' · ' + PTN[r.ev]), h('p', { key: 2, style: tx }, 'Based on: ' + SRC)];
+          else body = [h('p', { key: 1, style: tx }, 'Setup hasn\u2019t set an expectation for this level yet, so it isn\u2019t compared.')];
+          return { value: r.c, title, content: h('div', { style: { display: 'flex', flexDirection: 'column', gap: 6, alignItems: 'flex-start' } }, body) };
+        });
+        const open = !!s.groupsOpen[g.k];
+        return { domId: 'grp-' + g.k, title: g.title, dot: g.dot, count: cnt[g.k], open, chev: open ? 'chevron-up' : 'chevron-down', items, toggle: () => this.setState(ps => ({ groupsOpen: { ...ps.groupsOpen, [g.k]: !ps.groupsOpen[g.k] } })) };
+      });
+      const explore = btn('Explore a position from here', 'compass', () => this.openExplore(id), 'outline');
+      if (c.st === 'new') pn.notes.push({ text: 'You haven\u2019t held this level, so it isn\u2019t completed yet. It becomes completed when an approved assessment meets it, or when your manager marks it.' });
+      else if (c.st === 'here') pn.buttons.push(explore);
+      else if (c.st === 'target') pn.buttons.push(explore, btn('Remove as target', 'flag-off', () => this.askRemoveTarget(id), 'danger'));
+      else if (c.st === 'planned') {
+        pn.buttons.push(btn('Set as target', 'flag', () => this.askSetTarget(id)), explore);
+        const br = c.company.find(r => r.kind === 'company');
+        if (br && !m.fp.nodes.includes(id)) {
+          const rm = this.removal(plan, br.id);
+          if (rm.blocked) pn.notes.push({ text: rm.blocked });
+          else pn.buttons.push(btn('Remove from my map', 'trash-2', () => this.askRemoveRoute(br.id, 'Remove from my map'), 'danger'));
+        }
+      } else if (c.st === 'vision') {
+        if (c.approvedVision) pn.buttons.push(btn('Set as target', 'flag', () => this.askSetTarget(id)));
+        else pn.notes.push({ text: 'Your manager approves career visions before they can become your target.' });
+        c.visions.forEach(v => pn.buttons.push(btn('Show ' + this.vname(plan, v.n), 'route', () => this.selectRoute(v.id), 'outline')));
+        pn.buttons.push(explore);
+      }
+    } else if (sel && sel.type === 'route') {
+      const r = activeRoute, meta = this.routeMeta(r, m);
+      pn.isRoute = true; pn.title = r.name; pn.badge = meta.badge; pn.badgeLabel = meta.badgeLabel; pn.context = meta.context;
+      pn.rows = this.railRows(r, m, null, true);
+      if (r.kind === 'follow') {
+        if (m.target) pn.buttons.push(btn('Open Active target', 'flag', () => this.selectCard(m.target), 'outline'));
+        if (m.fp.changes.length) pn.buttons.push(btn('Path history', 'history', () => this.setState({ dlg: 'history', seenHistory: true }), 'outline'));
+      } else if (r.kind === 'company') {
+        pn.notes.push({ text: 'It becomes your main route, shown in the top row.' });
+        pn.buttons.push(btn('Follow this path', 'route', () => this.askSwitch(r.pathId)));
+      } else {
+        const vn = r.name, ow = otherWaiting(r.id), rm = this.removal(plan, r.id);
+        const draftNote = 'It leaves your company path, so your manager approves it before any role in it can become your target.';
+        if (r.status === 'draft') {
+          if (ow) pn.notes.push({ text: this.vname(plan, ow.n) + ' is waiting for approval. You can send one at a time. Withdraw it to send this one.' });
+          else { pn.notes.push({ text: draftNote }); pn.buttons.push(btn('Request manager approval', 'send', () => this.openRequest(r.id))); }
+        } else if (r.status === 'waiting') {
+          pn.notes.push({ text: 'Your manager is reviewing it. Your current role stays the same.' });
+          pn.buttons.push(btn('Withdraw request', 'undo-2', () => this.withdraw(r.id), 'outline'));
+        } else if (r.status === 'approved') {
+          pn.notes.push({ text: 'Your manager agreed on this direction. Select a role in it to make it your target.' });
+        } else if (r.status === 'declined') {
+          pn.notes.push({ text: 'Your manager: \u201c' + (r.mgrNote || '') + '\u201d' }, { text: draftNote });
+          if (!ow) pn.buttons.push(btn('Edit and resend', 'send', () => this.openRequest(r.id)));
+        }
+        if (rm.blocked) { if (r.status !== 'waiting') pn.notes.push({ text: rm.blocked }); else pn.notes.push({ text: vn + ' is waiting for approval. Withdraw the request before removing it.' }); }
+        else pn.buttons.push(btn('Remove ' + vn, 'trash-2', () => this.askRemoveRoute(r.id, 'Remove ' + vn), 'danger'));
+      }
+    }
+    pn.hasFooter = pn.notes.length + pn.buttons.length > 0;
+
+    // explore dialog
+    const exFromOptions = Object.values(m.cards).filter(c => !['completed', 'new'].includes(c.st)).map(c => ({ value: c.id, label: full(c.id) }));
+    const depts = [...new Set(Object.values(POS).map(p => p.dept))];
+    const exPosOptions = [];
+    depts.forEach(d => { exPosOptions.push({ group: d }); Object.keys(POS).filter(k => POS[k].dept === d).forEach(k => exPosOptions.push({ value: k, label: POS[k].name })); });
+    const exJoinOptions = s.ex.pos ? POS[s.ex.pos].levels.map(l => ({ value: String(l), label: 'L' + l + ' · ' + LVN[l] })) : [];
+    const move = s.dlg === 'explore' ? this.classifyMove(plan, m, s.ex.from, s.ex.pos, s.ex.join) : null;
+    const mv = { ok: false, err: false, disabled: true, rows: [], heading: '', sub: '', errText: '' };
+    if (move && move.err) { mv.err = true; mv.errText = move.err; }
+    else if (move) {
+      mv.ok = true; mv.disabled = false; mv.heading = move.heading; mv.sub = move.sub;
+      mv.rows = move.kind === 'vision' && move.mode === 'joins'
+        ? this.previewRows([s.ex.from, ...move.steps], m, move.color, move.dash, 'Continues from ')
+        : this.previewRows([s.ex.from, ...move.steps], m, move.color, move.dash);
+    }
+
+    // confirm / request / history
+    const cf = s.cf || { title: '', desc: '', notes: [], confirm: 'Confirm', variant: 'default' };
+    const cfv = { ...cf, notes: (cf.notes || []).map(t => ({ text: t })), hasFromTo: !!cf.hasFromTo, hasList: !!cf.hasList, list: cf.list || [] };
+    const rqR = s.rqId ? plan.routes.find(r => r.id === s.rqId) : null;
+    let rq = { title: '', line: '' };
+    if (rqR) {
+      const newRoles = rqR.road.slice(1).filter(id => m.cards[id] && !m.cards[id].company.length).length;
+      rq = { title: 'Send ' + this.vname(plan, rqR.n) + ' for approval', line: full(rqR.road[0]) + ' \u2192 ' + full(rqR.road[rqR.road.length - 1]) + ' · ' + newRoles + ' new role' + (newRoles === 1 ? '' : 's') };
+    }
+    const hsChanges = m.fp.changes.map((ch, ci) => {
+      const after = ci === 0 ? m.fp.nodes : m.fp.changes[ci - 1].before, before = ch.before, hi = after.indexOf(HERE);
+      const items = [];
+      after.filter(n => !before.includes(n)).forEach(n => {
+        const behind = after.indexOf(n) < hi, held = HELD.includes(n);
+        items.push({ icon: I('plus', { color: 'var(--color-icon-success)' }), title: full(n), note: behind ? (held ? 'Added before your level. Completed.' : 'Added before your level. Not completed yet.') : 'Added ahead. Planned.', badge: behind && !held && NS ? h(NS.Badge, { variant: 'outline' }, 'New on your path') : null });
+      });
+      before.filter(n => !after.includes(n)).forEach(n => {
+        const was = n === ch.targetRemoved;
+        items.push({ icon: I('minus', { color: 'var(--color-icon-danger)' }), title: full(n), note: was ? 'Removed. Pick a new target.' : 'Removed.', badge: was && NS ? h(NS.Badge, { variant: 'warning' }, 'Was your target') : null });
+      });
+      return { head: ch.date + ' · by your company', items };
+    });
+
+    const msgs = s.msgs.map(x => ({
+      role: x.role, text: x.text, hasProposal: !!x.proposal,
+      rows: x.proposal ? this.previewRows(x.proposal, m, COL.vision[0], 'dashed') : [],
+      canAdd: !!x.proposal && !x.added, added: !!x.added, add: () => this.addProposal(x),
+    }));
+
+    const mk = (n) => I(n);
+    return {
+      ic: { career: mk('route'), actions: mk('list-checks'), records: mk('file-text'), bell: mk('bell'), settings: mk('settings'), info: mk('info'), chart: mk('chart-bar'), alert: mk('circle-alert') },
+      sidebarCollapsed: !!this.props.sidebarCollapsed || s.narrow || s.aiOpen,
+      showChangeAlert: plan.follow === 'eg' && !s.seenHistory && m.fp.changes.length > 0,
+      changeText: m.fp.name + ' changed ' + (m.fp.changes[0] ? m.fp.changes[0].date.replace(', 2026', '') : ''),
+      openHistory: () => this.setState({ dlg: 'history', seenHistory: true }),
+      isMap: s.view === 'map', isList: s.view === 'list', mapVariant: s.view === 'map' ? 'secondary' : 'ghost', listVariant: s.view === 'list' ? 'secondary' : 'ghost',
+      showMap: () => this.setState({ view: 'map' }), showList: () => this.setState({ view: 'list' }),
+      aiOpen: s.aiOpen, aiVariant: s.aiOpen ? 'secondary' : 'outline', toggleAi: () => this.setState({ aiOpen: !s.aiOpen }),
+      hasTarget: !!m.target, noTarget: !m.target, targetName: m.target ? full(m.target) : '',
+      bar: { ready: pc('ready'), growth: pc('growth'), need: pc('need') }, countBtns, ofTotal: 'of ' + scored, tipText,
+      noTargetHead: pickNew ? 'Pick a new target.' : 'No target yet.',
+      noTargetText: pickNew ? full(plan.removedTarget) + ' is no longer on your path.' : 'Pick a role on your map and choose Set as target to track your progress.',
+      bodyDir: s.compact ? 'column' : 'row', bodyOverflow: s.compact ? 'auto' : 'hidden', viewMinH: s.compact ? '440px' : '0',
+      panelW: s.compact ? '100%' : 'min(400px, 42%)', panelBorderL: s.compact ? '0' : '1px solid var(--color-border-default)', panelBorderT: s.compact ? '1px solid var(--color-border-default)' : '0',
+      showPicker: ROLE_PATHS.length > 1, follow: plan.follow, followOptions: ROLE_PATHS.map(k => ({ value: k, label: PATHS[k].name })), askSwitch: this.askSwitch,
+      openExploreToolbar: () => this.openExplore(selCard || HERE),
+      zoomPct: Math.round(s.zoom * 100) + '%', zoomIn: () => this.zoomAt(s.zoom * 1.15), zoomOut: () => this.zoomAt(s.zoom / 1.15), showWhole: this.showWhole,
+      vpRef: this.vpRef, listRef: this.listRef, panelRef: this.panelRef, chatRef: this.chatRef, onDown: this.onDown,
+      cursor: s.dragging ? 'grabbing' : 'grab', transform: `translate(${s.pan.x}px, ${s.pan.y}px) scale(${s.zoom})`,
+      nodes, edgesEl, legend, listRoutes,
+      panelOpen: !!sel, pn, clearSel: () => this.setState({ sel: null }),
+      msgs, askVision: () => this.aiVision(), askTargetNeeds: () => this.aiTarget(), askCompare: () => this.aiCompare(), onChatSend: this.onChatSend,
+      exOpen: s.dlg === 'explore', ex: s.ex, exFromOptions, exPosOptions, exJoinOptions, exNoPos: !s.ex.pos, mv,
+      setExFrom: v => this.setState(ps => ({ ex: { ...ps.ex, from: v, join: ps.ex.pos ? this.defaultJoin(v, ps.ex.pos) : '' } })),
+      setExPos: v => this.setState(ps => ({ ex: { ...ps.ex, pos: v, join: this.defaultJoin(ps.ex.from, v) } })),
+      setExJoin: v => this.setState(ps => ({ ex: { ...ps.ex, join: v } })),
+      confirmExplore: this.confirmExplore,
+      closeDlg: this.closeDlg, closeDlgIfFalse: v => { if (!v) this.setState({ dlg: null }); },
+      cfOpen: s.dlg === 'confirm', cf: cfv, confirmCf: this.confirmCf,
+      rqOpen: s.dlg === 'request', rq, rqNote: s.rqNote, onRqNote: e => this.setState({ rqNote: e.target.value }), sendRequest: this.sendRequest,
+      hsOpen: s.dlg === 'history', hs: { path: m.fp.name, changes: hsChanges },
+      toasts: s.toasts,
+    };
+  }
+}
+</script>
+</body>
+</html>

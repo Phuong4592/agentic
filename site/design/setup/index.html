@@ -1,12 +1,1260 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Setup</title>
+<meta charset="utf-8">
+<title>EnPath Setup</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="../support.js"></script>
 </head>
 <body>
-  <!-- Placeholder: replaced by Setup.dc.html from Claude Design -->
-  <p>Setup page coming soon.</p>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="../_ds/agentic-design-system-b6d96ea0-9e2b-4744-bca0-ed972deae955/styles.css">
+  <script src="../_ds/agentic-design-system-b6d96ea0-9e2b-4744-bca0-ed972deae955/_ds_bundle.js"></script>
+  <style>html,body{margin:0;height:100%;overflow:hidden}a{color:var(--color-text-link-hover)}a:hover{color:var(--color-text-link-active)}</style>
+</helmet>
+<div data-screen-label="Setup" style="display:flex;height:100vh;overflow:hidden;background:var(--color-background-default);font-family:var(--font-sans, Inter, sans-serif);color:var(--color-background-default-foreground)">
+  <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Sidebar" collapsed="{{ sidebarCollapsed }}" hint-size="240px,100%">
+    <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarHeader" logo="E" title="EnPath" caption="Admin workspace" hint-size="100%,56px"></x-import>
+    <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarContent" hint-size="100%,200px">
+      <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarGroup" label="Operations" hint-size="100%,160px">
+        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarMenuItem" icon="{{ ic.dash }}" label="Dashboard" hint-size="100%,32px"></x-import>
+        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarMenuItem" icon="{{ ic.people }}" label="People" hint-size="100%,32px"></x-import>
+        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarMenuItem" icon="{{ ic.setup }}" label="Setup" active="{{ true }}" hint-size="100%,32px"></x-import>
+        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarMenuItem" icon="{{ ic.audit }}" label="Audit log" hint-size="100%,32px"></x-import>
+      </x-import>
+    </x-import>
+    <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarFooter" hint-size="100%,80px">
+      <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarMenuItem" icon="{{ ic.bell }}" label="Notifications" hint-size="100%,32px"></x-import>
+      <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.SidebarMenuItem" icon="{{ ic.settings }}" label="Settings" hint-size="100%,32px"></x-import>
+    </x-import>
+  </x-import>
+
+  <div style="display:flex;flex:1;flex-direction:column;min-width:0;overflow:hidden">
+    <header style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 16px;padding:12px 16px 0;flex-shrink:0">
+      <div style="display:flex;flex-direction:column;gap:4px;min-width:0">
+        <span style="font-size:12px;color:var(--color-text-secondary)">Operations / Setup</span>
+        <h1 style="margin:0;font-size:18px;font-weight:600;line-height:1.3">Setup</h1>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <sc-if value="{{ ro }}" hint-placeholder-val="{{ false }}">
+          <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Badge" variant="secondary" hint-size="80px,20px">View only</x-import>
+        </sc-if>
+        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Avatar" size="sm" fallback="HP" name="Ha Pham" hint-size="32px,32px"></x-import>
+      </div>
+    </header>
+    <div style="padding:8px 16px 0;border-bottom:1px solid var(--color-border-default);flex-shrink:0;overflow-x:auto">
+      <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Tabs" variant="line" tabs="{{ tabs }}" value="{{ tab }}" onValueChange="{{ onTab }}" hint-size="100%,40px"></x-import>
+    </div>
+
+    <main style="flex:1;min-height:0;overflow:auto;padding:16px;background:var(--color-background-subtle)">
+      <div style="display:flex;flex-direction:column;gap:16px;max-width:1400px;margin:0 auto">
+        <sc-if value="{{ ro }}" hint-placeholder-val="{{ false }}">
+          <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Alert" icon="{{ ic.lock }}" title="You have view access" hint-size="100%,64px">Editing Setup needs the framework.write permission. Ask an Admin to grant it.</x-import>
+        </sc-if>
+
+        <!-- OVERVIEW -->
+        <sc-if value="{{ isOverview }}" hint-placeholder-val="{{ true }}">
+          <div style="display:grid;grid-template-columns:{{ ovCols }};gap:16px;align-items:start">
+            <div style="display:flex;flex-direction:column;gap:16px;min-width:0">
+              <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Card" hint-size="100%,120px">
+                <div style="display:flex;flex-direction:column;gap:12px">
+                  <div style="display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px">
+                    <h2 style="margin:0;font-size:16px;font-weight:600">Setup progress</h2>
+                    <span style="font-size:14px;color:var(--color-text-secondary)">{{ progressText }}</span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:12px">
+                    <div style="flex:1;min-width:0"><x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Progress" value="{{ progressPct }}" size="md" aria-label="Setup progress" hint-size="100%,8px"></x-import></div>
+                    <span style="font-size:24px;font-weight:600;font-variant-numeric:tabular-nums">{{ progressLabel }}</span>
+                  </div>
+                  <sc-if value="{{ showAttention }}" hint-placeholder-val="{{ true }}">
+                    <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Alert" variant="warning" icon="{{ ic.warn }}" title="Setup attention" hint-size="100%,80px">
+                      <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-start">
+                        <span>{{ attentionText }}</span>
+                        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" variant="outline" size="sm" onClick="{{ openAttention }}" hint-size="160px,32px">{{ attentionCta }}</x-import>
+                      </div>
+                    </x-import>
+                  </sc-if>
+                </div>
+              </x-import>
+              <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Card" hint-size="100%,400px">
+                <div style="display:flex;flex-direction:column;gap:4px">
+                  <h2 style="margin:0 0 8px;font-size:16px;font-weight:600">Setup sequence</h2>
+                  <sc-for list="{{ steps }}" as="st" hint-placeholder-count="5">
+                    <div style="display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--color-border-default)">
+                      <span style="display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:9999px;font-size:12px;font-weight:600;background:{{ st.dotBg }};color:{{ st.dotFg }}">{{ st.mark }}</span>
+                      <div style="display:flex;flex-direction:column;gap:4px;min-width:0">
+                        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px">
+                          <span style="font-size:14px;font-weight:500">{{ st.name }}</span>
+                          <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Badge" variant="{{ st.variant }}" hint-size="80px,20px">{{ st.status }}</x-import>
+                        </div>
+                        <span style="font-size:14px;color:var(--color-text-secondary);text-wrap:pretty">{{ st.count }}</span>
+                      </div>
+                      <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" variant="outline" size="sm" onClick="{{ st.onOpen }}" hint-size="70px,32px">Open</x-import>
+                    </div>
+                  </sc-for>
+                </div>
+              </x-import>
+            </div>
+            <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Card" hint-size="100%,300px">
+              <div style="display:flex;flex-direction:column;gap:12px">
+                <h2 style="margin:0;font-size:16px;font-weight:600">Recent admin activity</h2>
+                <sc-if value="{{ hasActivity }}" hint-placeholder-val="{{ true }}">
+                  <div style="display:flex;flex-direction:column">
+                    <sc-for list="{{ activity }}" as="a" hint-placeholder-count="4">
+                      <div style="display:grid;grid-template-columns:16px minmax(0,1fr);gap:10px;padding:10px 0;border-top:1px solid var(--color-border-default)">
+                        <span style="display:flex;padding-top:2px;color:var(--color-icon-muted)">{{ a.icon }}</span>
+                        <div style="display:flex;flex-direction:column;gap:2px;min-width:0">
+                          <span style="font-size:14px;text-wrap:pretty">{{ a.text }}</span>
+                          <span style="font-size:12px;color:var(--color-text-secondary)">{{ a.meta }}</span>
+                        </div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ noActivity }}" hint-placeholder-val="{{ false }}">
+                  <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Empty" icon="{{ ic.audit }}" title="No activity yet" description="Confirmed Setup changes show here." hint-size="100%,160px"></x-import>
+                </sc-if>
+              </div>
+            </x-import>
+          </div>
+        </sc-if>
+
+        <!-- POSITIONS & LEVELS -->
+        <sc-if value="{{ isPositions }}" hint-placeholder-val="{{ false }}">
+          <sc-if value="{{ noPositions }}" hint-placeholder-val="{{ false }}">
+            <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Empty" variant="outline" icon="{{ ic.briefcase }}" title="No positions yet" description="Create your first Position to start the career structure." primaryAction="{{ createPosBtn }}" style="background:var(--color-background-default)" hint-size="100%,220px"></x-import>
+          </sc-if>
+          <sc-if value="{{ hasPositions }}" hint-placeholder-val="{{ true }}">
+            <div style="display:grid;grid-template-columns:{{ splitCols }};gap:16px;align-items:start">
+              <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Card" hint-size="100%,400px">
+                <div style="display:flex;flex-direction:column;gap:12px">
+                  <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+                    <h2 style="margin:0;font-size:16px;font-weight:600">Positions</h2>
+                    <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" size="sm" disabled="{{ ro }}" onClick="{{ openCreatePos }}" hint-size="130px,32px">
+                      <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Icon" name="plus" hint-size="16px,16px"></x-import>
+                      <span>Create position</span>
+                    </x-import>
+                  </div>
+                  <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Input" leading="{{ ic.search }}" placeholder="Search positions" value="{{ posQ }}" onChange="{{ onPosQ }}" aria-label="Search positions" hint-size="100%,36px"></x-import>
+                  <div style="display:flex;flex-direction:column;gap:2px">
+                    <sc-for list="{{ posList }}" as="p" hint-placeholder-count="4">
+                      <button type="button" onClick="{{ p.onClick }}" style="display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;padding:10px 12px;border:0;border-radius:6px;text-align:left;cursor:pointer;font:inherit;color:inherit;background:{{ p.bg }};box-shadow:{{ p.edge }}">
+                        <span style="display:flex;flex-direction:column;gap:2px;min-width:0">
+                          <span style="font-size:14px;font-weight:500">{{ p.name }}</span>
+                          <span style="font-size:12px;color:var(--color-text-secondary)">{{ p.meta }}</span>
+                        </span>
+                        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Badge" variant="{{ p.variant }}" hint-size="60px,20px">{{ p.status }}</x-import>
+                      </button>
+                    </sc-for>
+                    <sc-if value="{{ posNoResults }}" hint-placeholder-val="{{ false }}">
+                      <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Empty" icon="{{ ic.search }}" title="No matching positions" description="Try a different name or code." hint-size="100%,140px"></x-import>
+                    </sc-if>
+                  </div>
+                </div>
+              </x-import>
+
+              <sc-if value="{{ hasSp }}" hint-placeholder-val="{{ true }}">
+                <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Card" hint-size="100%,400px">
+                  <div style="display:flex;flex-direction:column;gap:16px;min-width:0">
+                    <div style="display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:12px">
+                      <div style="display:flex;flex-direction:column;gap:6px;min-width:0">
+                        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px">
+                          <h2 style="margin:0;font-size:16px;font-weight:600">{{ sp.name }}</h2>
+                          <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Badge" variant="outline" hint-size="40px,20px">{{ sp.code }}</x-import>
+                          <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Badge" variant="{{ sp.variant }}" hint-size="60px,20px">{{ sp.status }}</x-import>
+                        </div>
+                        <span style="font-size:14px;color:var(--color-text-secondary);text-wrap:pretty">{{ sp.desc }}</span>
+                        <span style="font-size:14px;color:var(--color-text-secondary)">Competency matrix: <span style="color:var(--color-background-default-foreground)">{{ sp.matrix }}</span></span>
+                      </div>
+                      <div style="display:flex;gap:8px">
+                        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" variant="outline" size="sm" disabled="{{ ro }}" onClick="{{ openEditPos }}" hint-size="110px,32px">
+                          <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Icon" name="pencil" hint-size="16px,16px"></x-import>
+                          <span>Edit position</span>
+                        </x-import>
+                        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" size="sm" disabled="{{ ro }}" onClick="{{ openAddLevel }}" hint-size="90px,32px">
+                          <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Icon" name="plus" hint-size="16px,16px"></x-import>
+                          <span>Add level</span>
+                        </x-import>
+                      </div>
+                    </div>
+                    <sc-if value="{{ spNoLevels }}" hint-placeholder-val="{{ false }}">
+                      <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Empty" variant="background" icon="{{ ic.layers }}" title="No levels yet" description="Add a Level so employees can be mapped and expectations set." primaryAction="{{ addLevelBtn }}" hint-size="100%,200px"></x-import>
+                    </sc-if>
+                    <sc-if value="{{ spHasLevels }}" hint-placeholder-val="{{ true }}">
+                      <div style="overflow-x:auto">
+                        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Table" framed="{{ true }}" hint-size="100%,200px">
+                          <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.TableHeader" hint-size="100%,48px">
+                            <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.TableRow" hint-size="100%,48px">
+                              <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.TableHead" hint-size="60px,48px">Sequence</x-import>
+                              <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.TableHead" hint-size="200px,48px">Level</x-import>
+                              <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.TableHead" hint-size="120px,48px">Expectations</x-import>
+                              <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.TableHead" hint-size="80px,48px">Status</x-import>
+                              <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.TableHead" align="right" hint-size="60px,48px"><span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Actions</span></x-import>
+                            </x-import>
+                          </x-import>
+                          <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.TableBody" hint-size="100%,150px">
+                            <sc-for list="{{ spLevels }}" as="l" hint-placeholder-count="3">
+                              <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.TableRow" hint-size="100%,56px">
+                                <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.TableCell" hint-size="60px,56px"><span style="font-family:var(--font-mono, 'Roboto Mono', monospace);font-size:12px">{{ l.seq }}</span></x-import>
+                                <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.TableCell" hint-size="200px,56px">
+                                  <div style="display:flex;flex-direction:column;gap:2px"><span style="font-weight:500">{{ l.name }}</span><span style="font-size:12px;color:var(--color-text-secondary)">{{ l.desc }}</span></div>
+                                </x-import>
+                                <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.TableCell" hint-size="120px,56px"><x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Badge" variant="{{ l.covVariant }}" hint-size="50px,20px">{{ l.cov }}</x-import></x-import>
+                                <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.TableCell" hint-size="80px,56px"><x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Badge" variant="{{ l.variant }}" hint-size="60px,20px">{{ l.status }}</x-import></x-import>
+                                <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.TableCell" align="right" hint-size="60px,56px">
+                                  <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" variant="ghost" size="sm" disabled="{{ ro }}" onClick="{{ l.onEdit }}" hint-size="50px,32px">Edit</x-import>
+                                </x-import>
+                              </x-import>
+                            </sc-for>
+                          </x-import>
+                        </x-import>
+                      </div>
+                    </sc-if>
+                  </div>
+                </x-import>
+              </sc-if>
+            </div>
+          </sc-if>
+        </sc-if>
+
+        <!-- EMPLOYEE MAPPING -->
+        <sc-if value="{{ isMapping }}" hint-placeholder-val="{{ false }}">
+          <div style="display:grid;grid-template-columns:{{ mapCols }};gap:16px;align-items:start">
+            <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Card" hint-size="100%,500px">
+              <div style="display:flex;flex-direction:column;gap:12px;min-width:0">
+                <div style="display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px">
+                  <h2 style="margin:0;font-size:16px;font-weight:600">Employees</h2>
+                  <span style="font-size:14px;color:var(--color-text-secondary)">{{ empSummary }}</span>
+                </div>
+                <div style="display:flex;flex-wrap:wrap;gap:8px">
+                  <div style="flex:1 1 220px;min-width:0"><x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Input" leading="{{ ic.search }}" placeholder="Search by name or email" value="{{ empQ }}" onChange="{{ onEmpQ }}" aria-label="Search employees" hint-size="100%,36px"></x-import></div>
+                  <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Select" options="{{ empFilterOptions }}" value="{{ empFilter }}" onValueChange="{{ onEmpFilter }}" style="width:170px" hint-size="170px,36px"></x-import>
+                </div>
+                <sc-if value="{{ hasEmpRows }}" hint-placeholder-val="{{ true }}">
+                  <div style="overflow-x:auto">
+                    <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Table" framed="{{ true }}" hint-size="100%,400px">
+                      <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.TableHeader" hint-size="100%,48px">
+                        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.TableRow" hint-size="100%,48px">
+                          <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.TableHead" hint-size="200px,48px">Employee</x-import>
+                          <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.TableHead" hint-size="180px,48px">Position-Level</x-import>
+                          <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.TableHead" hint-size="100px,48px">Status</x-import>
+                        </x-import>
+                      </x-import>
+                      <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.TableBody" hint-size="100%,300px">
+                        <sc-for list="{{ empRows }}" as="e" hint-placeholder-count="6">
+                          <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.TableRow" selected="{{ e.selected }}" onClick="{{ e.onClick }}" style="cursor:pointer" hint-size="100%,56px">
+                            <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.TableCell" hint-size="200px,56px">
+                              <div style="display:flex;flex-direction:column;gap:2px"><span style="font-weight:500">{{ e.name }}</span><span style="font-size:12px;color:var(--color-text-secondary)">{{ e.email }}</span></div>
+                            </x-import>
+                            <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.TableCell" hint-size="180px,56px"><span style="color:{{ e.assignColor }}">{{ e.assign }}</span></x-import>
+                            <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.TableCell" hint-size="100px,56px"><x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Badge" variant="{{ e.variant }}" hint-size="80px,20px">{{ e.status }}</x-import></x-import>
+                          </x-import>
+                        </sc-for>
+                      </x-import>
+                    </x-import>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ empNoResults }}" hint-placeholder-val="{{ false }}">
+                  <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Empty" icon="{{ ic.search }}" title="{{ empEmptyTitle }}" description="{{ empEmptyDesc }}" hint-size="100%,160px"></x-import>
+                </sc-if>
+              </div>
+            </x-import>
+
+            <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Card" hint-size="100%,420px">
+              <sc-if value="{{ noSe }}" hint-placeholder-val="{{ false }}">
+                <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Empty" icon="{{ ic.user }}" title="No employee selected" description="Select an employee to see their context and career assignment." hint-size="100%,200px"></x-import>
+              </sc-if>
+              <sc-if value="{{ hasSe }}" hint-placeholder-val="{{ true }}">
+                <div style="display:flex;flex-direction:column;gap:16px">
+                  <div style="display:flex;align-items:center;gap:12px">
+                    <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Avatar" fallback="{{ se.initials }}" name="{{ se.name }}" hint-size="40px,40px"></x-import>
+                    <div style="display:flex;flex-direction:column;gap:2px;min-width:0">
+                      <h2 style="margin:0;font-size:16px;font-weight:600">{{ se.name }}</h2>
+                      <span style="font-size:14px;color:var(--color-text-secondary)">{{ se.email }}</span>
+                    </div>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:8px">
+                    <div style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--color-text-secondary)">
+                      <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Icon" name="lock" style="width:12px;height:12px" hint-size="12px,12px"></x-import>
+                      <span>Employee context, from HR, read-only</span>
+                    </div>
+                    <div style="display:grid;grid-template-columns:max-content minmax(0,1fr);gap:8px 16px;padding:12px;border-radius:8px;background:var(--color-background-muted);font-size:14px">
+                      <span style="color:var(--color-text-secondary)">Employment title</span><span>{{ se.title }}</span>
+                      <span style="color:var(--color-text-secondary)">Organization unit</span><span>{{ se.unit }}</span>
+                      <span style="color:var(--color-text-secondary)">Direct manager</span><span>{{ se.manager }}</span>
+                    </div>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:12px">
+                    <span style="font-size:12px;font-weight:500;color:var(--color-text-secondary)">Career assignment in EnPath</span>
+                    <div style="display:flex;flex-direction:column;gap:8px">
+                      <label for="map-pos" style="font-size:14px;font-weight:500;line-height:1">Position</label>
+                      <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Select" id="map-pos" options="{{ mapPosOptions }}" value="{{ mapPos }}" onValueChange="{{ onMapPos }}" placeholder="Select a position" disabled="{{ ro }}" hint-size="100%,36px"></x-import>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:8px">
+                      <label for="map-lvl" style="font-size:14px;font-weight:500;line-height:1">Level</label>
+                      <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Select" id="map-lvl" options="{{ mapLvlOptions }}" value="{{ mapLvl }}" onValueChange="{{ onMapLvl }}" placeholder="{{ mapLvlPh }}" disabled="{{ mapLvlDisabled }}" hint-size="100%,36px"></x-import>
+                      <span style="font-size:12px;color:var(--color-text-secondary)">{{ mapHint }}</span>
+                    </div>
+                  </div>
+                  <div style="display:flex;justify-content:flex-end;gap:8px">
+                    <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" variant="outline" disabled="{{ mapResetDisabled }}" onClick="{{ resetMap }}" hint-size="80px,36px">Reset</x-import>
+                    <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" disabled="{{ mapPvDisabled }}" onClick="{{ previewMap }}" hint-size="120px,36px">Preview change</x-import>
+                  </div>
+                </div>
+              </sc-if>
+            </x-import>
+          </div>
+        </sc-if>
+
+        <!-- COMPETENCY MATRIX -->
+        <sc-if value="{{ isMatrix }}" hint-placeholder-val="{{ false }}">
+          <sc-if value="{{ noMatrices }}" hint-placeholder-val="{{ false }}">
+            <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Empty" variant="outline" icon="{{ ic.grid }}" title="No competency matrix yet" description="Create a Matrix and publish it so Positions can use it." primaryAction="{{ createMxBtn }}" style="background:var(--color-background-default)" hint-size="100%,220px"></x-import>
+          </sc-if>
+          <sc-if value="{{ hasMatrices }}" hint-placeholder-val="{{ true }}">
+            <div style="display:grid;grid-template-columns:{{ splitCols }};gap:16px;align-items:start">
+              <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Card" hint-size="100%,300px">
+                <div style="display:flex;flex-direction:column;gap:12px">
+                  <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+                    <h2 style="margin:0;font-size:16px;font-weight:600">Matrices</h2>
+                    <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" size="sm" disabled="{{ ro }}" onClick="{{ openCreateMx }}" hint-size="120px,32px">
+                      <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Icon" name="plus" hint-size="16px,16px"></x-import>
+                      <span>Create matrix</span>
+                    </x-import>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:2px">
+                    <sc-for list="{{ mxList }}" as="m" hint-placeholder-count="2">
+                      <button type="button" onClick="{{ m.onClick }}" style="display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;padding:10px 12px;border:0;border-radius:6px;text-align:left;cursor:pointer;font:inherit;color:inherit;background:{{ m.bg }};box-shadow:{{ m.edge }}">
+                        <span style="display:flex;flex-direction:column;gap:2px;min-width:0">
+                          <span style="font-size:14px;font-weight:500">{{ m.name }}</span>
+                          <span style="font-size:12px;color:var(--color-text-secondary)">{{ m.meta }}</span>
+                        </span>
+                        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Badge" variant="{{ m.variant }}" hint-size="60px,20px">{{ m.status }}</x-import>
+                      </button>
+                    </sc-for>
+                  </div>
+                </div>
+              </x-import>
+              <sc-if value="{{ hasSm }}" hint-placeholder-val="{{ true }}">
+                <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Card" hint-size="100%,500px">
+                  <div style="display:flex;flex-direction:column;gap:16px;min-width:0">
+                    <div style="display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:12px">
+                      <div style="display:flex;flex-direction:column;gap:6px;min-width:0">
+                        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px">
+                          <h2 style="margin:0;font-size:16px;font-weight:600">{{ sm.name }}</h2>
+                          <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Badge" variant="{{ sm.variant }}" hint-size="60px,20px">{{ sm.status }}</x-import>
+                          <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Badge" variant="outline" hint-size="30px,20px">{{ sm.version }}</x-import>
+                        </div>
+                        <span style="font-size:14px;color:var(--color-text-secondary);text-wrap:pretty">{{ sm.desc }}</span>
+                        <span style="font-size:14px;color:var(--color-text-secondary)">Used by: <span style="color:var(--color-background-default-foreground)">{{ sm.usedBy }}</span></span>
+                      </div>
+                      <div style="display:flex;flex-wrap:wrap;gap:8px">
+                        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" variant="outline" size="sm" disabled="{{ ro }}" onClick="{{ openEditMx }}" hint-size="100px,32px">
+                          <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Icon" name="pencil" hint-size="16px,16px"></x-import>
+                          <span>Edit matrix</span>
+                        </x-import>
+                        <sc-if value="{{ smIsDraft }}" hint-placeholder-val="{{ false }}">
+                          <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" size="sm" disabled="{{ publishDisabled }}" onClick="{{ publishMx }}" hint-size="80px,32px">Publish</x-import>
+                        </sc-if>
+                      </div>
+                    </div>
+                    <sc-if value="{{ smIsDraft }}" hint-placeholder-val="{{ false }}">
+                      <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Alert" icon="{{ ic.info }}" title="Draft matrix" hint-size="100%,64px">{{ smDraftText }}</x-import>
+                    </sc-if>
+                    <div style="display:flex;flex-direction:column;gap:8px">
+                      <span style="font-size:12px;font-weight:500;color:var(--color-text-secondary)">{{ sm.scaleTitle }}</span>
+                      <div style="display:flex;flex-wrap:wrap;gap:8px">
+                        <sc-for list="{{ smScale }}" as="sl" hint-placeholder-count="5">
+                          <span style="display:flex;align-items:center;gap:6px;padding:4px 10px;border:1px solid var(--color-border-default);border-radius:6px;font-size:12px">
+                            <span style="font-family:var(--font-mono, 'Roboto Mono', monospace);font-weight:600">{{ sl.n }}</span><span>{{ sl.label }}</span>
+                          </span>
+                        </sc-for>
+                      </div>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:8px">
+                      <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+                        <span style="font-size:12px;font-weight:500;color:var(--color-text-secondary)">{{ smCompTitle }}</span>
+                        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" variant="outline" size="sm" disabled="{{ ro }}" onClick="{{ openAddComp }}" hint-size="140px,32px">
+                          <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Icon" name="plus" hint-size="16px,16px"></x-import>
+                          <span>Add competency</span>
+                        </x-import>
+                      </div>
+                      <sc-if value="{{ smNoComps }}" hint-placeholder-val="{{ false }}">
+                        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Empty" variant="background" icon="{{ ic.list }}" title="No competencies yet" description="Add Competencies before setting expectations." hint-size="100%,160px"></x-import>
+                      </sc-if>
+                      <sc-for list="{{ smComps }}" as="c" hint-placeholder-count="4">
+                        <div style="display:flex;flex-direction:column;gap:8px;padding:12px;border:1px solid var(--color-border-default);border-radius:8px">
+                          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
+                            <div style="display:flex;flex-direction:column;gap:2px;min-width:0">
+                              <span style="font-size:14px;font-weight:500"><span style="font-family:var(--font-mono, 'Roboto Mono', monospace);font-size:12px;color:var(--color-text-secondary)">{{ c.seq }}</span> {{ c.name }}</span>
+                              <span style="font-size:14px;color:var(--color-text-secondary);text-wrap:pretty">{{ c.desc }}</span>
+                            </div>
+                            <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" variant="ghost" size="sm" disabled="{{ ro }}" onClick="{{ c.onEdit }}" hint-size="50px,32px">Edit</x-import>
+                          </div>
+                          <sc-if value="{{ c.hasBeh }}" hint-placeholder-val="{{ true }}">
+                            <div style="display:grid;grid-template-columns:max-content minmax(0,1fr);gap:6px 12px;font-size:14px">
+                              <sc-for list="{{ c.beh }}" as="b" hint-placeholder-count="2">
+                                <span style="font-size:12px;color:var(--color-text-secondary);padding-top:2px">{{ b.lvl }}</span><span style="text-wrap:pretty">{{ b.text }}</span>
+                              </sc-for>
+                            </div>
+                          </sc-if>
+                          <sc-if value="{{ c.noBeh }}" hint-placeholder-val="{{ false }}">
+                            <span style="font-size:12px;color:var(--color-text-secondary)">No observable behaviors yet</span>
+                          </sc-if>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </div>
+                </x-import>
+              </sc-if>
+            </div>
+          </sc-if>
+        </sc-if>
+
+        <!-- EXPECTATIONS -->
+        <sc-if value="{{ isExpect }}" hint-placeholder-val="{{ false }}">
+          <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Card" hint-size="100%,500px">
+            <div style="display:flex;flex-direction:column;gap:16px;min-width:0">
+              <div style="display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px">
+                <div style="display:flex;flex-direction:column;gap:8px;flex:1 1 220px;max-width:300px">
+                  <label for="exp-pos" style="font-size:14px;font-weight:500;line-height:1">Position</label>
+                  <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Select" id="exp-pos" options="{{ expPosOptions }}" value="{{ expPos }}" onValueChange="{{ onExpPos }}" placeholder="Select a position" hint-size="100%,36px"></x-import>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:8px;flex:1 1 220px;max-width:300px">
+                  <label for="exp-mx" style="font-size:14px;font-weight:500;line-height:1">Competency matrix</label>
+                  <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Select" id="exp-mx" options="{{ expMxOptions }}" value="{{ expMx }}" onValueChange="{{ onExpMx }}" placeholder="Select a matrix" disabled="{{ expMxDisabled }}" hint-size="100%,36px"></x-import>
+                </div>
+              </div>
+
+              <sc-if value="{{ expEmpty }}" hint-placeholder-val="{{ false }}">
+                <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Empty" variant="background" icon="{{ ic.grid }}" title="{{ expEmptyTitle }}" description="{{ expEmptyDesc }}" primaryAction="{{ expEmptyBtn }}" hint-size="100%,200px"></x-import>
+              </sc-if>
+
+              <sc-if value="{{ expGrid }}" hint-placeholder-val="{{ true }}">
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px">
+                  <sc-for list="{{ expMetrics }}" as="mt" hint-placeholder-count="3">
+                    <div style="display:flex;flex-direction:column;gap:4px;padding:12px;border:1px solid var(--color-border-default);border-radius:8px">
+                      <span style="font-size:12px;color:var(--color-text-secondary)">{{ mt.label }}</span>
+                      <span style="font-size:20px;font-weight:600;font-variant-numeric:tabular-nums">{{ mt.value }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+                <sc-if value="{{ expInvalid }}" hint-placeholder-val="{{ false }}">
+                  <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Alert" variant="destructive" icon="{{ ic.alert }}" title="Expectations can't go down" hint-size="100%,64px">{{ expInvalidText }}</x-import>
+                </sc-if>
+                <sc-if value="{{ expSwitch }}" hint-placeholder-val="{{ false }}">
+                  <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Alert" variant="warning" icon="{{ ic.warn }}" title="Changing matrix" hint-size="100%,64px">{{ expSwitchText }}</x-import>
+                </sc-if>
+                <div style="overflow-x:auto">
+                  <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Table" framed="{{ true }}" hint-size="100%,360px">
+                    <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.TableHeader" hint-size="100%,48px">
+                      <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.TableRow" hint-size="100%,48px">
+                        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.TableHead" hint-size="200px,48px">Competency</x-import>
+                        <sc-for list="{{ expHeads }}" as="hd" hint-placeholder-count="3">
+                          <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.TableHead" hint-size="170px,48px">{{ hd.name }}</x-import>
+                        </sc-for>
+                      </x-import>
+                    </x-import>
+                    <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.TableBody" hint-size="100%,300px">
+                      <sc-for list="{{ expRows }}" as="r" hint-placeholder-count="6">
+                        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.TableRow" hint-size="100%,56px">
+                          <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.TableCell" hint-size="200px,56px"><span style="font-weight:500">{{ r.name }}</span></x-import>
+                          <sc-for list="{{ r.cells }}" as="cell" hint-placeholder-count="3">
+                            <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.TableCell" hint-size="170px,56px">
+                              <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Select" options="{{ cellOptions }}" value="{{ cell.value }}" onValueChange="{{ cell.onChange }}" invalid="{{ cell.invalid }}" disabled="{{ ro }}" aria-label="{{ cell.label }}" style="min-width:150px" hint-size="150px,36px"></x-import>
+                            </x-import>
+                          </sc-for>
+                        </x-import>
+                      </sc-for>
+                    </x-import>
+                  </x-import>
+                </div>
+                <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px">
+                  <span style="font-size:14px;color:{{ expFootColor }}">{{ expFootText }}</span>
+                  <div style="display:flex;gap:8px">
+                    <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" variant="outline" disabled="{{ expResetDisabled }}" onClick="{{ resetExp }}" hint-size="80px,36px">Reset</x-import>
+                    <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" disabled="{{ expPvDisabled }}" onClick="{{ previewExp }}" hint-size="130px,36px">Preview changes</x-import>
+                  </div>
+                </div>
+              </sc-if>
+            </div>
+          </x-import>
+        </sc-if>
+
+        <!-- CAREER PATHS -->
+        <sc-if value="{{ isPaths }}" hint-placeholder-val="{{ false }}">
+          <sc-if value="{{ noPathsAtAll }}" hint-placeholder-val="{{ false }}">
+            <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Empty" variant="outline" icon="{{ ic.route }}" title="No career paths yet" description="Create a Path to connect Position-Levels into a progression." primaryAction="{{ createPathBtn }}" style="background:var(--color-background-default)" hint-size="100%,220px"></x-import>
+          </sc-if>
+          <sc-if value="{{ showPathsLayout }}" hint-placeholder-val="{{ true }}">
+            <div style="display:grid;grid-template-columns:{{ splitCols }};gap:16px;align-items:start">
+              <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Card" hint-size="100%,300px">
+                <div style="display:flex;flex-direction:column;gap:12px">
+                  <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+                    <h2 style="margin:0;font-size:16px;font-weight:600">Career paths</h2>
+                    <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" size="sm" disabled="{{ ro }}" onClick="{{ startCreatePath }}" hint-size="110px,32px">
+                      <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Icon" name="plus" hint-size="16px,16px"></x-import>
+                      <span>Create path</span>
+                    </x-import>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:2px">
+                    <sc-for list="{{ pathList }}" as="p" hint-placeholder-count="3">
+                      <button type="button" onClick="{{ p.onClick }}" style="display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;padding:10px 12px;border:0;border-radius:6px;text-align:left;cursor:pointer;font:inherit;color:inherit;background:{{ p.bg }};box-shadow:{{ p.edge }}">
+                        <span style="display:flex;flex-direction:column;gap:2px;min-width:0">
+                          <span style="display:flex;align-items:center;gap:6px;font-size:14px;font-weight:500">{{ p.name }}<sc-if value="{{ p.warn }}" hint-placeholder-val="{{ false }}"><span style="display:flex;color:var(--color-status-warning-subtle-foreground)" title="Incomplete expectations">{{ ic.warnSm }}</span></sc-if></span>
+                          <span style="font-size:12px;color:var(--color-text-secondary)">{{ p.meta }}</span>
+                        </span>
+                        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Badge" variant="{{ p.variant }}" hint-size="60px,20px">{{ p.status }}</x-import>
+                      </button>
+                    </sc-for>
+                  </div>
+                </div>
+              </x-import>
+
+              <sc-if value="{{ showPathView }}" hint-placeholder-val="{{ true }}">
+                <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Card" hint-size="100%,400px">
+                  <div style="display:flex;flex-direction:column;gap:16px;min-width:0">
+                    <div style="display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:12px">
+                      <div style="display:flex;flex-direction:column;gap:6px;min-width:0">
+                        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px">
+                          <h2 style="margin:0;font-size:16px;font-weight:600">{{ vp.name }}</h2>
+                          <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Badge" variant="{{ vp.variant }}" hint-size="60px,20px">{{ vp.status }}</x-import>
+                          <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Badge" variant="outline" hint-size="30px,20px">{{ vp.version }}</x-import>
+                        </div>
+                        <span style="font-size:14px;color:var(--color-text-secondary);text-wrap:pretty">{{ vp.desc }}</span>
+                      </div>
+                      <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" variant="outline" size="sm" disabled="{{ ro }}" onClick="{{ startEditPath }}" hint-size="90px,32px">
+                        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Icon" name="pencil" hint-size="16px,16px"></x-import>
+                        <span>Edit path</span>
+                      </x-import>
+                    </div>
+                    <sc-if value="{{ vpWarn }}" hint-placeholder-val="{{ false }}">
+                      <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Alert" variant="warning" icon="{{ ic.warn }}" title="Readiness isn't complete" hint-size="100%,64px">{{ vpWarnText }}</x-import>
+                    </sc-if>
+                    <div style="display:flex;flex-direction:column">
+                      <sc-for list="{{ vpNodes }}" as="n" hint-placeholder-count="3">
+                        <div style="display:flex;flex-direction:column">
+                          <div style="display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px;border:1px solid var(--color-border-default);border-radius:8px">
+                            <span style="display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:9999px;background:var(--color-background-muted);font-size:12px;font-weight:600">{{ n.i }}</span>
+                            <div style="display:flex;flex-direction:column;gap:2px;min-width:0">
+                              <span style="font-size:14px;font-weight:500">{{ n.name }}</span>
+                              <span style="font-size:12px;color:var(--color-text-secondary)">{{ n.pos }}</span>
+                            </div>
+                            <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Badge" variant="{{ n.covVariant }}" hint-size="50px,20px">{{ n.cov }}</x-import>
+                          </div>
+                          <sc-if value="{{ n.notLast }}" hint-placeholder-val="{{ true }}">
+                            <div style="display:flex;align-items:center;gap:8px;padding:4px 0 4px 24px;color:var(--color-icon-muted)">
+                              <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Icon" name="arrow-down" hint-size="16px,16px"></x-import>
+                              <span style="font-size:12px;color:var(--color-text-secondary)">{{ n.move }}</span>
+                            </div>
+                          </sc-if>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </div>
+                </x-import>
+              </sc-if>
+
+              <sc-if value="{{ showPathEdit }}" hint-placeholder-val="{{ false }}">
+                <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Card" hint-size="100%,500px">
+                  <div style="display:flex;flex-direction:column;gap:16px;min-width:0">
+                    <h2 style="margin:0;font-size:16px;font-weight:600">{{ peTitle }}</h2>
+                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px">
+                      <div style="display:flex;flex-direction:column;gap:8px">
+                        <label for="pe-name" style="font-size:14px;font-weight:500;line-height:1">Name</label>
+                        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Input" id="pe-name" value="{{ pe.name }}" onChange="{{ onPeName }}" placeholder="Backend growth" hint-size="100%,36px"></x-import>
+                      </div>
+                      <div style="display:flex;flex-direction:column;gap:8px">
+                        <label for="pe-status" style="font-size:14px;font-weight:500;line-height:1">Status</label>
+                        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Select" id="pe-status" options="{{ pathStatusOptions }}" value="{{ pe.status }}" onValueChange="{{ onPeStatus }}" hint-size="100%,36px"></x-import>
+                      </div>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:8px">
+                      <label for="pe-desc" style="font-size:14px;font-weight:500;line-height:1">Description</label>
+                      <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Textarea" id="pe-desc" value="{{ pe.desc }}" onChange="{{ onPeDesc }}" rows="{{ 2 }}" placeholder="Describe the career direction" hint-size="100%,64px"></x-import>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:8px">
+                      <span style="font-size:14px;font-weight:500">Nodes, in order</span>
+                      <sc-for list="{{ peNodes }}" as="nd" hint-placeholder-count="2">
+                        <div style="display:grid;grid-template-columns:28px minmax(0,1fr) auto auto auto;gap:8px;align-items:center">
+                          <span style="display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:9999px;background:var(--color-background-muted);font-size:12px;font-weight:600">{{ nd.i }}</span>
+                          <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Select" options="{{ nodeOptions }}" value="{{ nd.value }}" onValueChange="{{ nd.onChange }}" placeholder="Select a Position-Level" invalid="{{ nd.invalid }}" aria-label="{{ nd.label }}" hint-size="100%,36px"></x-import>
+                          <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Badge" variant="{{ nd.covVariant }}" hint-size="50px,20px">{{ nd.cov }}</x-import>
+                          <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" variant="ghost" size="icon-sm" disabled="{{ nd.upDisabled }}" onClick="{{ nd.onUp }}" aria-label="Move up" hint-size="32px,32px"><x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Icon" name="arrow-up" hint-size="16px,16px"></x-import></x-import>
+                          <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" variant="ghost" size="icon-sm" onClick="{{ nd.onRemove }}" aria-label="Remove node" hint-size="32px,32px"><x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Icon" name="x" hint-size="16px,16px"></x-import></x-import>
+                        </div>
+                      </sc-for>
+                      <div>
+                        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" variant="outline" size="sm" onClick="{{ addNode }}" hint-size="100px,32px">
+                          <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Icon" name="plus" hint-size="16px,16px"></x-import>
+                          <span>Add node</span>
+                        </x-import>
+                      </div>
+                    </div>
+                    <sc-if value="{{ peHasErrors }}" hint-placeholder-val="{{ false }}">
+                      <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Alert" variant="destructive" icon="{{ ic.alert }}" title="Fix these before preview" hint-size="100%,80px">
+                        <div style="display:flex;flex-direction:column;gap:4px">
+                          <sc-for list="{{ peErrors }}" as="er" hint-placeholder-count="1"><span>{{ er.text }}</span></sc-for>
+                        </div>
+                      </x-import>
+                    </sc-if>
+                    <sc-if value="{{ peHasWarn }}" hint-placeholder-val="{{ false }}">
+                      <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Alert" variant="warning" icon="{{ ic.warn }}" title="Incomplete expectations" hint-size="100%,64px">{{ peWarnText }}</x-import>
+                    </sc-if>
+                    <div style="display:flex;justify-content:flex-end;gap:8px">
+                      <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" variant="outline" onClick="{{ cancelPathEdit }}" hint-size="80px,36px">Cancel</x-import>
+                      <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" disabled="{{ pePvDisabled }}" onClick="{{ previewPath }}" hint-size="120px,36px">Preview path</x-import>
+                    </div>
+                  </div>
+                </x-import>
+              </sc-if>
+            </div>
+          </sc-if>
+        </sc-if>
+      </div>
+    </main>
+  </div>
+
+  <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Dialog" open="{{ fmOpen }}" onOpenChange="{{ closeIfFalse }}" title="{{ fm.title }}" description="{{ fm.desc }}" width="{{ 480 }}" hint-size="0px,0px">
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <sc-for list="{{ fm.fields }}" as="f" hint-placeholder-count="3">
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <label for="{{ f.htmlId }}" style="font-size:14px;font-weight:500;line-height:1">{{ f.label }}</label>
+          <sc-if value="{{ f.isInput }}" hint-placeholder-val="{{ true }}">
+            <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Input" id="{{ f.htmlId }}" value="{{ f.value }}" onChange="{{ f.onChange }}" invalid="{{ f.invalid }}" placeholder="{{ f.ph }}" hint-size="100%,36px"></x-import>
+          </sc-if>
+          <sc-if value="{{ f.isArea }}" hint-placeholder-val="{{ false }}">
+            <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Textarea" id="{{ f.htmlId }}" value="{{ f.value }}" onChange="{{ f.onChange }}" invalid="{{ f.invalid }}" placeholder="{{ f.ph }}" rows="{{ 2 }}" hint-size="100%,64px"></x-import>
+          </sc-if>
+          <sc-if value="{{ f.isSelect }}" hint-placeholder-val="{{ false }}">
+            <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Select" id="{{ f.htmlId }}" options="{{ f.options }}" value="{{ f.value }}" onValueChange="{{ f.onValue }}" invalid="{{ f.invalid }}" hint-size="100%,36px"></x-import>
+          </sc-if>
+          <sc-if value="{{ f.hasErr }}" hint-placeholder-val="{{ false }}">
+            <span style="font-size:12px;color:var(--color-status-danger-subtle-foreground)">{{ f.err }}</span>
+          </sc-if>
+          <sc-if value="{{ f.hasHelp }}" hint-placeholder-val="{{ false }}">
+            <span style="font-size:12px;color:var(--color-text-secondary)">{{ f.help }}</span>
+          </sc-if>
+        </div>
+      </sc-for>
+      <div style="display:flex;justify-content:flex-end;gap:8px">
+        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" variant="outline" onClick="{{ closeDlg }}" hint-size="80px,40px">Cancel</x-import>
+        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" onClick="{{ fmPreview }}" hint-size="90px,40px">Preview</x-import>
+      </div>
+    </div>
+  </x-import>
+
+  <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Dialog" open="{{ pvOpen }}" onOpenChange="{{ closeIfFalse }}" title="{{ pv.title }}" description="Review before you save. Nothing changes until you confirm." width="{{ 560 }}" hint-size="0px,0px">
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div style="display:grid;grid-template-columns:minmax(90px,max-content) minmax(0,1fr) minmax(0,1fr);border:1px solid var(--color-border-default);border-radius:8px;overflow:hidden;font-size:14px">
+        <span style="padding:10px 12px;font-size:12px;font-weight:500;color:var(--color-text-secondary);background:var(--color-background-muted)">Field</span>
+        <span style="padding:10px 12px;font-size:12px;font-weight:500;color:var(--color-text-secondary);background:var(--color-background-muted)">Before</span>
+        <span style="padding:10px 12px;font-size:12px;font-weight:500;color:var(--color-text-secondary);background:var(--color-background-muted)">After</span>
+        <sc-for list="{{ pv.rows }}" as="r" hint-placeholder-count="3">
+          <span style="padding:10px 12px;border-top:1px solid var(--color-border-default);color:var(--color-text-secondary)">{{ r.field }}</span>
+          <span style="padding:10px 12px;border-top:1px solid var(--color-border-default);color:var(--color-text-secondary);text-wrap:pretty;overflow-wrap:anywhere">{{ r.before }}</span>
+          <span style="padding:10px 12px;border-top:1px solid var(--color-border-default);font-weight:{{ r.weight }};text-wrap:pretty;overflow-wrap:anywhere">{{ r.after }}</span>
+        </sc-for>
+      </div>
+      <sc-if value="{{ pv.hasMore }}" hint-placeholder-val="{{ false }}">
+        <span style="font-size:12px;color:var(--color-text-secondary)">{{ pv.moreText }}</span>
+      </sc-if>
+      <sc-for list="{{ pv.warnings }}" as="w" hint-placeholder-count="1">
+        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Alert" variant="warning" icon="{{ ic.warn }}" hint-size="100%,48px">{{ w.text }}</x-import>
+      </sc-for>
+      <div style="display:flex;justify-content:flex-end;gap:8px">
+        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" variant="outline" onClick="{{ pvBack }}" hint-size="110px,40px">Back to edit</x-import>
+        <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Button" onClick="{{ confirmPv }}" hint-size="130px,40px">Confirm and save</x-import>
+      </div>
+    </div>
+  </x-import>
+
+  <x-import component-from-global-scope="AgenticDesignSystem_b6d96e.Toaster" toasts="{{ toasts }}" hint-size="0px,0px"></x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;permission&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;framework.write&quot;,&quot;View only&quot;],&quot;default&quot;:&quot;framework.write&quot;,&quot;tsType&quot;:&quot;'framework.write'|'View only'&quot;,&quot;section&quot;:&quot;Demo state&quot;},&quot;dataset&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Seeded&quot;,&quot;Empty&quot;],&quot;default&quot;:&quot;Seeded&quot;,&quot;tsType&quot;:&quot;'Seeded'|'Empty'&quot;,&quot;section&quot;:&quot;Demo state&quot;},&quot;completionRule&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;All cells mapped&quot;,&quot;At least 1 per level&quot;],&quot;default&quot;:&quot;All cells mapped&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Open questions&quot;},&quot;sidebarCollapsed&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Layout&quot;}}">
+const NSN = 'AgenticDesignSystem_b6d96e';
+const SCALES = { 3: ['Developing', 'Proficient', 'Advanced'], 4: ['Foundation', 'Working', 'Proficient', 'Advanced'], 5: ['Awareness', 'Working', 'Proficient', 'Advanced', 'Expert'] };
+const ADMIN = 'Ha Pham';
+const MIN = 60000, HR = 3600000, DAY = 86400000;
+const clone = o => JSON.parse(JSON.stringify(o));
+const STEP_NAMES = ['Positions & Levels', 'Employee Mapping', 'Competency Matrix', 'Expectations', 'Career Paths'];
+const STEP_TABS = ['positions', 'mapping', 'matrix', 'expect', 'paths'];
+
+function seedData() {
+  const now = Date.now();
+  const L = (id, posId, name, seq, desc, status) => ({ id, posId, name, seq, desc, status: status || 'Active' });
+  const E = (id, name, email, title, unit, manager, levelId) => ({ id, name, email, title, unit, manager, levelId });
+  return {
+    positions: [
+      { id: 'BE', name: 'Backend Engineer', code: 'BE', desc: 'Builds and runs server-side services and APIs.', status: 'Active', matrixId: 'NS' },
+      { id: 'FE', name: 'Frontend Engineer', code: 'FE', desc: 'Builds web interfaces and client-side features.', status: 'Active', matrixId: 'NS' },
+      { id: 'EM', name: 'Engineering Manager', code: 'EM', desc: 'Leads an engineering team and its delivery.', status: 'Active', matrixId: 'LD' },
+      { id: 'DE', name: 'Data Engineer', code: 'DE', desc: 'Builds data pipelines and warehouse models.', status: 'Active', matrixId: null },
+      { id: 'QA', name: 'QA Engineer', code: 'QA', desc: 'Manual and automated product testing.', status: 'Archived', matrixId: 'NS' },
+    ],
+    levels: [
+      L('BE-L2', 'BE', 'Backend Engineer L2', 2, 'Delivers well-scoped tasks with guidance.'),
+      L('BE-L3', 'BE', 'Backend Engineer L3', 3, 'Owns features end to end.'),
+      L('BE-L4', 'BE', 'Backend Engineer L4', 4, 'Leads complex services and mentors others.'),
+      L('FE-L2', 'FE', 'Frontend Engineer L2', 2, 'Delivers well-scoped UI work with guidance.'),
+      L('FE-L3', 'FE', 'Frontend Engineer L3', 3, 'Owns frontend features end to end.'),
+      L('EM-M1', 'EM', 'Engineering Manager M1', 1, 'Manages one team of up to 8 people.'),
+      L('EM-M2', 'EM', 'Engineering Manager M2', 2, 'Manages several teams or other managers.'),
+      L('QA-L1', 'QA', 'QA Engineer L1', 1, 'Runs test plans written by others.', 'Archived'),
+      L('QA-L2', 'QA', 'QA Engineer L2', 2, 'Writes and maintains test plans.', 'Archived'),
+    ],
+    employees: [
+      E('e1', 'Minh Tran', 'minh.tran@northstar.vn', 'Software Engineer II', 'Platform', 'Quang Pham', 'BE-L3'),
+      E('e2', 'Lan Nguyen', 'lan.nguyen@northstar.vn', 'Software Engineer', 'Platform', 'Quang Pham', 'BE-L2'),
+      E('e3', 'Hoa Le', 'hoa.le@northstar.vn', 'Frontend Developer', 'Web', 'Thao Vo', 'FE-L2'),
+      E('e4', 'Quang Pham', 'quang.pham@northstar.vn', 'Senior Software Engineer', 'Platform', 'Duc Hoang', 'BE-L4'),
+      E('e5', 'Thao Vo', 'thao.vo@northstar.vn', 'Senior Frontend Developer', 'Web', 'Duc Hoang', 'FE-L3'),
+      E('e6', 'Duc Hoang', 'duc.hoang@northstar.vn', 'Engineering Manager', 'Engineering', 'Ha Pham', 'EM-M1'),
+      E('e7', 'Linh Dang', 'linh.dang@northstar.vn', 'Data Engineer', 'Data', 'Duc Hoang', null),
+      E('e8', 'Khanh Bui', 'khanh.bui@northstar.vn', 'Software Engineer', 'Platform', 'Quang Pham', null),
+      E('e9', 'Mai Do', 'mai.do@northstar.vn', 'Frontend Developer', 'Web', 'Thao Vo', 'FE-L2'),
+      E('e10', 'Tuan Ngo', 'tuan.ngo@northstar.vn', 'Software Engineer II', 'Platform', 'Quang Pham', 'BE-L3'),
+    ],
+    matrices: [
+      { id: 'NS', name: 'Northstar Engineering Matrix', desc: 'Shared framework for individual contributor engineering roles.', scale: 5, status: 'Active', version: 3, comps: [
+        { id: 'sd', name: 'System Design', desc: 'Designs services that are reliable and easy to change.', beh: { 2: 'Follows existing patterns for a small component', 3: 'Can design a medium-sized service independently', 4: 'Can lead system design for complex services' } },
+        { id: 'ps', name: 'Problem Solving', desc: 'Breaks down ambiguous problems and finds workable solutions.', beh: { 2: 'Solves well-defined problems with some help', 3: 'Solves ambiguous problems within own area', 4: 'Solves cross-team problems and removes root causes' } },
+        { id: 'do', name: 'Delivery Ownership', desc: 'Delivers reliable work on time and owns the outcome.', beh: { 3: 'Owns feature delivery from plan to release', 4: 'Owns delivery for a service or multi-sprint project' } },
+        { id: 'co', name: 'Collaboration', desc: 'Works effectively with teammates and other teams.', beh: { 3: 'Pairs and reviews code constructively', 4: 'Aligns several teams on shared work' } },
+        { id: 'cm', name: 'Communication', desc: 'Shares context clearly in writing and conversation.', beh: { 3: 'Writes clear design notes and status updates', 4: 'Explains trade-offs to non-technical stakeholders' } },
+        { id: 'tl', name: 'Technical Leadership', desc: 'Raises the technical bar of the team.', beh: { 3: 'Mentors newer engineers on the team', 4: 'Sets technical direction for a service area' } },
+      ] },
+      { id: 'LD', name: 'Leadership Matrix', desc: 'Framework for people managers.', scale: 4, status: 'Draft', version: 1, comps: [
+        { id: 'pd', name: 'People Development', desc: 'Grows people through feedback and coaching.', beh: { 2: 'Runs regular 1:1s and gives timely feedback', 3: 'Builds a growth plan for each report' } },
+        { id: 'st', name: 'Strategic Thinking', desc: 'Connects team work to company goals.', beh: {} },
+        { id: 'sm', name: 'Stakeholder Management', desc: 'Keeps partners informed and aligned.', beh: {} },
+      ] },
+    ],
+    expect: {
+      'BE-L3': { sd: 3, ps: 3, do: 3, co: 3, cm: 3, tl: 2 },
+      'BE-L4': { sd: 4, ps: 4, do: 4, co: 4, cm: 4, tl: 3 },
+      'FE-L2': { sd: 2, ps: 2, do: 2, co: 2, cm: 2, tl: 1 },
+      'FE-L3': { sd: 3, ps: 3, do: 3 },
+    },
+    paths: [
+      { id: 'p1', name: 'Backend growth', desc: 'Individual contributor progression for backend engineers.', status: 'Active', version: 2, nodes: ['BE-L2', 'BE-L3', 'BE-L4'] },
+      { id: 'p2', name: 'Backend to management', desc: 'Move from senior backend work into people management.', status: 'Draft', version: 1, nodes: ['BE-L4', 'EM-M1', 'EM-M2'] },
+      { id: 'p3', name: 'Frontend growth', desc: 'Individual contributor progression for frontend engineers.', status: 'Active', version: 1, nodes: ['FE-L2', 'FE-L3'] },
+    ],
+    audit: [
+      { id: 'a1', who: ADMIN, text: 'Updated expectations for Frontend Engineer', icon: 'grid-3x3', t: now - 2 * HR },
+      { id: 'a2', who: ADMIN, text: 'Created Career Path Backend to management', icon: 'route', t: now - 5 * HR },
+      { id: 'a3', who: 'Bao Tran', text: 'Mapped Minh Tran to Backend Engineer L3', icon: 'user-round-check', t: now - DAY },
+      { id: 'a4', who: ADMIN, text: 'Published Northstar Engineering Matrix v3', icon: 'layers', t: now - 2 * DAY },
+      { id: 'a5', who: ADMIN, text: 'Created Position Data Engineer', icon: 'briefcase', t: now - 3 * DAY },
+    ],
+  };
+}
+function emptyData() {
+  const s = seedData();
+  return { positions: [], levels: [], employees: s.employees.map(e => ({ ...e, levelId: null })), matrices: [], expect: {}, paths: [], audit: [] };
+}
+
+const posOf = (d, id) => d.positions.find(p => p.id === id);
+const lvlOf = (d, id) => d.levels.find(l => l.id === id);
+const mxOf = (d, id) => d.matrices.find(m => m.id === id);
+const levelsOf = (d, posId, activeOnly) => d.levels.filter(l => l.posId === posId && (!activeOnly || l.status === 'Active')).sort((a, b) => a.seq - b.seq);
+const scaleLabel = (scale, n) => n ? n + ' ' + SCALES[scale][n - 1] : 'Not set';
+function coverage(d, levelId) {
+  const l = lvlOf(d, levelId); if (!l) return { mapped: 0, total: 0, noMx: true };
+  const p = posOf(d, l.posId), mx = p && mxOf(d, p.matrixId);
+  if (!mx || !mx.comps.length) return { mapped: 0, total: 0, noMx: true };
+  const e = d.expect[levelId] || {};
+  return { mapped: mx.comps.filter(c => e[c.id] > 0).length, total: mx.comps.length, noMx: false };
+}
+const covBadge = c => c.noMx ? { text: 'No matrix', variant: 'warning' } : { text: c.mapped + '/' + c.total, variant: c.mapped === c.total ? 'success' : 'warning' };
+function pathRuleErrors(d, nodes) {
+  const errs = [];
+  if (nodes.length < 2) errs.push('A path needs at least 2 nodes.');
+  if (nodes.some(n => !n)) errs.push('Choose a Position-Level for every node.');
+  for (let i = 1; i < nodes.length; i++) {
+    const a = lvlOf(d, nodes[i - 1]), b = lvlOf(d, nodes[i]);
+    if (!a || !b) continue;
+    if (a.id === b.id) errs.push('Nodes ' + i + ' and ' + (i + 1) + ' are the same.');
+    else if (a.posId === b.posId && b.seq <= a.seq) errs.push('Node ' + (i + 1) + ' must be a higher Level than node ' + i + ' in ' + posOf(d, a.posId).name + '.');
+  }
+  return errs;
+}
+function relTime(t) {
+  const x = Date.now() - t;
+  if (x < MIN) return 'Just now';
+  if (x < HR) return Math.floor(x / MIN) + 'm ago';
+  if (x < DAY) return Math.floor(x / HR) + 'h ago';
+  return Math.floor(x / DAY) + 'd ago';
+}
+
+class Component extends DCLogic {
+  state = this.initState(this.props.dataset);
+
+  initState(ds) {
+    const data = ds === 'Empty' ? emptyData() : seedData();
+    const firstExp = (data.positions.find(p => p.status === 'Active' && levelsOf(data, p.id).length) || {}).id || '';
+    return {
+      tab: (this.state && this.state.tab) || 'overview', data,
+      selPos: data.positions[0] ? data.positions[0].id : null, posQ: '',
+      selEmp: null, empQ: '', empFilter: 'all', mapDraft: { pos: '', lvl: '' },
+      selMx: data.matrices[0] ? data.matrices[0].id : null,
+      selPath: data.paths[0] ? data.paths[0].id : null, pe: null,
+      dlg: null, fm: null, pv: null, toasts: (this.state && this.state.toasts) || [], w: window.innerWidth,
+      ...this.expInit(data, firstExp),
+    };
+  }
+  componentDidMount() {
+    this._t = setInterval(() => { if (window[NSN]) { clearInterval(this._t); this.forceUpdate(); } }, 100);
+    this._rs = () => this.setState({ w: window.innerWidth });
+    window.addEventListener('resize', this._rs);
+    this._tick = setInterval(() => this.forceUpdate(), 60000);
+  }
+  componentWillUnmount() { clearInterval(this._t); clearInterval(this._tick); window.removeEventListener('resize', this._rs); }
+  componentDidUpdate(prev) { if (prev.dataset !== this.props.dataset) this.setState(this.initState(this.props.dataset)); }
+
+  get ro() { return this.props.permission === 'View only'; }
+  toast(t) {
+    const id = Date.now() + Math.random();
+    this.setState(s => ({ toasts: [...s.toasts, { id, type: 'success', ...t }] }));
+    setTimeout(() => this.setState(s => ({ toasts: s.toasts.filter(x => x.id !== id) })), 3500);
+  }
+  closeDlg = () => this.setState({ dlg: null });
+  closeIfFalse = o => { if (!o) this.closeDlg(); };
+  go = tab => this.setState({ tab, pe: null });
+
+  // ---------- expectations ----------
+  expInit(d, posId) {
+    const p = posOf(d, posId);
+    if (!p) return { expPos: '', expMx: '', expDraft: {} };
+    const act = d.matrices.find(m => m.status === 'Active');
+    const mx = p.matrixId && mxOf(d, p.matrixId) ? p.matrixId : (act ? act.id : '');
+    return { expPos: posId, expMx: mx, expDraft: mx && mx === p.matrixId ? this.savedExp(d, posId) : {} };
+  }
+  savedExp(d, posId) { const o = {}; levelsOf(d, posId).forEach(l => { o[l.id] = { ...(d.expect[l.id] || {}) }; }); return o; }
+  expCalc() {
+    const s = this.state, d = s.data, p = posOf(d, s.expPos), mx = mxOf(d, s.expMx);
+    const levels = p ? levelsOf(d, p.id) : [], comps = mx ? mx.comps : [];
+    const invalid = {}, invNames = [];
+    comps.forEach(c => {
+      let prev = 0, prevL = null;
+      levels.forEach(l => {
+        const v = (s.expDraft[l.id] || {})[c.id] || 0;
+        if (!v) return;
+        if (v < prev) { invalid[l.id + '|' + c.id] = true; invNames.push(c.name + ' at ' + l.name + ' is lower than ' + prevL.name); }
+        if (v >= prev) { prev = v; prevL = l; }
+      });
+    });
+    let setCount = 0; levels.forEach(l => comps.forEach(c => { if ((s.expDraft[l.id] || {})[c.id] > 0) setCount++; }));
+    const total = levels.length * comps.length;
+    const switched = !!p && !!mx && p.matrixId !== mx.id;
+    const saved = this.savedExp(d, s.expPos);
+    const changes = [];
+    levels.forEach(l => comps.forEach(c => {
+      const a = switched ? 0 : (saved[l.id] || {})[c.id] || 0, b = (s.expDraft[l.id] || {})[c.id] || 0;
+      if (a !== b) changes.push({ field: c.name + ', ' + l.name.replace(p.name + ' ', ''), before: scaleLabel(mx.scale, a), after: scaleLabel(mx.scale, b) });
+    }));
+    return { p, mx, levels, comps, invalid, invNames, setCount, total, switched, changes };
+  }
+  setCell(lid, cid, v) { this.setState(s => ({ expDraft: { ...s.expDraft, [lid]: { ...(s.expDraft[lid] || {}), [cid]: +v } } })); }
+  onExpPos = v => this.setState(this.expInit(this.state.data, v));
+  onExpMx = v => { const d = this.state.data, p = posOf(d, this.state.expPos); this.setState({ expMx: v, expDraft: p && p.matrixId === v ? this.savedExp(d, p.id) : {} }); };
+  resetExp = () => this.setState(this.expInit(this.state.data, this.state.expPos));
+  previewExp = () => {
+    const x = this.expCalc(), warnings = [];
+    const missing = x.total - x.setCount;
+    if (missing) warnings.push(missing + ' cells are still Not set. You can save a partial draft, but setup stays incomplete.');
+    if (x.switched) warnings.push(x.p.name + ' will switch to ' + x.mx.name + '. Existing expectations from ' + (mxOf(this.state.data, x.p.matrixId) || { name: 'the old matrix' }).name + ' will be replaced.');
+    const rows = x.switched ? [{ field: 'Matrix', before: (mxOf(this.state.data, x.p.matrixId) || { name: 'None' }).name, after: x.mx.name }, ...x.changes] : x.changes;
+    const draft = this.state.expDraft, posId = x.p.id, mxId = x.mx.id, lv = x.levels.map(l => l.id), cids = x.comps.map(c => c.id);
+    this.openPreview({
+      title: 'Preview expectations', rows, warnings,
+      audit: { text: 'Updated expectations for ' + x.p.name, icon: 'grid-3x3' },
+      commit: d => {
+        posOf(d, posId).matrixId = mxId;
+        lv.forEach(lid => { const o = {}; cids.forEach(c => { const v = (draft[lid] || {})[c]; if (v > 0) o[c] = v; }); if (Object.keys(o).length) d.expect[lid] = o; else delete d.expect[lid]; });
+      },
+      after: d => this.setState(this.expInit(d, posId)),
+    });
+  };
+
+  // ---------- preview ----------
+  openPreview(pv) { this.setState({ dlg: 'preview', pv, pvFromForm: this.state.dlg === 'form' }); }
+  pvBack = () => this.setState({ dlg: this.state.pvFromForm ? 'form' : null });
+  confirmPv = () => {
+    const pv = this.state.pv, d = clone(this.state.data);
+    pv.commit(d);
+    d.audit.unshift({ id: 'a' + Date.now(), who: ADMIN, text: pv.audit.text, icon: pv.audit.icon, t: Date.now() });
+    this.setState({ data: d, dlg: null, pv: null, ...(pv.state ? pv.state(d) : {}) }, () => pv.after && pv.after(d));
+    this.toast({ title: 'Changes saved', description: pv.audit.text });
+  };
+
+  // ---------- forms ----------
+  openForm(kind, ctx) { const def = this.formDef(kind, ctx || {}); this.setState({ dlg: 'form', fm: { kind, ctx: ctx || {}, values: def.init(), errors: {} } }); }
+  setFm(id, v) { this.setState(s => ({ fm: { ...s.fm, values: { ...s.fm.values, [id]: v }, errors: { ...s.fm.errors, [id]: null } } })); }
+  fmPreview = () => {
+    const fm = this.state.fm, def = this.formDef(fm.kind, fm.ctx), v = fm.values;
+    const errors = def.validate(v);
+    if (Object.keys(errors).some(k => errors[k])) { this.setState({ fm: { ...fm, errors } }); return; }
+    this.openPreview(def.preview(v));
+  };
+  rowsFor(fields, before, after) {
+    return fields.map(([key, label, fmt]) => {
+      const f = fmt || (x => x || '—');
+      const b = before ? f(before[key]) : '—', a = f(after[key]);
+      return { field: label, before: b, after: a, changed: b !== a };
+    }).filter(r => !before || r.changed);
+  }
+  formDef(kind, ctx) {
+    const d = this.state.data, dup = (list, key, val, selfId) => list.some(x => x.id !== selfId && String(x[key]).trim().toLowerCase() === String(val).trim().toLowerCase());
+    const req = v => !String(v || '').trim();
+    if (kind === 'position') {
+      const cur = ctx.id && posOf(d, ctx.id);
+      return {
+        title: cur ? 'Edit position' : 'Create position', desc: cur ? cur.name : 'Positions group the Levels of one career track.',
+        fields: [{ id: 'name', label: 'Position name', ph: 'Backend Engineer' }, { id: 'code', label: 'Position code', ph: 'BE' }, { id: 'desc', label: 'Description (optional)', type: 'area', ph: 'Short description of the Position' }, { id: 'status', label: 'Status', type: 'select', options: ['Active', 'Archived'], help: 'Archived Positions keep history but can\'t be used for new setup.' }],
+        init: () => cur ? { name: cur.name, code: cur.code, desc: cur.desc, status: cur.status } : { name: '', code: '', desc: '', status: 'Active' },
+        validate: v => ({ name: req(v.name) ? 'Position name can\'t be empty' : dup(d.positions, 'name', v.name, ctx.id) ? 'A Position with this name already exists' : null, code: req(v.code) ? 'Position code can\'t be empty' : dup(d.positions, 'code', v.code, ctx.id) ? 'This code is already used' : null }),
+        preview: v => {
+          const warnings = [];
+          if (!cur) warnings.push('This Position has no Level and no Competency Matrix yet. Add them next.');
+          if (cur && v.status === 'Archived' && cur.status !== 'Archived') { const n = d.employees.filter(e => { const l = lvlOf(d, e.levelId); return l && l.posId === cur.id; }).length; if (n) warnings.push(n + ' employees are mapped to this Position. They keep their mapping, but it can\'t be used for new mapping.'); }
+          const id = cur ? cur.id : 'P' + Date.now();
+          return {
+            title: cur ? 'Preview position change' : 'Preview new position', warnings,
+            rows: this.rowsFor([['name', 'Name'], ['code', 'Code'], ['desc', 'Description'], ['status', 'Status']], cur, v),
+            audit: { text: (cur ? 'Edited Position ' : 'Created Position ') + v.name.trim(), icon: 'briefcase' },
+            commit: dd => { if (cur) Object.assign(posOf(dd, id), { name: v.name.trim(), code: v.code.trim(), desc: v.desc, status: v.status }); else dd.positions.push({ id, name: v.name.trim(), code: v.code.trim().toUpperCase(), desc: v.desc, status: v.status, matrixId: null }); },
+            state: () => ({ selPos: id, posQ: '' }),
+          };
+        },
+      };
+    }
+    if (kind === 'level') {
+      const p = posOf(d, ctx.posId), cur = ctx.id && lvlOf(d, ctx.id), sib = levelsOf(d, ctx.posId);
+      const nextSeq = sib.length ? sib[sib.length - 1].seq + 1 : 1;
+      return {
+        title: cur ? 'Edit level' : 'Add level', desc: p.name,
+        fields: [{ id: 'name', label: 'Level name', ph: p.name + ' L' + nextSeq }, { id: 'seq', label: 'Sequence', ph: String(nextSeq), help: 'Sets the career order. Must be unique in this Position.' }, { id: 'desc', label: 'Description (optional)', type: 'area', ph: 'Scope or expectation for this Level' }, { id: 'status', label: 'Status', type: 'select', options: ['Active', 'Archived'] }],
+        init: () => cur ? { name: cur.name, seq: String(cur.seq), desc: cur.desc, status: cur.status } : { name: p.name + ' L' + nextSeq, seq: String(nextSeq), desc: '', status: 'Active' },
+        validate: v => ({ name: req(v.name) ? 'Level name can\'t be empty' : null, seq: !/^\d+$/.test(String(v.seq).trim()) ? 'Enter a whole number' : sib.some(l => l.id !== ctx.id && l.seq === +v.seq) ? 'Sequence ' + v.seq + ' is already used in ' + p.name : null }),
+        preview: v => {
+          const id = cur ? cur.id : p.id + '-' + Date.now();
+          return {
+            title: cur ? 'Preview level change' : 'Preview new level', warnings: cur ? [] : ['New Levels have no expected competencies yet. Set them in Expectations.'],
+            rows: this.rowsFor([['name', 'Name'], ['seq', 'Sequence', x => String(x)], ['desc', 'Description'], ['status', 'Status']], cur ? { ...cur, seq: String(cur.seq) } : null, v),
+            audit: { text: (cur ? 'Edited Level ' : 'Added Level ') + v.name.trim(), icon: 'layers' },
+            commit: dd => { const o = { name: v.name.trim(), seq: +v.seq, desc: v.desc, status: v.status }; if (cur) Object.assign(lvlOf(dd, id), o); else dd.levels.push({ id, posId: p.id, ...o }); },
+          };
+        },
+      };
+    }
+    if (kind === 'matrix') {
+      const cur = ctx.id && mxOf(d, ctx.id);
+      const maxUsed = cur ? Math.max(0, ...d.positions.filter(p => p.matrixId === cur.id).flatMap(p => levelsOf(d, p.id).flatMap(l => Object.values(d.expect[l.id] || {})))) : 0;
+      return {
+        title: cur ? 'Edit matrix' : 'Create matrix', desc: cur ? cur.name : 'A Matrix holds the Competencies and proficiency scale used by Positions.',
+        fields: [{ id: 'name', label: 'Name', ph: 'Northstar Engineering Matrix' }, { id: 'desc', label: 'Description', type: 'area', ph: 'What this Matrix is used for' }, { id: 'scale', label: 'Rating scale', type: 'select', options: [{ value: '3', label: '3 levels' }, { value: '4', label: '4 levels' }, { value: '5', label: '5 levels' }], help: maxUsed ? 'Expectations use up to level ' + maxUsed + ', so the scale can\'t go below that.' : 'You can change this later.' }],
+        init: () => cur ? { name: cur.name, desc: cur.desc, scale: String(cur.scale) } : { name: '', desc: '', scale: '5' },
+        validate: v => ({ name: req(v.name) ? 'Name can\'t be empty' : dup(d.matrices, 'name', v.name, ctx.id) ? 'A Matrix with this name already exists' : null, desc: req(v.desc) ? 'Add a short description' : null, scale: +v.scale < maxUsed ? 'Existing expectations use level ' + maxUsed + '. Choose ' + maxUsed + ' levels or more.' : null }),
+        preview: v => {
+          const id = cur ? cur.id : 'M' + Date.now();
+          return {
+            title: cur ? 'Preview matrix change' : 'Preview new matrix', warnings: cur ? [] : ['New matrices start as Draft. Publish it before Positions can use it.'],
+            rows: this.rowsFor([['name', 'Name'], ['desc', 'Description'], ['scale', 'Rating scale', x => x + ' levels']], cur ? { ...cur, scale: String(cur.scale) } : null, v),
+            audit: { text: (cur ? 'Edited Matrix ' : 'Created Matrix ') + v.name.trim(), icon: 'layers' },
+            commit: dd => { if (cur) Object.assign(mxOf(dd, id), { name: v.name.trim(), desc: v.desc, scale: +v.scale }); else dd.matrices.push({ id, name: v.name.trim(), desc: v.desc, scale: +v.scale, status: 'Draft', version: 1, comps: [] }); },
+            state: () => ({ selMx: id }),
+          };
+        },
+      };
+    }
+    if (kind === 'comp') {
+      const mx = mxOf(d, ctx.mxId), cur = ctx.id && mx.comps.find(c => c.id === ctx.id);
+      const bf = SCALES[mx.scale].map((lb, i) => ({ id: 'b' + (i + 1), label: 'Behavior at ' + (i + 1) + ' ' + lb + ' (optional)', ph: 'What someone does at this level' }));
+      return {
+        title: cur ? 'Edit competency' : 'Add competency', desc: mx.name,
+        fields: [{ id: 'name', label: 'Name', ph: 'System Design' }, { id: 'desc', label: 'Description', type: 'area', ph: 'What this Competency covers' }, ...bf],
+        init: () => { const o = { name: cur ? cur.name : '', desc: cur ? cur.desc : '' }; bf.forEach((f, i) => { o[f.id] = cur ? cur.beh[i + 1] || '' : ''; }); return o; },
+        validate: v => ({ name: req(v.name) ? 'Name can\'t be empty' : mx.comps.some(c => c.id !== ctx.id && c.name.toLowerCase() === v.name.trim().toLowerCase()) ? 'This Competency already exists in the Matrix' : null }),
+        preview: v => {
+          const beh = {}; bf.forEach((f, i) => { if (String(v[f.id] || '').trim()) beh[i + 1] = v[f.id].trim(); });
+          const fmtB = o => Object.keys(o).length + ' behaviors';
+          const rows = this.rowsFor([['name', 'Name'], ['desc', 'Description'], ['beh', 'Behaviors', fmtB]], cur, { name: v.name.trim(), desc: v.desc, beh });
+          return {
+            title: cur ? 'Preview competency change' : 'Preview new competency', rows,
+            warnings: !cur && mx.status === 'Active' ? ['Positions using this Matrix will have 1 more Competency to set in Expectations.'] : [],
+            audit: { text: (cur ? 'Edited Competency ' : 'Added Competency ') + v.name.trim() + ' in ' + mx.name, icon: 'list-checks' },
+            commit: dd => { const m = mxOf(dd, mx.id); if (cur) Object.assign(m.comps.find(c => c.id === cur.id), { name: v.name.trim(), desc: v.desc, beh }); else m.comps.push({ id: 'c' + Date.now(), name: v.name.trim(), desc: v.desc, beh }); },
+          };
+        },
+      };
+    }
+  }
+
+  // ---------- mapping ----------
+  selectEmp(id) { const d = this.state.data, e = d.employees.find(x => x.id === id), l = lvlOf(d, e.levelId); this.setState({ selEmp: id, mapDraft: { pos: l ? l.posId : '', lvl: e.levelId || '' } }); }
+  previewMap = () => {
+    const d = this.state.data, e = d.employees.find(x => x.id === this.state.selEmp), md = this.state.mapDraft;
+    const ol = lvlOf(d, e.levelId), nl = lvlOf(d, md.lvl), cv = coverage(d, md.lvl), warnings = [];
+    if (cv.noMx) warnings.push(posOf(d, nl.posId).name + ' has no Competency Matrix yet. Readiness for ' + e.name + ' won\'t be available.');
+    else if (cv.mapped < cv.total) warnings.push(nl.name + ' has ' + cv.mapped + '/' + cv.total + ' expectations set. Readiness for ' + e.name + ' won\'t be complete.');
+    const eid = e.id, lid = md.lvl;
+    this.openPreview({
+      title: 'Preview mapping change', warnings,
+      rows: [{ field: 'Position', before: ol ? posOf(d, ol.posId).name : 'Not linked', after: posOf(d, nl.posId).name }, { field: 'Level', before: ol ? ol.name : 'Not linked', after: nl.name }, { field: 'HR data', before: 'Unchanged', after: 'Unchanged' }].map(r => ({ ...r, changed: r.before !== r.after })),
+      audit: { text: 'Mapped ' + e.name + ' to ' + nl.name, icon: 'user-round-check' },
+      commit: dd => { dd.employees.find(x => x.id === eid).levelId = lid; },
+    });
+  };
+
+  // ---------- paths ----------
+  startCreatePath = () => this.setState({ pe: { id: null, name: '', desc: '', status: 'Draft', nodes: ['', ''] } });
+  startEditPath = () => { const p = this.state.data.paths.find(x => x.id === this.state.selPath); this.setState({ pe: { id: p.id, name: p.name, desc: p.desc, status: p.status, nodes: [...p.nodes] } }); };
+  setPe(patch) { this.setState(s => ({ pe: { ...s.pe, ...patch } })); }
+  peErrors() {
+    const d = this.state.data, pe = this.state.pe, e = [];
+    if (!pe.name.trim()) e.push('Name can\'t be empty.');
+    else if (d.paths.some(p => p.id !== pe.id && p.name.toLowerCase() === pe.name.trim().toLowerCase())) e.push('A path with this name already exists.');
+    if (!pe.desc.trim()) e.push('Add a short description.');
+    return e.concat(pathRuleErrors(d, pe.nodes));
+  }
+  incompleteNodes(nodes) { const d = this.state.data; return nodes.filter(n => n && lvlOf(d, n)).filter(n => { const c = coverage(d, n); return c.noMx || c.mapped < c.total; }).map(n => lvlOf(d, n).name); }
+  previewPath = () => {
+    const d = this.state.data, pe = this.state.pe, cur = pe.id && d.paths.find(p => p.id === pe.id);
+    const chain = ns => ns.map(n => (lvlOf(d, n) || { name: '?' }).name).join(' → ');
+    const after = { name: pe.name.trim(), desc: pe.desc.trim(), status: pe.status, nodes: pe.nodes };
+    const rows = this.rowsFor([['name', 'Name'], ['desc', 'Description'], ['status', 'Status'], ['nodes', 'Nodes', chain], ['version', 'Version', x => 'v' + x]], cur, { ...after, version: cur ? cur.version + 1 : 1 });
+    const inc = this.incompleteNodes(pe.nodes), warnings = [];
+    if (inc.length) warnings.push(inc.join(', ') + (inc.length > 1 ? ' don\'t' : ' doesn\'t') + ' have complete expectations. Readiness analysis for this path won\'t be complete.');
+    const id = cur ? cur.id : 'p' + Date.now();
+    this.openPreview({
+      title: cur ? 'Preview path change' : 'Preview new path', rows, warnings,
+      audit: { text: (cur ? 'Edited Career Path ' : 'Created Career Path ') + after.name, icon: 'route' },
+      commit: dd => { if (cur) Object.assign(dd.paths.find(p => p.id === id), after, { version: cur.version + 1 }); else dd.paths.push({ id, ...after, version: 1 }); },
+      state: () => ({ selPath: id, pe: null }),
+    });
+  };
+
+  // ---------- steps ----------
+  steps() {
+    const d = this.state.data, rule = this.props.completionRule || 'All cells mapped';
+    const act = d.positions.filter(p => p.status === 'Active');
+    const s1 = [act.filter(p => levelsOf(d, p.id, true).length).length, act.length];
+    const s2 = [d.employees.filter(e => e.levelId).length, d.employees.length];
+    const s3 = [act.filter(p => { const m = mxOf(d, p.matrixId); return m && m.status === 'Active'; }).length, act.length];
+    let n4 = 0, d4 = 0;
+    act.forEach(p => { const m = mxOf(d, p.matrixId); if (!m || m.status !== 'Active') return; levelsOf(d, p.id, true).forEach(l => { const c = coverage(d, l.id); if (rule === 'All cells mapped') { n4 += c.mapped; d4 += c.total; } else { d4++; if (c.mapped > 0) n4++; } }); });
+    const n5 = d.paths.filter(p => p.status === 'Active' && !pathRuleErrors(d, p.nodes).length).length;
+    const counts = [
+      s1[0] + '/' + s1[1] + ' active positions have levels',
+      s2[0] + '/' + s2[1] + ' employees mapped',
+      s3[0] + '/' + s3[1] + ' positions linked to an Active matrix',
+      rule === 'All cells mapped' ? n4 + '/' + d4 + ' expected cells mapped' : n4 + '/' + d4 + ' levels have at least 1 expectation',
+      n5 + (n5 === 1 ? ' active path' : ' active paths'),
+    ];
+    const pairs = [s1, s2, s3, [n4, d4], [n5, 1]];
+    return pairs.map(([n, t], i) => {
+      const status = t > 0 && n >= t ? 'Complete' : n > 0 ? 'In progress' : 'Not started';
+      return { i, name: STEP_NAMES[i], count: counts[i], status };
+    });
+  }
+
+  renderVals() {
+    const s = this.state, d = s.data, NS = window[NSN], h = React.createElement, ro = this.ro;
+    const I = (n, st) => (NS && NS.Icon ? h(NS.Icon, { name: n, style: st }) : null);
+    const narrow = s.w < 960, sidebarCollapsed = !!this.props.sidebarCollapsed || s.w < 1100;
+    const sel = on => ({ bg: on ? 'var(--color-background-muted)' : 'transparent', edge: on ? 'inset 2px 0 0 var(--color-brand-primary)' : 'none' });
+    const stVar = st => st === 'Active' ? 'success' : st === 'Draft' ? 'secondary' : 'outline';
+    const btn = (label, onClick, icon) => NS ? h(NS.Button, { size: 'sm', onClick, disabled: ro }, icon ? I(icon) : null, h('span', null, label)) : null;
+
+    // overview
+    const steps = this.steps(), done = steps.filter(x => x.status === 'Complete').length, pct = Math.round(done / 5 * 100);
+    const firstOpen = steps.find(x => x.status !== 'Complete');
+    const stepVals = steps.map(x => ({
+      ...x, variant: x.status === 'Complete' ? 'success' : x.status === 'In progress' ? 'warning' : 'secondary',
+      mark: String(x.i + 1),
+      dotBg: x.status === 'Complete' ? 'var(--color-status-success-subtle)' : 'var(--color-background-muted)',
+      dotFg: x.status === 'Complete' ? 'var(--color-status-success-subtle-foreground)' : 'var(--color-background-default-foreground)',
+      onOpen: () => this.go(STEP_TABS[x.i]),
+    }));
+
+    // positions
+    const q = s.posQ.trim().toLowerCase();
+    const posFiltered = d.positions.filter(p => !q || p.name.toLowerCase().includes(q) || p.code.toLowerCase().includes(q));
+    const spP = posOf(d, s.selPos);
+    const spLv = spP ? levelsOf(d, spP.id) : [];
+
+    // mapping
+    const eq = s.empQ.trim().toLowerCase();
+    const empF = d.employees.filter(e => (!eq || e.name.toLowerCase().includes(eq) || e.email.toLowerCase().includes(eq)) && (s.empFilter === 'all' || (s.empFilter === 'linked' ? !!e.levelId : !e.levelId)));
+    const se = d.employees.find(e => e.id === s.selEmp);
+    const md = s.mapDraft;
+    const mapChanged = se && md.lvl && md.lvl !== (se.levelId || '');
+    const actPos = d.positions.filter(p => p.status === 'Active');
+    const mapLvlOpts = md.pos ? levelsOf(d, md.pos, true).map(l => ({ value: l.id, label: l.name })) : [];
+
+    // matrix
+    const smM = mxOf(d, s.selMx);
+    const usedBy = smM ? d.positions.filter(p => p.matrixId === smM.id).map(p => p.name) : [];
+
+    // expectations
+    const x = this.expCalc();
+    const expPosOptions = actPos.map(p => ({ value: p.id, label: p.name }));
+    const expMxOptions = d.matrices.map(m => ({ value: m.id, label: m.status === 'Active' ? m.name : m.name + ' (Draft)', disabled: m.status !== 'Active' }));
+    let expEmpty = null;
+    if (!actPos.length) expEmpty = { t: 'No positions yet', d: 'Create a Position with Levels before setting expectations.', b: 'Go to Positions & Levels', tab: 'positions' };
+    else if (!x.p) expEmpty = { t: 'Select a position', d: 'Choose the Position whose Levels you want to set.' };
+    else if (!x.levels.length) expEmpty = { t: x.p.name + ' has no levels', d: 'Add Levels to this Position before setting expectations.', b: 'Add levels', tab: 'positions', pos: x.p.id };
+    else if (!d.matrices.some(m => m.status === 'Active')) expEmpty = { t: 'No Active matrix', d: 'Create or publish a Competency Matrix first.', b: 'Go to Competency Matrix', tab: 'matrix' };
+    else if (!x.mx) expEmpty = { t: 'Select a matrix', d: 'Choose the Active Competency Matrix for this Position.' };
+    else if (!x.comps.length) expEmpty = { t: x.mx.name + ' has no competencies', d: 'Add Competencies to the Matrix before setting expectations.', b: 'Go to Competency Matrix', tab: 'matrix' };
+    const expGrid = !expEmpty;
+    const expInv = expGrid && x.invNames.length > 0;
+    const missing = expGrid ? x.total - x.setCount : 0;
+
+    // paths
+    const vpP = d.paths.find(p => p.id === s.selPath);
+    const nodeOptions = [];
+    actPos.forEach(p => { const lv = levelsOf(d, p.id, true); if (!lv.length) return; nodeOptions.push({ group: p.name }); lv.forEach(l => nodeOptions.push({ value: l.id, label: l.name })); });
+    const pe = s.pe, peErr = pe ? this.peErrors() : [], peInc = pe ? this.incompleteNodes(pe.nodes) : [];
+    const vpInc = vpP ? this.incompleteNodes(vpP.nodes) : [];
+
+    // form + preview
+    const fm = s.fm, fdef = fm && this.formDef(fm.kind, fm.ctx);
+    const fmVals = fdef ? {
+      title: fdef.title, desc: fdef.desc,
+      fields: fdef.fields.map(f => ({
+        htmlId: 'fm-' + f.id, label: f.label, ph: f.ph || '', value: fm.values[f.id] == null ? '' : fm.values[f.id],
+        isInput: !f.type, isArea: f.type === 'area', isSelect: f.type === 'select', options: f.options,
+        onChange: e => this.setFm(f.id, e.target.value), onValue: v => this.setFm(f.id, v),
+        invalid: !!fm.errors[f.id], hasErr: !!fm.errors[f.id], err: fm.errors[f.id] || '', hasHelp: !!f.help && !fm.errors[f.id], help: f.help || '',
+      })),
+    } : { title: '', desc: '', fields: [] };
+    const pv = s.pv, PVMAX = 12;
+    const pvVals = pv ? {
+      title: pv.title,
+      rows: pv.rows.slice(0, PVMAX).map(r => ({ ...r, weight: r.changed === false ? '400' : '500' })),
+      hasMore: pv.rows.length > PVMAX, moreText: '+' + (pv.rows.length - PVMAX) + ' more changes',
+      warnings: pv.warnings.map(t => ({ text: t })),
+    } : { title: '', rows: [], warnings: [], hasMore: false };
+
+    const tabs = [['overview', 'Overview'], ['positions', 'Positions & Levels'], ['mapping', 'Employee Mapping'], ['matrix', 'Competency Matrix'], ['expect', 'Expectations'], ['paths', 'Career Paths']].map(([value, label]) => ({ value, label }));
+
+    return {
+      ro, sidebarCollapsed,
+      ic: { dash: I('layout-dashboard'), people: I('users'), setup: I('settings-2'), audit: I('history'), bell: I('bell'), settings: I('settings'), lock: I('lock'), warn: I('triangle-alert'), warnSm: I('triangle-alert', { width: 14, height: 14 }), alert: I('circle-alert'), info: I('info'), search: I('search'), briefcase: I('briefcase'), layers: I('layers'), user: I('user'), grid: I('grid-3x3'), list: I('list-checks'), route: I('route') },
+      tabs, tab: s.tab, onTab: v => this.go(v),
+      isOverview: s.tab === 'overview', isPositions: s.tab === 'positions', isMapping: s.tab === 'mapping', isMatrix: s.tab === 'matrix', isExpect: s.tab === 'expect', isPaths: s.tab === 'paths',
+      ovCols: narrow ? 'minmax(0,1fr)' : 'minmax(0,2fr) minmax(280px,1fr)',
+      splitCols: narrow ? 'minmax(0,1fr)' : 'minmax(260px,340px) minmax(0,1fr)',
+      mapCols: narrow ? 'minmax(0,1fr)' : 'minmax(0,1.4fr) minmax(300px,1fr)',
+
+      progressPct: pct, progressLabel: pct + '%', progressText: done + ' of 5 steps complete',
+      showAttention: !!firstOpen, attentionText: firstOpen ? 'The career framework isn\'t ready yet. ' + firstOpen.name + ' still needs work: ' + firstOpen.count + '.' : '',
+      attentionCta: firstOpen ? 'Open ' + firstOpen.name : '', openAttention: () => firstOpen && this.go(STEP_TABS[firstOpen.i]),
+      steps: stepVals,
+      activity: d.audit.slice(0, 8).map(a => ({ text: a.text, meta: a.who + ' · ' + relTime(a.t), icon: I(a.icon, { width: 16, height: 16 }) })),
+      hasActivity: d.audit.length > 0, noActivity: d.audit.length === 0,
+
+      noPositions: !d.positions.length, hasPositions: d.positions.length > 0,
+      createPosBtn: btn('Create position', () => this.openForm('position'), 'plus'),
+      openCreatePos: () => this.openForm('position'), posQ: s.posQ, onPosQ: e => this.setState({ posQ: e.target.value }),
+      posList: posFiltered.map(p => ({ name: p.name, meta: p.code + ' · ' + levelsOf(d, p.id).length + ' levels', status: p.status, variant: stVar(p.status), onClick: () => this.setState({ selPos: p.id }), ...sel(p.id === s.selPos) })),
+      posNoResults: !!q && !posFiltered.length,
+      hasSp: !!spP,
+      sp: spP ? { name: spP.name, code: spP.code, desc: spP.desc || 'No description', status: spP.status, variant: stVar(spP.status), matrix: (mxOf(d, spP.matrixId) || { name: 'Not linked' }).name } : {},
+      openEditPos: () => this.openForm('position', { id: spP.id }), openAddLevel: () => this.openForm('level', { posId: spP.id }),
+      addLevelBtn: spP ? btn('Add level', () => this.openForm('level', { posId: spP.id }), 'plus') : null,
+      spNoLevels: !!spP && !spLv.length, spHasLevels: spLv.length > 0,
+      spLevels: spLv.map(l => { const cb = covBadge(coverage(d, l.id)); return { seq: l.seq, name: l.name, desc: l.desc || '', status: l.status, variant: stVar(l.status), cov: cb.text, covVariant: cb.variant, onEdit: () => this.openForm('level', { posId: spP.id, id: l.id }) }; }),
+
+      empSummary: d.employees.filter(e => e.levelId).length + ' of ' + d.employees.length + ' mapped',
+      empQ: s.empQ, onEmpQ: e => this.setState({ empQ: e.target.value }),
+      empFilter: s.empFilter, onEmpFilter: v => this.setState({ empFilter: v }),
+      empFilterOptions: [{ value: 'all', label: 'All statuses' }, { value: 'linked', label: 'Profile linked' }, { value: 'not', label: 'Not linked' }],
+      hasEmpRows: empF.length > 0, empNoResults: !empF.length,
+      empEmptyTitle: 'No matching employees', empEmptyDesc: 'Try another name, email, or status.',
+      empRows: empF.map(e => { const l = lvlOf(d, e.levelId); return { name: e.name, email: e.email, assign: l ? l.name : 'Not linked', assignColor: l ? 'inherit' : 'var(--color-text-secondary)', status: l ? 'Profile linked' : 'Not linked', variant: l ? 'success' : 'secondary', selected: e.id === s.selEmp, onClick: () => this.selectEmp(e.id) }; }),
+      hasSe: !!se, noSe: !se,
+      se: se ? { name: se.name, email: se.email, title: se.title, unit: se.unit, manager: se.manager, initials: se.name.split(' ').map(w => w[0]).join('').slice(0, 2) } : {},
+      mapPosOptions: actPos.map(p => ({ value: p.id, label: p.name })), mapPos: md.pos,
+      onMapPos: v => this.setState({ mapDraft: { pos: v, lvl: '' } }),
+      mapLvlOptions: mapLvlOpts, mapLvl: md.lvl, onMapLvl: v => this.setState({ mapDraft: { ...md, lvl: v } }),
+      mapLvlDisabled: ro || !md.pos || !mapLvlOpts.length, mapLvlPh: !md.pos ? 'Select a position first' : mapLvlOpts.length ? 'Select a level' : 'This position has no active levels',
+      mapHint: !md.pos ? 'Only Active Positions are listed.' : !md.lvl ? 'Choose a Level in the selected Position.' : mapChanged ? 'Only the EnPath career assignment changes. HR data stays the same.' : 'No changes to preview.',
+      mapPvDisabled: ro || !mapChanged, mapResetDisabled: !se || (md.lvl === (se.levelId || '') && md.pos === ((lvlOf(d, se.levelId) || {}).posId || '')),
+      resetMap: () => se && this.selectEmp(se.id), previewMap: this.previewMap,
+
+      noMatrices: !d.matrices.length, hasMatrices: d.matrices.length > 0,
+      createMxBtn: btn('Create matrix', () => this.openForm('matrix'), 'plus'), openCreateMx: () => this.openForm('matrix'),
+      mxList: d.matrices.map(m => ({ name: m.name, meta: m.scale + '-level scale · ' + m.comps.length + ' competencies · v' + m.version, status: m.status, variant: stVar(m.status), onClick: () => this.setState({ selMx: m.id }), ...sel(m.id === s.selMx) })),
+      hasSm: !!smM,
+      sm: smM ? { name: smM.name, desc: smM.desc, status: smM.status, variant: stVar(smM.status), version: 'v' + smM.version, usedBy: usedBy.length ? usedBy.join(', ') : 'No positions yet', scaleTitle: 'Proficiency scale, ' + smM.scale + ' levels' } : {},
+      smIsDraft: !!smM && smM.status === 'Draft',
+      smDraftText: smM && smM.comps.length ? 'Positions can\'t use this Matrix until you publish it. Publishing increases the version.' : 'Add at least 1 Competency before you publish.',
+      publishDisabled: ro || !smM || !smM.comps.length,
+      publishMx: () => this.openPreview({ title: 'Preview publish', rows: [{ field: 'Status', before: 'Draft', after: 'Active', changed: true }, { field: 'Version', before: 'v' + smM.version, after: 'v' + (smM.version + 1), changed: true }], warnings: [], audit: { text: 'Published ' + smM.name + ' v' + (smM.version + 1), icon: 'layers' }, commit: dd => { const m = mxOf(dd, smM.id); m.status = 'Active'; m.version++; } }),
+      openEditMx: () => this.openForm('matrix', { id: smM.id }), openAddComp: () => this.openForm('comp', { mxId: smM.id }),
+      smScale: smM ? SCALES[smM.scale].map((label, i) => ({ n: i + 1, label })) : [],
+      smCompTitle: smM ? 'Competencies (' + smM.comps.length + ')' : '',
+      smNoComps: !!smM && !smM.comps.length,
+      smComps: smM ? smM.comps.map((c, i) => { const beh = Object.keys(c.beh).sort().map(k => ({ lvl: scaleLabel(smM.scale, +k), text: c.beh[k] })); return { seq: String(i + 1).padStart(2, '0'), name: c.name, desc: c.desc, beh, hasBeh: beh.length > 0, noBeh: !beh.length, onEdit: () => this.openForm('comp', { mxId: smM.id, id: c.id }) }; }) : [],
+
+      expPosOptions, expPos: s.expPos, onExpPos: this.onExpPos,
+      expMxOptions, expMx: s.expMx, onExpMx: this.onExpMx, expMxDisabled: ro || !x.p || !d.matrices.length,
+      expEmpty: !!expEmpty, expEmptyTitle: expEmpty ? expEmpty.t : '', expEmptyDesc: expEmpty ? expEmpty.d : '',
+      expEmptyBtn: expEmpty && expEmpty.b && NS ? h(NS.Button, { size: 'sm', variant: 'outline', onClick: () => this.setState({ tab: expEmpty.tab, ...(expEmpty.pos ? { selPos: expEmpty.pos } : {}) }) }, expEmpty.b) : null,
+      expGrid,
+      expMetrics: expGrid ? [{ label: 'Career levels', value: x.levels.length }, { label: 'Competencies', value: x.comps.length }, { label: 'Expected cells mapped', value: x.setCount + '/' + x.total }] : [],
+      expInvalid: expInv, expInvalidText: expInv ? x.invNames[0] + (x.invNames.length > 1 ? ', and ' + (x.invNames.length - 1) + ' more.' : '.') + ' Raise it or lower the earlier Level.' : '',
+      expSwitch: expGrid && x.switched, expSwitchText: expGrid && x.switched ? (x.p.matrixId ? 'Saving links ' + x.p.name + ' to ' + x.mx.name + ' and replaces its current expectations.' : 'Saving links ' + x.p.name + ' to ' + x.mx.name + '.') : '',
+      expHeads: expGrid ? x.levels.map(l => ({ name: l.name.replace(x.p.name + ' ', '') + (l.status === 'Archived' ? ' (Archived)' : '') })) : [],
+      cellOptions: x.mx ? [{ value: '0', label: 'Not set' }, ...SCALES[x.mx.scale].map((lb, i) => ({ value: String(i + 1), label: (i + 1) + ' ' + lb }))] : [],
+      expRows: expGrid ? x.comps.map(c => ({ name: c.name, cells: x.levels.map(l => ({ value: String((s.expDraft[l.id] || {})[c.id] || 0), onChange: v => this.setCell(l.id, c.id, v), invalid: !!x.invalid[l.id + '|' + c.id], label: c.name + ' for ' + l.name })) })) : [],
+      expFootText: !expGrid ? '' : x.setCount === 0 ? 'Set at least 1 cell to preview.' : missing ? missing + ' cells are Not set. You can save a partial draft.' : 'All cells are set.',
+      expFootColor: expGrid && !missing && x.setCount ? 'var(--color-text-success)' : 'var(--color-text-secondary)',
+      expResetDisabled: !expGrid || (!x.changes.length && !x.switched),
+      expPvDisabled: ro || !expGrid || expInv || x.setCount === 0 || (!x.changes.length && !x.switched),
+      resetExp: this.resetExp, previewExp: this.previewExp,
+
+      noPathsAtAll: !d.paths.length && !pe, showPathsLayout: d.paths.length > 0 || !!pe,
+      createPathBtn: btn('Create path', this.startCreatePath, 'plus'), startCreatePath: this.startCreatePath,
+      pathList: d.paths.map(p => ({ name: p.name, meta: p.nodes.length + ' nodes · v' + p.version, status: p.status, variant: stVar(p.status), warn: this.incompleteNodes(p.nodes).length > 0, onClick: () => this.setState({ selPath: p.id, pe: null }), ...sel(p.id === s.selPath && !(pe && !pe.id)) })),
+      showPathView: !pe && !!vpP, showPathEdit: !!pe,
+      vp: vpP ? { name: vpP.name, desc: vpP.desc, status: vpP.status, variant: stVar(vpP.status), version: 'v' + vpP.version } : {},
+      vpWarn: vpInc.length > 0, vpWarnText: vpInc.length ? vpInc.join(', ') + (vpInc.length > 1 ? ' don\'t' : ' doesn\'t') + ' have complete expected competencies. The path can stay ' + vpP.status + ', but readiness analysis isn\'t complete.' : '',
+      vpNodes: vpP ? vpP.nodes.map((n, i) => { const l = lvlOf(d, n) || { name: 'Missing level', posId: '' }, cb = covBadge(coverage(d, n)), nx = lvlOf(d, vpP.nodes[i + 1]); return { i: i + 1, name: l.name, pos: (posOf(d, l.posId) || { name: '' }).name, cov: cb.text, covVariant: cb.variant, notLast: i < vpP.nodes.length - 1, move: nx ? (nx.posId === l.posId ? 'Level up' : 'Cross-position move') : '' }; }) : [],
+      startEditPath: this.startEditPath,
+      peTitle: pe && pe.id ? 'Edit path' : 'Create path',
+      pe: pe || { name: '', desc: '', status: 'Draft' },
+      onPeName: e => this.setPe({ name: e.target.value }), onPeDesc: e => this.setPe({ desc: e.target.value }), onPeStatus: v => this.setPe({ status: v }),
+      pathStatusOptions: ['Draft', 'Active', 'Archived'], nodeOptions,
+      peNodes: pe ? pe.nodes.map((n, i) => {
+        const cb = n ? covBadge(coverage(d, n)) : { text: '—', variant: 'outline' };
+        const prev = lvlOf(d, pe.nodes[i - 1]), cur = lvlOf(d, n);
+        const bad = !!prev && !!cur && (prev.id === cur.id || (prev.posId === cur.posId && cur.seq <= prev.seq));
+        return {
+          i: i + 1, value: n, label: 'Node ' + (i + 1), cov: cb.text, covVariant: cb.variant, invalid: bad, upDisabled: i === 0,
+          onChange: v => this.setPe({ nodes: pe.nodes.map((m, j) => j === i ? v : m) }),
+          onUp: () => { const a = [...pe.nodes];[a[i - 1], a[i]] = [a[i], a[i - 1]]; this.setPe({ nodes: a }); },
+          onRemove: () => this.setPe({ nodes: pe.nodes.filter((_, j) => j !== i) }),
+        };
+      }) : [],
+      addNode: () => this.setPe({ nodes: [...pe.nodes, ''] }),
+      peHasErrors: peErr.length > 0, peErrors: peErr.map(t => ({ text: t })),
+      peHasWarn: !peErr.length && peInc.length > 0, peWarnText: peInc.length ? peInc.join(', ') + ' ' + (peInc.length > 1 ? 'aren\'t' : 'isn\'t') + ' fully set in Expectations. You can still save.' : '',
+      pePvDisabled: ro || peErr.length > 0, previewPath: this.previewPath, cancelPathEdit: () => this.setState({ pe: null }),
+
+      fmOpen: s.dlg === 'form', fm: fmVals, fmPreview: this.fmPreview,
+      pvOpen: s.dlg === 'preview', pv: pvVals, pvBack: this.pvBack, confirmPv: this.confirmPv,
+      closeDlg: this.closeDlg, closeIfFalse: this.closeIfFalse,
+      toasts: s.toasts,
+    };
+  }
+}
+</script>
 </body>
 </html>
