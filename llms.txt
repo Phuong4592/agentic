@@ -1,0 +1,106 @@
+# Agentic Design System
+
+> A Figma-first design system built on shadcn/ui and Tailwind CSS, with a three-tier token architecture (Primitives → Semantics → Components), 36 documented components, and AI-assisted build, audit, and Storybook workflows.
+
+**Figma file key:** `YWfTOUTpFZ0BNxHobfUqme`
+**Storybook:** `http://localhost:6006` — 36 components (per-component verification status in `Tracking/Storybook Status.md`; only 3 fully verified, most pending Figma parity + Phase-3 verification)
+**Code:** `agentic-ui/` — Next.js + Tailwind v4 + shadcn/ui. Lives as a subfolder of this monorepo (repo root → `agentic-ui/`). All `agentic-ui/...` paths below are relative to the repo root.
+
+---
+
+## Rules and Process
+
+- `agentic-design-system.md`: Token architecture, all semantic token names and rules, spacing system, layout grid, Figma ↔ Tailwind mapping, dark mode implementation (`.dark` class, `tokens.css` override block). **Read before any build or audit.**
+- `agentic-theme.md`: Theme reference — the system's look & feel captured at the primitive layer (brand ramp, neutral ramp, status ramps, radius, spacing, typography) plus a 5-lever re-theme workflow. **Read before any theming or re-skin work.**
+- `Machine Readable/figma-ids.md`: All Figma node IDs, effect style IDs (shadows), text style IDs (typography), variable collection IDs. Reference when running figma-cli scripts.
+- `Skills/Build component skill.md`: Phased build process (5 phases) with verification gates.
+- `Skills/Component Audit Skill.md`: Audit checklist R1–R8, report format, fix execution order, R8 rule.
+- `Skills/Token Binding Skill.md`: Token binding API reference, fix scripts.
+- `Skills/Theme Generator Skill.md`: Turn input colors into a compliant theme — contrast gate (per `agentic-theme.md` standard), full ramp generation, token write + rebuild. Use for any re-skin.
+- `content-guidelines.md`: Voice-neutral UX writing mechanics — capitalization, button labels, error messages, empty states, punctuation. Brand voice/tone is left to the consuming product.
+- `Skills/Component Documentation Skill.md`: Documentation template, required sections, post-writing checklist.
+- `Skills/Storybook Build Process.md`: Storybook pipeline rules — token audit, parity check, story writing, story verification. Includes: spacing/color rules, native OS input rule, story className override audit rule.
+- `Claude Memory/Claude-collaboration-rules.md`: Collaboration workflow — propose before executing, never fix without approval.
+
+---
+
+## Component Documentation
+
+36 components — each has its own dedicated markdown spec, meta.json, and Storybook story.
+
+- `Component Markdown (reference)/[Name].md`: Full design spec per component — variant matrix, structure layer tree, token bindings per state, behavior, accessibility, usage rules, do-nots, best practice. **36 files.**
+- `Component Markdown (reference)/Form-shared.md`: Shared sub-component specs — `label`, `menu-dropdown`, `menu-dropdown-item`.
+
+**Notable separations (2026-06-03):**
+- `AlertDialog.md` — separated from Alert.md. Full spec for the modal overlay component.
+- `Textarea.md` — separated from Input.md. Full spec for the multi-line text control.
+
+---
+
+## Machine-Readable Artifacts
+
+**36 meta.json files** — one per component, v3 schema.
+
+- `Machine Readable/artifacts/components/[name].meta.json`: Structured metadata — variants (`reactProp`/`reactValues`), tokens per state (including invalid ring spec), storybook reference, implementation notes, known issues, changelog, dark mode risks, behavior typeGuide. **Read before any component work.**
+- `Machine Readable/component-quick-reference.md`: **Scan before building any screen.** What each component is for, key usage rule, common mistake, comparison to similar components. Hand-maintained from meta.json. ⚠️ Still lists 35 — ChatBubble not yet added (regenerate).
+- `Machine Readable/component-directory.md`: **Quick-reference directory** — components with Figma node ID, Storybook title, and tsx file. Use to navigate between Figma ↔ Storybook ↔ code. Hand-maintained from meta.json. ⚠️ Still lists 35 — ChatBubble not yet added (regenerate).
+- `Machine Readable/meta-artifact-template.md`: **v3 template** — all required fields documented. Read before generating or updating any meta.json.
+- `Machine Readable/generation-rules.md`: When and how to regenerate meta.json — triggered by markdown changes, code changes, story changes, bug fixes.
+- `Machine Readable/validate-artifacts.mjs`: Validation script — run with `node "Machine Readable/validate-artifacts.mjs"` to check all 36 meta.json files.
+- `Machine Readable/drift-check.mjs`: **Drift detector** — run `node "Machine Readable/drift-check.mjs"`. Checks (1) every path in llms.txt resolves, (2) component-count claims match meta.json files, (3) agentic-theme.md hexes exist in primitives, (4) Figma Dark mode matches tokens.css `.dark` (needs figma-cli connected). Exit 1 on drift. Run after renames/moves, token edits, or a Figma change.
+
+**Note:** `examples.tsx` files deleted 2026-06-03. Examples now live in `src/stories/*.stories.tsx`. The `storybook` field in each meta.json references the story file path and named exports.
+
+---
+
+## Storybook
+
+- `agentic-ui/src/stories/[Name].stories.tsx`: **36 story files** — interactive demos for all components. Verification status per component in `Tracking/Storybook Status.md` (not all verified).
+- `agentic-ui/src/components/ui/[name].tsx`: Component implementation files — all tokens spec-fixed.
+- `agentic-ui/src/app/tokens.css`: 339 resolved CSS custom properties consumed by Storybook and the app. Includes a `.dark {}` override block for dark mode.
+- `agentic-ui/.storybook/preview.tsx`: Storybook config — light/dark theme toggle via `@storybook/addon-themes` (`withThemeByClassName`, toggles the `.dark` class). Backgrounds: light / muted / dark.
+
+---
+
+## Screen Design (Storybook prototypes)
+
+Guides for designing full product screens using real components + Tailwind in Storybook.
+
+- `Prototype-build/prototype-build-skill.md`: **Read before building any prototype/screen.** Requirements checklist, phases (plan → shell → screens → audit), token rules, component usage rules, common mistakes table.
+- `Prototype-build/layout-patterns.md`: Copy-paste patterns — app shell, page header, form page, data table page, dashboard card grid, settings page, empty state page, auth card. Token quick-reference at the end.
+
+**Screen templates** live as Storybook stories under `agentic-ui/src/stories/screens/` (title `Screens/Feature/Name`). Template catalog (outside repo, in the L&D vault): `UI Template/README.md`. First template: **Northwind** (sales/orders) — `Screens/Northwind/App Shell` + `Screens/Northwind/Dashboard` under `agentic-ui/src/stories/screens/northwind/`.
+
+---
+
+## Figma Screen Design
+
+Guides for designing full product screens in Figma using this design system.
+
+- `Figma-screen-design/artboard-setup.md`: Frame sizes (390/768/1024/1280/1440px), applying grid styles (Grid/Mobile/Tablet/Desktop), page organisation, Auto Layout conventions, using components on artboards.
+- `Figma-screen-design/annotation-guide.md`: What to annotate vs what Dev Mode surfaces automatically, spacing token annotations, responsive change annotations, state and interaction legend format, handoff checklist.
+- `Figma-screen-design/screen-flow.md`: Frame naming convention, flow structure (entry/error/empty/loading/success screens), prototype connection animations, overlay setup, canvas organisation, Storybook reference for handoff.
+- `Figma-screen-design/screen-build-skill.md`: **Read before building any Figma screen.** Script template, async API rules, common patterns (nav bar, header, input-field, button, footer), component variant string reference, text node names inside instances, known gotchas table, verification process.
+
+---
+
+## Tracking
+
+- `Tracking/Storybook Status.md`: Per-component pipeline status — `.tsx` tokens, Figma parity, story written, story verified. 36 components tracked; only 3 fully verified (Badge, Separator, Skeleton) — parity + Phase-3 verification pending for most (Summary corrected 2026-07-02).
+- `Tracking/Audit Status.md`: Figma component audit log — every component set, last audit date, R1–R8 rules, findings.
+- `AI Readiness/AI-Readiness Roadmap.md`: 15-factor AI-readiness assessment. Current score: 12/15 ✅. Phase 4.3 Storybook complete. Phase 4.1 Code Connect N/A.
+
+---
+
+## Tokens
+
+Three-tier architecture: Primitives → Semantics → Components.
+
+- `Tokens/primitives.tokens.json`: 190 raw primitive variables (colors, spacing, radius, motion) — DTCG format.
+- `Tokens/semantics.tokens.json`: 110 semantic variables (background, surface, brand, border, text, icon, status, sidebar, opacity) — DTCG format.
+- `Tokens/components.tokens.json`: 44 component tokens (button, badge, tooltip, table) — DTCG format.
+- `Tokens/tokens.tokens.json`: All three collections combined.
+- `Tokens/output/css/variables.css`: 339 resolved CSS custom properties — consumed by app and Storybook.
+- `Tokens/output/css/tailwind-v4.css`: Same values as `@theme` block for Tailwind v4.
+- `Tokens/output/js/tokens.mjs`: ES module token constants.
+- `Tokens/sd.build.mjs`: Style Dictionary v5 build script — run `node sd.build.mjs` after re-exporting tokens from Figma.
